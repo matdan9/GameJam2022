@@ -4,40 +4,104 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAction
+public class PlayerAction: MonoBehaviour
 {
     //Variables pour le nouveau input system
     private InputSystem inputActions;
 
     private Vector2 input;
+    private bool canInteract = false;
+
+    private GameObject item;
+
+    private int bulletCounter = 0;
+
+    private GameObject pickupText;
     
     private void Awake()
     {
-        //Va chercher le nouveau input system
+        //Go get the new input system
         inputActions = new InputSystem();
 
-        //Permet d'aller chercher les inputs des touches pour le mouvement
+        //Can reach the inputs for movements
         inputActions.PlayerMovements.Movements.performed += MovementsCharacter;
-        //Remet les valeur a 0 lorsqu'on relache la touche
+        //Put the inputs for movements values back to zero
         inputActions.PlayerMovements.Movements.canceled += MovementsCharacter;
+
+        inputActions.PlayerActions.Pickup.performed += Interact;
         
     }
 
-    //------- Cette fonction detecte si les boutons WASD sont enfonce -------//
-     private void MovementsCharacter(InputAction.CallbackContext context)
+    void Start(){
+
+        pickupText = GameObject.Find("pickupText");
+        pickupText.SetActive(false);
+        
+    }
+
+    //------- this fonction detect if the WASD boutons are pressed -------//
+    private void MovementsCharacter(InputAction.CallbackContext context)
     {
         input = context.ReadValue<Vector2>();
     }
 
+    //------- this fonction detect if the pickup(E) bouton is pressed -------//
+     private void Interact(InputAction.CallbackContext context)
+    {   
+        if(canInteract && item.transform.tag == "Bullet"){
+            Destroy(item);
+            item = null;
+            bulletCounter ++;  
+            pickupText.SetActive(false);
+
+        }
+        else if(canInteract && item.transform.tag == "Campfire")
+        {
+            Debug.Log("Light up campfire");
+
+        }
+        else if(canInteract && item.transform.tag == "Shotgun" )
+        {
+            Destroy(item);
+            item = null;
+            Debug.Log("Shotgun");
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.transform.tag == "Bullet" || collision.transform.tag == "Shotgun"){
+            canInteract = true;
+            item = collision.transform.gameObject;
+            pickupText.SetActive(true);
+            
+        }
+        else if(collision.transform.tag == "Campfire")
+        {
+            Debug.Log("Text campfire active");
+        }
+    }
+
+    void OnTriggerExit(Collider collision)
+    {
+        if(collision.transform.tag == "Campfire" || collision.transform.tag == "Bullet" || collision.transform.tag == "Shotgun"){
+            canInteract = false;
+            pickupText.SetActive(false);
+        }
+    }
 
 
-      //------- Cette fonction active l'input system -------//
+
+
+
+
+    //------- This fonction activate the input system -------//
     private void OnEnable()
     {
         inputActions.Enable();
     }
 
-    //------- Cette fonction desactive l'input system -------//
+    //------- This fonction deactivate the input system -------//
     private void OnDisable()
     {
         inputActions.Disable();
