@@ -19,6 +19,7 @@ public class PlayerAction
         //Permet d'aller chercher les inputs des touches pour le mouvement
         inputActions.PlayerMovements.Movements.performed += MovementsCharacter;
         //Remet les valeur a 0 lorsqu'on relache la touche
+        inputActions.PlayerMovements.Movements.canceled += MovementsCharacter;
         
     }
 
