@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController: MonoBehaviour
 {
     [SerializeField]
     private float mSensX = 5f;
@@ -18,25 +19,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpForce = 4;
     [SerializeField]
-    private float jogSpeed = 10000;
+    private float jogSpeed = 5;
     [SerializeField]
-    private float runSpeed = 15f;
+    private float crouchSpeed = 2;
     [SerializeField]
-    private float _sideRayLength = 0.5f;
-    [SerializeField]
-    private float _sideJumpForce = 0.5f;
+    private float runSpeed = 8f;
     [SerializeField]
     private float _extraDrag = 0.3f;
-    [FormerlySerializedAs("_gripStrenght")] [SerializeField]
-    private float _gripStrength = 100f;
     [SerializeField]
     private LayerMask _groundLayer;
     [SerializeField]
-    private GameObject _laser;
+    private GameObject _bullet;
     [SerializeField]
     private long _weaponCoolDown;
     [SerializeField] 
-    private AudioClip laserAudio;
+    private AudioClip gunAudio;
     [SerializeField] 
     private AudioClip movingSound;
     [SerializeField] 
@@ -45,8 +42,6 @@ public class PlayerController : MonoBehaviour
     private AudioClip _jumpAudio;
 
     private bool _touchedGround = false;
-    private bool _touchedLeft = false;
-    private bool _touchedRight = false;
     private float _movingSpeed;
     private bool _iswalking = false;
     private float _movingDirection = 0;
@@ -61,158 +56,117 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider _collider;
     private Vector2 _mouseMovement = new Vector2();
     private Vector3 _extraPhisicsVec = new Vector3();
-    private GameObject[] _spawnPoints;
     private long _nextShot = 0;
     private AudioSource _audio;
+    private Vector2 _movementInputs;
+    private InputSystem inputSystem;
 
-    private float x = 0;
-    private float y = 0;
+    private void Awake(){
+        SetupControls();
+    }
 
-    public void OnStartClient()
+    private void SetupControls(){
+        inputSystem = new InputSystem();
+        inputSystem.PlayerMovements.Movements.performed += UpdateMovementInputs;
+        inputSystem.PlayerMovements.Movements.canceled += UpdateMovementInputs;
+        inputSystem.PlayerMovements.Look.performed += UpdateMouseInput;
+        inputSystem.PlayerMovements.Crouch.performed += Crouch;
+        inputSystem.PlayerMovements.Crouch.canceled += Crouch;
+    }
+
+    private void Start()
     {
-        Debug.Log("ok");
-        _audio = this.GetComponent<AudioSource>();
+        _movingSpeed = jogSpeed;
+        Cursor.lockState = CursorLockMode.Locked;
+        SetupCam();
         SetupCollider();
         RbSetup();
+        SetupControls();
+        _audio = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audio.clip = movingSound;
     }
 
-    public void OnStartLocalPlayer()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        _spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-        Debug.Log("toto africa");
-        SetupCam();
-    }
-
-
-    public void Kill()
-    {
-        if(_spawnPoints == null) _spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-        this.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Length)].transform.position;
-        AudioSource.PlayClipAtPoint(dieSound, transform.position);
+    private void UpdateMovementInputs(InputAction.CallbackContext c){
+        _movementInputs = c.ReadValue<Vector2>();
     }
 
     private void Update()
     {
-        if(_rbPlayer.velocity.magnitude >= 2 && (_touchedLeft||_touchedRight||_touchedGround) && !_audio.isPlaying) //PlayWalkingSound();
-        UpdateMovingInputs();
-        UpdateMouseInput();
-        _movement *= Time.deltaTime * 10f;
-    }
-
-    private void PlayWalkingSound()
-    {
-        _audio.volume = Random.Range(0.5f, 8f);
-        _audio.pitch = Random.Range(0.7f, 1f);
-        _audio.Play();
+        if(_rbPlayer.velocity.magnitude >= 2 && !_audio.isPlaying) PlayWalkingSound();
+        UpdateMovement();
     }
 
     private void FixedUpdate()
     {
         UpdateGroundSensors();
-        MouseLook();
         UpdatePlayerPosition();
     }
     
-
     private void UpdatePlayerPosition()
     {
-        if (!_touchedGround && (!_touchedLeft && !_touchedRight)) _movement /= 3;
+        if (!_touchedGround) _movement /= 3;
         _movement.y = _rbPlayer.velocity.y;
         _extraPhisicsVec *= _extraDrag;
         _movement += _extraPhisicsVec;
-        if((_touchedLeft || _touchedRight) && !_touchedGround && _movement.y<0)
-        {
-            _movement.y /= _gripStrength;
-        }
         _rbPlayer.velocity = _movement;
+        _movement.x -= _movement.x;
+        _movement.z -= _movement.z;
     }
 
-    private void UpdateMouseInput()
+    private void UpdateMouseInput(InputAction.CallbackContext c)
     {
-         x += Input.GetAxis("Mouse X") * mSensX * Time.deltaTime;
-         y += Input.GetAxis("Mouse Y") * mSensY * -1 * Time.deltaTime;
-        _mouseMovement.x += Input.GetAxis("Mouse X") * mSensX * Time.deltaTime;
-        _mouseMovement.y += Input.GetAxis("Mouse Y") * mSensY * -1 * Time.deltaTime;
+        Vector2 vec = c.ReadValue<Vector2>();
+        _mouseMovement.x += vec.x * mSensX * 0.01f;
+        _mouseMovement.y += vec.y * mSensY * -1 * 0.01f;
+        MouseLook();
     }
-    
+
     private void MouseLook()
     {
-        
-        _rbPlayer.MoveRotation(Quaternion.Euler(0f, this.transform.rotation.eulerAngles.y + x, 0f));
-        _camPlayer.transform.localRotation = Quaternion.Euler(_camPlayer.transform.localRotation.eulerAngles.x + y, 0f, 0f);
-        x = 0;
-        y = 0;
+        _rbPlayer.MoveRotation(Quaternion.Euler(0f, this.transform.rotation.eulerAngles.y + _mouseMovement.x, 0f));
+        _camPlayer.transform.localRotation = Quaternion.Euler(_camPlayer.transform.localRotation.eulerAngles.x + _mouseMovement.y, 0f, 0f);
         _mouseMovement.x = 0;
         _mouseMovement.y = 0;
     }
 
-    private void UpdateMovingInputs()
+    private void UpdateMovement()
     {
-        _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad;
-        if (Input.GetKey(KeyCode.A))
-        {
-            AKey();
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            DKey();
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            WKey();
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            SKey();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpaceKey();
-        }
-
+        Strafe(_movementInputs.x);
+        Move(_movementInputs.y);
+        /*
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Vector3 pos = new Vector3(_camPlayer.transform.position.x, _camPlayer.transform.position.y, _camPlayer.transform.position.z);
             Quaternion rot = new Quaternion(_camPlayer.transform.rotation.x, _camPlayer.transform.rotation.y, _camPlayer.transform.rotation.z, _camPlayer.transform.rotation.w);
             ShootLaser(pos, rot);
         }
-        
-        if (Input.GetKeyDown(KeyCode.LeftControl) && _touchedGround)
-        {
-            CtrlKey();
-        }
-        
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            this.transform.localScale = new Vector3(this.transform.localScale.x, 1, this.transform.localScale.z);
-        }
+        */
     }
 
-    private void ShootLaser(Vector3 pos, Quaternion rot)
+    private void ShootGun (Vector3 pos, Quaternion rot)
     {
         long currentTime = GetCurrentTime();
         if (_nextShot > currentTime) return;
         _nextShot = currentTime + _weaponCoolDown;
-        GameObject laser = Instantiate(_laser, pos + Vector3.down * 0.1f, rot);
+        GameObject bullet = Instantiate(_bullet, pos + Vector3.down * 0.1f, rot);
         RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
-        Destroy(laser, 1f);
-        
+        Destroy(bullet, 1f);
     }
 
-
-    private void RpcPlayGunSound(Vector3 position)
+    private void Crouch(InputAction.CallbackContext c)
     {
-        AudioSource.PlayClipAtPoint(laserAudio, position);
-    }
-    
-    private void CtrlKey()
-    {
-        _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad;
-        _extraPhisicsVec += _movement / 4;
-        _movement = Vector3.zero;
+        if(c.canceled){
+            this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y * 1.5f, this.transform.localScale.z);
+            _movingSpeed = jogSpeed;
+            return;
+        }
+        _movingSpeed = crouchSpeed;
         this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y / 1.5f, this.transform.localScale.z);
+    }
+
+    public void Kill()
+    {
+        //TODO kill the player
     }
 
     private void SpaceKey()
@@ -224,75 +178,39 @@ public class PlayerController : MonoBehaviour
             AudioSource.PlayClipAtPoint(_jumpAudio, this.transform.position);
             return;
         }
-        if (_touchedLeft)
-        {
-            var velocity = _rbPlayer.velocity;
-            velocity = new Vector3(velocity.x, 0f, velocity.y);
-            _rbPlayer.velocity = velocity;
-            Vector3 p = new Vector3();
-            float direction = transform.eulerAngles.y * Mathf.Deg2Rad + Mathf.PI / 4;
-            p.z += Mathf.Cos(direction) * _sideJumpForce;
-            p.x += Mathf.Sin(direction) * _sideJumpForce;
-            _extraPhisicsVec += p;
-            _rbPlayer.AddForce(Vector3.up * (jumpForce) , ForceMode.VelocityChange);
-            AudioSource.PlayClipAtPoint(_jumpAudio, this.transform.position);
-            return;
-        }
-        if (_touchedRight)
-        {
-            var velocity = _rbPlayer.velocity;
-            velocity = new Vector3(velocity.x, 0f, velocity.y);
-            _rbPlayer.velocity = velocity;
-            Vector3 p = new Vector3();
-            float direction = transform.eulerAngles.y * Mathf.Deg2Rad - Mathf.PI / 4;
-            p.z += Mathf.Cos(direction) * _sideJumpForce;
-            p.x += Mathf.Sin(direction) * _sideJumpForce;
-            _extraPhisicsVec += p;
-            _rbPlayer.AddForce(Vector3.up * (jumpForce), ForceMode.VelocityChange);
-            AudioSource.PlayClipAtPoint(_jumpAudio, this.transform.position);
-            return;
-        }
     }
     
-    private void AKey()
+    private void Strafe(float direction)
     {
-        _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad - Mathf.PI / 2;
+        if(direction == 0) return;
+        _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad;
+        _movingDirection += ((direction > 0)? (float) Math.PI / 2 : (float) Math.PI / -2);
         _movement.z += Mathf.Cos(_movingDirection) * _movingSpeed;
         _movement.x += Mathf.Sin(_movingDirection) * _movingSpeed;
     }
     
-    private void DKey()
+    private void Move(float direction)
     {
-        _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad + Mathf.PI / 2;
-        _movement.z += Mathf.Cos(_movingDirection) * _movingSpeed;
-        _movement.x += Mathf.Sin(_movingDirection) * _movingSpeed;
-    }
-    
-    private void WKey()
-    {
+        if(direction == 0) return;
+        /*
         if (Input.GetKey(KeyCode.LeftShift)){
             _movingSpeed = runSpeed;
         }
         else if (_iswalking == false){
             _movingSpeed = jogSpeed;
         }
+        */
+        //_movingSpeed = jogSpeed;
         _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad;
+        if(direction < 0) _movingDirection += Mathf.PI;
         _movement.z += Mathf.Cos(_movingDirection) * _movingSpeed;
         _movement.x += Mathf.Sin(_movingDirection) * _movingSpeed;
     }
-    
-    private void SKey()
-    {
-        _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad + Mathf.PI;
-        _movement.z += Mathf.Cos(_movingDirection) * _movingSpeed;
-        _movement.x += Mathf.Sin(_movingDirection) * _movingSpeed;
-    } 
 
     private void SetupCam()
     {
         Camera.main.transform.SetParent(transform);
         Camera.main.transform.localPosition = new Vector3(0f, 0.34f, 0f);
-        //Debug.Log(Camera.main.transform.localPosition);
         _camPlayer = gameObject.GetComponentInChildren<Camera>();
     }
     
@@ -322,17 +240,6 @@ public class PlayerController : MonoBehaviour
         Vector3 pos = this.transform.position;
         pos.y -= _collider.bounds.size.y / 2.1f;
         _touchedGround = Physics.Raycast(pos, Vector3.down, out _jumpRay, _jumpSensorLength);
-        Vector3 xPos = new Vector3(0f, 0f, 0f);
-        xPos.x += _collider.bounds.size.x / 2.1f;
-        _touchedRight = Physics.Raycast(transform.TransformPoint(xPos), this.transform.right, out _jumpRay, _sideRayLength);
-        xPos = new Vector3(0f, 0f, 0f);
-        xPos.x -= _collider.bounds.size.x / 2.1f;
-        _touchedLeft = Physics.Raycast(transform.TransformPoint(xPos), this.transform.right * -1, out _jumpRay, _sideRayLength);
-    }
-
-    public void AddJumpBoost(float boost)
-    {
-        _rbPlayer.AddForce(Vector3.up * boost, ForceMode.VelocityChange);
     }
 
     public void SetSens(int sens)
@@ -359,5 +266,27 @@ public class PlayerController : MonoBehaviour
     public static long GetCurrentTime()
     {
         return (long)(Time.time * 1000f);
+    }
+
+    private void PlayWalkingSound()
+    {
+        _audio.volume = Random.Range(0.5f, 8f);
+        _audio.pitch = Random.Range(0.7f, 1f);
+        _audio.Play();
+    }
+
+    private void RpcPlayGunSound(Vector3 position)
+    {
+        AudioSource.PlayClipAtPoint(gunAudio, position);
+    }
+
+    private void OnEnable()
+    {
+        inputSystem.Enable();
+    }
+
+    private void OnDisable()
+    {
+       inputSystem.Disable();
     }
 }
