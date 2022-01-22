@@ -13,7 +13,11 @@ public class PlayerController: MonoBehaviour
     [SerializeField]
     private float mSensX = 5f;
     [SerializeField]
+    private float xMul = 1f;
+    [SerializeField]
     private float mSensY = 5f;
+    [SerializeField]
+    private float yMul = 1f;
     [SerializeField]
     private float _jumpSensorLength = 0.1f;
     [SerializeField]
@@ -116,8 +120,8 @@ public class PlayerController: MonoBehaviour
     private void UpdateMouseInput(InputAction.CallbackContext c)
     {
         Vector2 vec = c.ReadValue<Vector2>();
-        _mouseMovement.x += vec.x * mSensX * 0.01f;
-        _mouseMovement.y += vec.y * mSensY * -1 * 0.01f;
+        _mouseMovement.x += vec.x * mSensX * 0.01f * xMul;
+        _mouseMovement.y += vec.y * mSensY * -1 * 0.01f * yMul;
         MouseLook();
     }
 
@@ -242,15 +246,40 @@ public class PlayerController: MonoBehaviour
         _touchedGround = Physics.Raycast(pos, Vector3.down, out _jumpRay, _jumpSensorLength);
     }
 
-    public void SetSens(int sens)
+    public void SetSens(float sens)
     {
-        this.mSensX = sens;
-        this.mSensY = sens;
+        this.mSensX = sens * xMul;
+        this.mSensY = sens * yMul;
     }
 
-    public float GetSens()
+    public void SetXMul(float mul)
+    {
+        this.xMul = mul;
+    }
+
+    public float GetXMul()
+    {
+        return xMul;
+    }
+
+    public void SetYMul(float mul)
+    {
+        this.yMul = mul;
+    }
+
+    public float GetYMul()
+    {
+        return yMul;
+    }
+
+    public float GetXSens()
     {
         return this.mSensX;
+    }
+
+    public float GetYSens()
+    {
+        return this.mSensY;
     }
 
     public void SetFov(int fov)

@@ -21,6 +21,10 @@ public class SettingsMenu : MonoBehaviour
     {
         SetTextValuesToSlider();
         playerController.SetFov((int)FOV.value);
+        playerController.SetXMul(sensitivityX.value);
+        if (inverseX.GetComponent<Toggle>().isOn && sensitivityX.value > 0) playerController.SetXMul(playerController.GetXMul() * -1);
+        playerController.SetYMul(sensitivityY.value);
+        if (inverseY.GetComponent<Toggle>().isOn && sensitivityY.value > 0) playerController.SetYMul(playerController.GetYMul() * -1);
     }
 
     void SetTextValuesToSlider()
