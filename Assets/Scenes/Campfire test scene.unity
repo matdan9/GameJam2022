@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9164302104267598366, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: multiplier
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9164302105010110002, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: m_RootOrder
