@@ -7,13 +7,6 @@ public class EventListener : MonoBehaviour
 {
     public GameObject gameMenu, settingsMenu;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame && gameMenu.activeSelf)

@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(_rbPlayer.velocity.magnitude >= 2 && (_touchedLeft||_touchedRight||_touchedGround) && !_audio.isPlaying) PlayWalkingSound();
+        if(_rbPlayer.velocity.magnitude >= 2 && (_touchedLeft||_touchedRight||_touchedGround) && !_audio.isPlaying) //PlayWalkingSound();
         UpdateMovingInputs();
         UpdateMouseInput();
         _movement *= Time.deltaTime * 10f;

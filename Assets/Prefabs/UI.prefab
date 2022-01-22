@@ -964,8 +964,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 701261739}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 100
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1795,8 +1795,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 620147018}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 100
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2365,6 +2365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 773466637}
+  - component: {fileID: 773466638}
   m_Layer: 0
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -2403,6 +2404,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &773466638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773466636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6dcadf35a79db42abdfe4eebfb2382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FOV: {fileID: 1080243165}
+  sensitivityX: {fileID: 884414402}
+  sensitivityY: {fileID: 1096163158}
+  mainVolume: {fileID: 466490822}
+  musicVolume: {fileID: 257924958}
+  sfxVolume: {fileID: 886664127}
+  inverseX: {fileID: 1337784291}
+  inverseY: {fileID: 944046165}
+  FOVText: {fileID: 918588584}
+  sensitivityXText: {fileID: 18496215}
+  sensitivityYText: {fileID: 966227320}
+  mainVolumeText: {fileID: 954972339}
+  musicVolumeText: {fileID: 1596896793}
+  sfxVolumeText: {fileID: 1613713934}
+  cam: {fileID: 0}
 --- !u!1 &853328213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,8 +2763,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1686021495}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 100
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3447,10 +3475,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 248732129}
   m_HandleRect: {fileID: 1257494240}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0
+  m_MinValue: 60
+  m_MaxValue: 120
+  m_WholeNumbers: 1
+  m_Value: 60
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3569,7 +3597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 0}
+  m_AnchoredPosition: {x: 30, y: 40}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1096163158
@@ -4339,7 +4367,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 40}
+  m_AnchoredPosition: {x: 30, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1337784291

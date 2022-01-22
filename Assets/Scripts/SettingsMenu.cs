@@ -8,19 +8,19 @@ public class SettingsMenu : MonoBehaviour
     public Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
     public Toggle inverseX, inverseY;
     public Text FOVText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
-    public Camera camera;
+    public Camera cam;
+    public GameObject player;
+    PlayerController playerController;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        playerController = player.GetComponent<PlayerController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         SetTextValuesToSlider();
-        camera.fieldOfView = FOV.value;
+        playerController.SetFov((int)FOV.value);
     }
 
     void SetTextValuesToSlider()
