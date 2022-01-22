@@ -23,10 +23,7 @@ public class LightMecanic : MonoBehaviour
     void Update()
     {
         LightDetection();
-        
-
-        
-          BurningTorch();  
+        BurningTorch();  
     }
 
     
