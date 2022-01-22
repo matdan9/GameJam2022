@@ -19,12 +19,14 @@ public class GameMenu : MonoBehaviour
 
     void ResumeButton()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         gameMenu.SetActive(false);
     }
 
     void SettingsButton()
     {
-
+        settingsMenu.SetActive(true);
+        gameMenu.SetActive(false);
         Debug.Log("SETTINGS HAS BEEN PRESSED");
     }
 
