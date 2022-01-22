@@ -76,6 +76,7 @@ public class PlayerController: MonoBehaviour
         inputSystem.PlayerMovements.Look.performed += UpdateMouseInput;
         inputSystem.PlayerMovements.Crouch.performed += Crouch;
         inputSystem.PlayerMovements.Crouch.canceled += Crouch;
+        inputSystem.PlayerMovements.Shoot.performed += ShootGun;
     }
 
     private void Start()
@@ -137,24 +138,18 @@ public class PlayerController: MonoBehaviour
     {
         Strafe(_movementInputs.x);
         Move(_movementInputs.y);
-        /*
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Vector3 pos = new Vector3(_camPlayer.transform.position.x, _camPlayer.transform.position.y, _camPlayer.transform.position.z);
-            Quaternion rot = new Quaternion(_camPlayer.transform.rotation.x, _camPlayer.transform.rotation.y, _camPlayer.transform.rotation.z, _camPlayer.transform.rotation.w);
-            ShootLaser(pos, rot);
-        }
-        */
     }
 
-    private void ShootGun (Vector3 pos, Quaternion rot)
+    private void ShootGun (InputAction.CallbackContext c)
     {
+        Vector3 pos = new Vector3(_camPlayer.transform.position.x, _camPlayer.transform.position.y, _camPlayer.transform.position.z);
+        Quaternion rot = new Quaternion(_camPlayer.transform.rotation.x, _camPlayer.transform.rotation.y, _camPlayer.transform.rotation.z, _camPlayer.transform.rotation.w);
         long currentTime = GetCurrentTime();
         if (_nextShot > currentTime) return;
         _nextShot = currentTime + _weaponCoolDown;
         GameObject bullet = Instantiate(_bullet, pos + Vector3.down * 0.1f, rot);
-        RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
-        Destroy(bullet, 1f);
+        //RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
+        Destroy(bullet, 10f);
     }
 
     private void Crouch(InputAction.CallbackContext c)
