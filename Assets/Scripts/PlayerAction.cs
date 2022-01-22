@@ -51,6 +51,9 @@ public class PlayerAction: MonoBehaviour
         
     }
     
+    void Update(){
+        
+    }
     
 
     private void OnTriggerEnter(Collider collision)
@@ -66,7 +69,6 @@ public class PlayerAction: MonoBehaviour
             canInteract = true;
             item = collision.transform.gameObject;
             interactText.SetActive(true);
-            Debug.Log("Text campfire active");
         }
     }
 
@@ -115,7 +117,8 @@ public class PlayerAction: MonoBehaviour
         if(canInteract && item.transform.tag == "Campfire")
         {
             interactText.SetActive(false);
-            Debug.Log("Light up campfire");
+            GetComponent<LightMecanic>().RestartTorch();
+            
         }  
     }
 
