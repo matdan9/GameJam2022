@@ -21,7 +21,9 @@ public class PlayerController: MonoBehaviour
     [SerializeField]
     private float jogSpeed = 50;
     [SerializeField]
-    private float runSpeed = 15f;
+    private float crouchSpeed = 2;
+    [SerializeField]
+    private float runSpeed = 8f;
     [SerializeField]
     private float _extraDrag = 0.3f;
     [SerializeField]
@@ -59,9 +61,6 @@ public class PlayerController: MonoBehaviour
     private Vector2 _movementInputs;
     private InputSystem inputSystem;
 
-    private float x = 0;
-    private float y = 0;
-
     private void Awake(){
         SetupControls();
     }
@@ -71,6 +70,8 @@ public class PlayerController: MonoBehaviour
         inputSystem.PlayerMovements.Movements.performed += UpdateMovementInputs;
         inputSystem.PlayerMovements.Movements.canceled += UpdateMovementInputs;
         inputSystem.PlayerMovements.Look.performed += UpdateMouseInput;
+        inputSystem.PlayerMovements.Crouch.performed += Crouch;
+        inputSystem.PlayerMovements.Crouch.canceled += Crouch;
     }
 
     private void Start()
@@ -78,10 +79,11 @@ public class PlayerController: MonoBehaviour
         _movingSpeed = jogSpeed;
         Cursor.lockState = CursorLockMode.Locked;
         SetupCam();
-        _audio = this.GetComponent<AudioSource>();
         SetupCollider();
         RbSetup();
         SetupControls();
+        _audio = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audio.clip = movingSound;
     }
 
     private void UpdateMovementInputs(InputAction.CallbackContext c){
@@ -90,15 +92,13 @@ public class PlayerController: MonoBehaviour
 
     private void Update()
     {
-        //if(_rbPlayer.velocity.magnitude >= 2 && !_audio.isPlaying) PlayWalkingSound();
+        if(_rbPlayer.velocity.magnitude >= 2 && !_audio.isPlaying) PlayWalkingSound();
         UpdateMovement();
-        _movement *= Time.deltaTime * 10f;
     }
 
     private void FixedUpdate()
     {
         UpdateGroundSensors();
-        MouseLook();
         UpdatePlayerPosition();
     }
     
@@ -109,23 +109,22 @@ public class PlayerController: MonoBehaviour
         _extraPhisicsVec *= _extraDrag;
         _movement += _extraPhisicsVec;
         _rbPlayer.velocity = _movement;
+        _movement.x -= _movement.x;
+        _movement.z -= _movement.z;
     }
 
     private void UpdateMouseInput(InputAction.CallbackContext c)
     {
         Vector2 vec = c.ReadValue<Vector2>();
-        x += vec.x * mSensX * Time.deltaTime;
-        y += vec.y * mSensY * -1 * Time.deltaTime;
-        _mouseMovement.x += vec.x * mSensX * Time.deltaTime;
-        _mouseMovement.y += vec.y * mSensY * -1 * Time.deltaTime;
+        _mouseMovement.x += vec.x * mSensX * 0.01f;
+        _mouseMovement.y += vec.y * mSensY * -1 * 0.01f;
+        MouseLook();
     }
 
     private void MouseLook()
     {
-        _rbPlayer.MoveRotation(Quaternion.Euler(0f, this.transform.rotation.eulerAngles.y + x, 0f));
-        _camPlayer.transform.localRotation = Quaternion.Euler(_camPlayer.transform.localRotation.eulerAngles.x + y, 0f, 0f);
-        x = 0;
-        y = 0;
+        _rbPlayer.MoveRotation(Quaternion.Euler(0f, this.transform.rotation.eulerAngles.y + _mouseMovement.x, 0f));
+        _camPlayer.transform.localRotation = Quaternion.Euler(_camPlayer.transform.localRotation.eulerAngles.x + _mouseMovement.y, 0f, 0f);
         _mouseMovement.x = 0;
         _mouseMovement.y = 0;
     }
@@ -154,9 +153,15 @@ public class PlayerController: MonoBehaviour
         Destroy(bullet, 1f);
     }
 
-    private void CtrlKey()
+    private void Crouch(InputAction.CallbackContext c)
     {
-        //TODO crouch less sound smaller less visible
+        if(c.canceled){
+            this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y * 1.5f, this.transform.localScale.z);
+            _movingSpeed = jogSpeed;
+            return;
+        }
+        _movingSpeed = crouchSpeed;
+        this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y / 1.5f, this.transform.localScale.z);
     }
 
     public void Kill()
@@ -195,7 +200,7 @@ public class PlayerController: MonoBehaviour
             _movingSpeed = jogSpeed;
         }
         */
-        _movingSpeed = jogSpeed;
+        //_movingSpeed = jogSpeed;
         _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad;
         if(direction < 0) _movingDirection += Mathf.PI;
         _movement.z += Mathf.Cos(_movingDirection) * _movingSpeed;
