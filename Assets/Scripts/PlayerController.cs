@@ -11,15 +11,15 @@ using Random = UnityEngine.Random;
 public class PlayerController: MonoBehaviour
 {
     [SerializeField]
-    private float mSensX = 5f;
+    private float mSensX = 10f;
     [SerializeField]
-    private float mSensY = 5f;
+    private float mSensY = 10f;
     [SerializeField]
     private float _jumpSensorLength = 0.1f;
     [SerializeField]
     private float jumpForce = 4;
     [SerializeField]
-    private float jogSpeed = 5;
+    private float jogSpeed = 50;
     [SerializeField]
     private float crouchSpeed = 2;
     [SerializeField]

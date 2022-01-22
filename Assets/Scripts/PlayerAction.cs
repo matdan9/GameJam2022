@@ -9,7 +9,6 @@ public class PlayerAction: MonoBehaviour
     //Variables pour le nouveau input system
     private InputSystem inputActions;
 
-    [SerializeField]private Vector2 input;
     private bool canInteract = false;
 
     private GameObject item;
@@ -24,19 +23,9 @@ public class PlayerAction: MonoBehaviour
         //Go get the new input system
         inputActions = new InputSystem();
 
-        //Can reach the inputs for movements
-        inputActions.PlayerMovements.Movements.performed += MovementsCharacter;
-        //Put the inputs for movements values back to zero
-        inputActions.PlayerMovements.Movements.canceled += MovementsCharacter;
-
-
         inputActions.PlayerActions.Pickup.performed += PickUp;
         
-      
-
         inputActions.PlayerActions.Interact.performed += Interact;  
-        
-    
         
     }
 
@@ -51,6 +40,9 @@ public class PlayerAction: MonoBehaviour
         
     }
     
+    void Update(){
+        
+    }
     
 
     private void OnTriggerEnter(Collider collision)
@@ -66,7 +58,6 @@ public class PlayerAction: MonoBehaviour
             canInteract = true;
             item = collision.transform.gameObject;
             interactText.SetActive(true);
-            Debug.Log("Text campfire active");
         }
     }
 
@@ -79,14 +70,6 @@ public class PlayerAction: MonoBehaviour
             pickupText.SetActive(false);
             interactText.SetActive(false);
         }
-    }
-
-
-
-    //------- this fonction detect if the WASD boutons are pressed -------//
-    private void MovementsCharacter(InputAction.CallbackContext context)
-    {
-        input = context.ReadValue<Vector2>();
     }
 
 
@@ -115,7 +98,8 @@ public class PlayerAction: MonoBehaviour
         if(canInteract && item.transform.tag == "Campfire")
         {
             interactText.SetActive(false);
-            Debug.Log("Light up campfire");
+            GetComponent<LightMecanic>().RestartTorch();
+            
         }  
     }
 
