@@ -50,40 +50,8 @@ public class PlayerAction: MonoBehaviour
         interactText.SetActive(false);
         
     }
-
-    //------- this fonction detect if the WASD boutons are pressed -------//
-    private void MovementsCharacter(InputAction.CallbackContext context)
-    {
-        input = context.ReadValue<Vector2>();
-    }
-
-    //------- this fonction detect if the pickup(E) bouton is pressed -------//
-     private void PickUp(InputAction.CallbackContext context)
-    {   
-        if(canInteract && item.transform.tag == "Bullet"){
-            Destroy(item);
-            item = null;
-            bulletCounter ++;  
-            pickupText.SetActive(false);
-
-        }
-        else if(canInteract && item.transform.tag == "Shotgun" )
-        {
-            Destroy(item);
-            item = null;
-        }
-    }
     
-    private void Interact(InputAction.CallbackContext context)
-    {
-        if(canInteract && item.transform.tag == "Campfire")
-        {
-            interactText.SetActive(false);
-            Debug.Log("Light up campfire");
-        }
     
-        
-    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -102,6 +70,8 @@ public class PlayerAction: MonoBehaviour
         }
     }
 
+
+
     void OnTriggerExit(Collider collision)
     {
         if(collision.transform.tag == "Campfire" || collision.transform.tag == "Bullet" || collision.transform.tag == "Shotgun"){
@@ -113,6 +83,41 @@ public class PlayerAction: MonoBehaviour
 
 
 
+    //------- this fonction detect if the WASD boutons are pressed -------//
+    private void MovementsCharacter(InputAction.CallbackContext context)
+    {
+        input = context.ReadValue<Vector2>();
+    }
+
+
+
+    //------- this fonction detect if the pickup(E) bouton is pressed -------//
+     private void PickUp(InputAction.CallbackContext context)
+    {   
+        if(canInteract && item.transform.tag == "Bullet"){
+            Destroy(item);
+            item = null;
+            bulletCounter ++;  
+            pickupText.SetActive(false);
+
+        }
+        else if(canInteract && item.transform.tag == "Shotgun" )
+        {
+            Destroy(item);
+            item = null;
+        }
+    }
+    
+
+
+    private void Interact(InputAction.CallbackContext context)
+    {
+        if(canInteract && item.transform.tag == "Campfire")
+        {
+            interactText.SetActive(false);
+            Debug.Log("Light up campfire");
+        }  
+    }
 
 
 
