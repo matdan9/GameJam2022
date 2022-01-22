@@ -86,12 +86,15 @@ public class PlayerAction: MonoBehaviour
             item = null;
             bulletCounter ++;  
             pickupText.SetActive(false);
+            canInteract = false;
 
         }
         else if(canInteract && item.transform.tag == "Shotgun" )
         {
             Destroy(item);
             item = null;
+            pickupText.SetActive(false);
+            canInteract = false;
         }
     }
     

@@ -36,9 +36,13 @@ public class LightMecanic : MonoBehaviour
         RaycastHit hit;
         Debug.DrawRay (transform.position, rotation * direction,Color.green);
         
+        
         if(Physics.Raycast(transform.position, rotation * direction, out hit, 5f, layer)){
-            Debug.Log(hit.transform.name);
-            //Ennemi scream !!!
+            
+            if(hit.transform.tag == "Enemy" || hit.transform.tag == "ScreamerFix") {
+                hit.transform.gameObject.GetComponent<Screamer>().EnnemyScream();
+            }
+            
         }
     }
 

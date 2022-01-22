@@ -16,6 +16,8 @@ public class Screamer : MonoBehaviour
 
     private LayerMask ground;
 
+    private bool isScreaming = false;
+
     public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask) {
             Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
            
@@ -41,16 +43,22 @@ public class Screamer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.tag != "ScreamerFix")EnnemiPatroling();
+        if(transform.tag != "ScreamerFix")EnnemyPatroling();
     }
 
 
-    private void EnnemiPatroling(){
+    private void EnnemyPatroling(){
 
-        if(!isWalkPointSet){
+        if(!isWalkPointSet && !isScreaming){
             SearchWalkingPoint();
-        }else{
+        }
+        else if(isWalkPointSet && !isScreaming)
+        {
             agent.SetDestination(walkPoint);
+        }
+        else if(!isWalkPointSet && isScreaming || isWalkPointSet && isScreaming)
+        {
+            agent.SetDestination(agent.transform.position);
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -71,7 +79,23 @@ public class Screamer : MonoBehaviour
         if(Physics.Raycast(walkPoint, -transform.up, 3f, ground)){
             isWalkPointSet = true;
         }
-
-        
     }
+
+    public void EnnemyScream(){
+        isScreaming = true;
+        transform.tag = "EnemyTouched";
+
+        Debug.Log("Anim scream !");
+        Debug.Log("Scream sound !");
+
+        Invoke("EnnemyCalmDown", 3f);
+    }
+
+    private void EnnemyCalmDown(){
+         Debug.Log("Ennemy is calm !!!");
+         isScreaming = false;
+         transform.tag = "Enemy";
+    }
+
+
 }
