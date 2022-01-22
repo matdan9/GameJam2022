@@ -147,7 +147,7 @@ public class PlayerController: MonoBehaviour
         long currentTime = GetCurrentTime();
         if (_nextShot > currentTime) return;
         _nextShot = currentTime + _weaponCoolDown;
-        GameObject bullet = Instantiate(_bullet, pos + Vector3.down * 0.1f, rot);
+        GameObject bullet = Instantiate(_bullet, pos, rot);
         //RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
         Destroy(bullet, 10f);
     }
