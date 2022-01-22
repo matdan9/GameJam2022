@@ -17,6 +17,7 @@ public class PlayerAction: MonoBehaviour
     private int bulletCounter = 0;
 
     private GameObject pickupText;
+    private GameObject interactText;
     
     private void Awake()
     {
@@ -39,20 +40,14 @@ public class PlayerAction: MonoBehaviour
         
     }
 
-    private void Interact(InputAction.CallbackContext context)
-    {
-        if(canInteract && item.transform.tag == "Campfire")
-        {
-            Debug.Log("Light up campfire");
-        }
     
-        
-    }
 
     void Start(){
 
         pickupText = GameObject.Find("pickupText");
+        interactText = GameObject.Find("interactText");
         pickupText.SetActive(false);
+        interactText.SetActive(false);
         
     }
 
@@ -78,6 +73,17 @@ public class PlayerAction: MonoBehaviour
             item = null;
         }
     }
+    
+    private void Interact(InputAction.CallbackContext context)
+    {
+        if(canInteract && item.transform.tag == "Campfire")
+        {
+            interactText.SetActive(false);
+            Debug.Log("Light up campfire");
+        }
+    
+        
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -91,6 +97,7 @@ public class PlayerAction: MonoBehaviour
         {
             canInteract = true;
             item = collision.transform.gameObject;
+            interactText.SetActive(true);
             Debug.Log("Text campfire active");
         }
     }
@@ -100,6 +107,7 @@ public class PlayerAction: MonoBehaviour
         if(collision.transform.tag == "Campfire" || collision.transform.tag == "Bullet" || collision.transform.tag == "Shotgun"){
             canInteract = false;
             pickupText.SetActive(false);
+            interactText.SetActive(false);
         }
     }
 
