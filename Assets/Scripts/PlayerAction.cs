@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerAction: MonoBehaviour
 {
@@ -14,7 +15,9 @@ public class PlayerAction: MonoBehaviour
     private GameObject item;
 
     private int bulletCounter = 0;
+    private int maxBulletCount = 10;
 
+    private GameObject bulletText;
     private GameObject pickupText;
     private GameObject interactText;
     
@@ -32,16 +35,17 @@ public class PlayerAction: MonoBehaviour
     
 
     void Start(){
-
+        bulletText = GameObject.Find("bulletText");
         pickupText = GameObject.Find("pickupText");
         interactText = GameObject.Find("interactText");
+
         pickupText.SetActive(false);
         interactText.SetActive(false);
         
     }
     
     void Update(){
-        
+        bulletText.GetComponent<Text>().text = bulletCounter.ToString() + "/" + maxBulletCount.ToString();
     }
     
 

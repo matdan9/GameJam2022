@@ -1107,7 +1107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &305392459
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1123,6 +1123,7 @@ RectTransform:
   - {fileID: 460102776}
   - {fileID: 299193754}
   - {fileID: 1235914568}
+  - {fileID: 773466637}
   m_Father: {fileID: 9164302104838073538}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1148,6 +1149,22 @@ MonoBehaviour:
   resume: {fileID: 460102775}
   settings: {fileID: 299193753}
   menu: {fileID: 1235914567}
+  FOV: {fileID: 1080243165}
+  sensitivityX: {fileID: 884414402}
+  sensitivityY: {fileID: 1096163158}
+  mainVolume: {fileID: 466490822}
+  musicVolume: {fileID: 257924958}
+  sfxVolume: {fileID: 886664127}
+  inverseX: {fileID: 1337784291}
+  inverseY: {fileID: 944046165}
+  FOVText: {fileID: 918588584}
+  sensitivityXText: {fileID: 18496215}
+  sensitivityYText: {fileID: 966227320}
+  mainVolumeText: {fileID: 954972339}
+  musicVolumeText: {fileID: 1596896793}
+  sfxVolumeText: {fileID: 1613713934}
+  cam: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &325192975
 GameObject:
   m_ObjectHideFlags: 0
@@ -2365,7 +2382,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 773466637}
-  - component: {fileID: 773466638}
   m_Layer: 0
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -2380,7 +2396,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773466636}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2396,41 +2412,14 @@ RectTransform:
   - {fileID: 466490821}
   - {fileID: 257924957}
   - {fileID: 886664126}
-  m_Father: {fileID: 9164302104838073538}
-  m_RootOrder: 2
+  m_Father: {fileID: 305392459}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &773466638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773466636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a6dcadf35a79db42abdfe4eebfb2382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FOV: {fileID: 1080243165}
-  sensitivityX: {fileID: 884414402}
-  sensitivityY: {fileID: 1096163158}
-  mainVolume: {fileID: 466490822}
-  musicVolume: {fileID: 257924958}
-  sfxVolume: {fileID: 886664127}
-  inverseX: {fileID: 1337784291}
-  inverseY: {fileID: 944046165}
-  FOVText: {fileID: 918588584}
-  sensitivityXText: {fileID: 18496215}
-  sensitivityYText: {fileID: 966227320}
-  mainVolumeText: {fileID: 954972339}
-  musicVolumeText: {fileID: 1596896793}
-  sfxVolumeText: {fileID: 1613713934}
-  cam: {fileID: 0}
 --- !u!1 &853328213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,10 +2657,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1234639111}
   m_HandleRect: {fileID: 1191053127}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.01
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3013,7 +3002,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &954972337
 GameObject:
   m_ObjectHideFlags: 0
@@ -3478,7 +3467,7 @@ MonoBehaviour:
   m_MinValue: 60
   m_MaxValue: 120
   m_WholeNumbers: 1
-  m_Value: 60
+  m_Value: 90
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3644,10 +3633,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 325192976}
   m_HandleRect: {fileID: 854435881}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.01
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4417,7 +4406,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &1346007841
 GameObject:
   m_ObjectHideFlags: 0
@@ -6122,6 +6111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frostOverlay: {fileID: 9164302104267598360}
   multiplier: 1
+  frostValue: 0
+  cold: 0
 --- !u!1 &9164302104613295430
 GameObject:
   m_ObjectHideFlags: 0
@@ -6229,7 +6220,6 @@ RectTransform:
   m_Children:
   - {fileID: 9164302104267598361}
   - {fileID: 305392459}
-  - {fileID: 773466637}
   m_Father: {fileID: 9164302105010110002}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

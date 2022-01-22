@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class Frost : MonoBehaviour
 {
     public GameObject frostOverlay;
+    [SerializeField]
     public float multiplier;
+    [SerializeField]
     float frostValue;
+    [SerializeField]
     bool cold = false;
 
     public void Start()
