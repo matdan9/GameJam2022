@@ -15,10 +15,9 @@ public class GameMenu : MonoBehaviour
         menu.GetComponent<Button>().onClick.AddListener(MenuButton);
     }
 
-    //options.GetButton().onClick.AddListener(/*Function name*/);
-
     void ResumeButton()
     {
+        Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Locked;
         gameMenu.SetActive(false);
     }
@@ -26,8 +25,6 @@ public class GameMenu : MonoBehaviour
     void SettingsButton()
     {
         settingsMenu.SetActive(true);
-        gameMenu.SetActive(false);
-        Debug.Log("SETTINGS HAS BEEN PRESSED");
     }
 
     void MenuButton()
