@@ -53,6 +53,15 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""08a935cd-0616-433a-820a-e76210540c95"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35e5854c-27bd-493a-bfc1-7a7194fae593"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -171,6 +191,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
         m_PlayerMovements_Movements = m_PlayerMovements.FindAction("Movements", throwIfNotFound: true);
         m_PlayerMovements_Jump = m_PlayerMovements.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMovements_Look = m_PlayerMovements.FindAction("Look", throwIfNotFound: true);
+        m_PlayerMovements_Crouch = m_PlayerMovements.FindAction("Crouch", throwIfNotFound: true);
         // PlayerActions
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Pickup = m_PlayerActions.FindAction("Pickup", throwIfNotFound: true);
@@ -236,6 +257,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovements_Movements;
     private readonly InputAction m_PlayerMovements_Jump;
     private readonly InputAction m_PlayerMovements_Look;
+    private readonly InputAction m_PlayerMovements_Crouch;
     public struct PlayerMovementsActions
     {
         private @InputSystem m_Wrapper;
@@ -243,6 +265,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
         public InputAction @Movements => m_Wrapper.m_PlayerMovements_Movements;
         public InputAction @Jump => m_Wrapper.m_PlayerMovements_Jump;
         public InputAction @Look => m_Wrapper.m_PlayerMovements_Look;
+        public InputAction @Crouch => m_Wrapper.m_PlayerMovements_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovements; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -261,6 +284,9 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_PlayerMovementsActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerMovementsActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerMovementsActionsCallbackInterface.OnLook;
+                @Crouch.started -= m_Wrapper.m_PlayerMovementsActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_PlayerMovementsActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_PlayerMovementsActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_PlayerMovementsActionsCallbackInterface = instance;
             if (instance != null)
@@ -274,6 +300,9 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -316,6 +345,7 @@ public partial class @InputSystem : IInputActionCollection2, IDisposable
         void OnMovements(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
     public interface IPlayerActionsActions
     {

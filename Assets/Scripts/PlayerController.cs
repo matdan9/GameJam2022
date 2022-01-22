@@ -19,9 +19,11 @@ public class PlayerController: MonoBehaviour
     [SerializeField]
     private float jumpForce = 4;
     [SerializeField]
-    private float jogSpeed = 10;
+    private float jogSpeed = 5;
     [SerializeField]
-    private float runSpeed = 15f;
+    private float crouchSpeed = 2;
+    [SerializeField]
+    private float runSpeed = 8f;
     [SerializeField]
     private float _extraDrag = 0.3f;
     [SerializeField]
@@ -68,6 +70,8 @@ public class PlayerController: MonoBehaviour
         inputSystem.PlayerMovements.Movements.performed += UpdateMovementInputs;
         inputSystem.PlayerMovements.Movements.canceled += UpdateMovementInputs;
         inputSystem.PlayerMovements.Look.performed += UpdateMouseInput;
+        inputSystem.PlayerMovements.Crouch.performed += Crouch;
+        inputSystem.PlayerMovements.Crouch.canceled += Crouch;
     }
 
     private void Start()
@@ -149,9 +153,15 @@ public class PlayerController: MonoBehaviour
         Destroy(bullet, 1f);
     }
 
-    private void CtrlKey()
+    private void Crouch(InputAction.CallbackContext c)
     {
-        //TODO crouch less sound smaller less visible
+        if(c.canceled){
+            this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y * 1.5f, this.transform.localScale.z);
+            _movingSpeed = jogSpeed;
+            return;
+        }
+        _movingSpeed = crouchSpeed;
+        this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y / 1.5f, this.transform.localScale.z);
     }
 
     public void Kill()
@@ -190,7 +200,7 @@ public class PlayerController: MonoBehaviour
             _movingSpeed = jogSpeed;
         }
         */
-        _movingSpeed = jogSpeed;
+        //_movingSpeed = jogSpeed;
         _movingDirection = transform.eulerAngles.y * Mathf.Deg2Rad;
         if(direction < 0) _movingDirection += Mathf.PI;
         _movement.z += Mathf.Cos(_movingDirection) * _movingSpeed;
