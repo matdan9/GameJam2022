@@ -231,7 +231,7 @@ public class PlayerController: MonoBehaviour
         _rbPlayer.freezeRotation = true;
         _rbPlayer.interpolation = RigidbodyInterpolation.Interpolate;
         _rbPlayer.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        _rbPlayer.mass = 1f;
+        _rbPlayer.mass = 3f;
     }
 
     private void UpdateGroundSensors()
