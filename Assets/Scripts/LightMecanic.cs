@@ -37,8 +37,7 @@ public class LightMecanic : MonoBehaviour
         Debug.DrawRay (transform.position, rotation * direction,Color.green);
         
         if(Physics.Raycast(transform.position, rotation * direction, out hit, 5f, layer)){
-            Debug.Log(hit.transform.name);
-            //Ennemi scream !!!
+            Debug.Log("Ennemy scream !!!");
         }
     }
 
