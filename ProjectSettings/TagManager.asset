@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Shotgun
   - Ennemi
+  - Torch
   layers:
   - Default
   - TransparentFX
