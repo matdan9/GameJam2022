@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -72,7 +70,7 @@ public class Screamer : MonoBehaviour
 
     private void SearchWalkingPoint(){
 
-        Vector3 randomPosition = RandomNavSphere(agent.transform.position, 20f, -1);
+        Vector3 randomPosition = RandomNavSphere(agent.transform.position, 20f, 9);
 
         walkPoint = randomPosition;
 
