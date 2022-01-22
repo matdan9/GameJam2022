@@ -83,7 +83,8 @@ public class Screamer : MonoBehaviour
 
     public void EnnemyScream(){
         isScreaming = true;
-        
+        transform.tag = "EnemyTouched";
+
         Debug.Log("Anim scream !");
         Debug.Log("Scream sound !");
 
@@ -93,6 +94,7 @@ public class Screamer : MonoBehaviour
     private void EnnemyCalmDown(){
          Debug.Log("Ennemy is calm !!!");
          isScreaming = false;
+         transform.tag = "Enemy";
     }
 
 
