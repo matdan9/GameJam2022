@@ -9,7 +9,7 @@ public class PlayerAction: MonoBehaviour
     //Variables pour le nouveau input system
     private InputSystem inputActions;
 
-    private Vector2 input;
+    [SerializeField]private Vector2 input;
     private bool canInteract = false;
 
     private GameObject item;
@@ -28,7 +28,24 @@ public class PlayerAction: MonoBehaviour
         //Put the inputs for movements values back to zero
         inputActions.PlayerMovements.Movements.canceled += MovementsCharacter;
 
-        inputActions.PlayerActions.Pickup.performed += Interact;
+
+        inputActions.PlayerActions.Pickup.performed += PickUp;
+        
+      
+
+        inputActions.PlayerActions.Interact.performed += Interact;  
+        
+    
+        
+    }
+
+    private void Interact(InputAction.CallbackContext context)
+    {
+        if(canInteract && item.transform.tag == "Campfire")
+        {
+            Debug.Log("Light up campfire");
+        }
+    
         
     }
 
@@ -46,7 +63,7 @@ public class PlayerAction: MonoBehaviour
     }
 
     //------- this fonction detect if the pickup(E) bouton is pressed -------//
-     private void Interact(InputAction.CallbackContext context)
+     private void PickUp(InputAction.CallbackContext context)
     {   
         if(canInteract && item.transform.tag == "Bullet"){
             Destroy(item);
@@ -55,16 +72,10 @@ public class PlayerAction: MonoBehaviour
             pickupText.SetActive(false);
 
         }
-        else if(canInteract && item.transform.tag == "Campfire")
-        {
-            Debug.Log("Light up campfire");
-
-        }
         else if(canInteract && item.transform.tag == "Shotgun" )
         {
             Destroy(item);
             item = null;
-            Debug.Log("Shotgun");
         }
     }
 
@@ -78,6 +89,8 @@ public class PlayerAction: MonoBehaviour
         }
         else if(collision.transform.tag == "Campfire")
         {
+            canInteract = true;
+            item = collision.transform.gameObject;
             Debug.Log("Text campfire active");
         }
     }
