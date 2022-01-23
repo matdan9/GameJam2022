@@ -66,6 +66,7 @@ public class PlayerController: MonoBehaviour
     private InputSystem inputSystem;
     private SoundEmitter soundEmitter;
     private float totalSound;
+    private bool enableMouseLook = true;
 
     private void Awake(){
         SetupControls();
@@ -140,6 +141,7 @@ public class PlayerController: MonoBehaviour
 
     private void MouseLook()
     {
+        if(!enableMouseLook) return;
         _rbPlayer.MoveRotation(Quaternion.Euler(0f, this.transform.rotation.eulerAngles.y + _mouseMovement.x, 0f));
         _camPlayer.transform.localRotation = Quaternion.Euler(_camPlayer.transform.localRotation.eulerAngles.x + _mouseMovement.y, 0f, 0f);
         _mouseMovement.x = 0;
@@ -251,6 +253,10 @@ public class PlayerController: MonoBehaviour
         Vector3 pos = this.transform.position;
         pos.y -= _collider.bounds.size.y / 2.1f;
         _touchedGround = Physics.Raycast(pos, Vector3.down, out _jumpRay, _jumpSensorLength);
+    }
+
+    public void EnableMouseLook(bool b){
+        enableMouseLook = b;
     }
 
     public void SetSens(float sens)
