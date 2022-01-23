@@ -1487,6 +1487,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7951177269542849288}
   - component: {fileID: 7625430777362017505}
+  - component: {fileID: 346853820448635110}
+  - component: {fileID: 3261159373934281910}
+  - component: {fileID: 5145338312039335033}
   m_Layer: 0
   m_Name: bigBoy
   m_TagString: Untagged
@@ -1531,6 +1534,56 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!54 &346853820448635110
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283324683031892402}
+  serializedVersion: 2
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!195 &3261159373934281910
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283324683031892402}
+  m_Enabled: 1
+  m_AgentTypeID: -334000983
+  m_Radius: 4.24
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 7.65
+  m_BaseOffset: 1.62
+  m_WalkableMask: 8
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &5145338312039335033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283324683031892402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35507ea163b597ed6bac1027759c16b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7286898631301509730
 GameObject:
   m_ObjectHideFlags: 0
