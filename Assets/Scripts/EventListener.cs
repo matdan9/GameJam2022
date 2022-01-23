@@ -13,6 +13,10 @@ public class EventListener : MonoBehaviour
         gameMenu = GameObject.Find("GameMenu");
         settingsMenu = GameObject.Find("SettingsMenu");
         slots = GameObject.Find("Slots");
+    }
+
+    void Start()
+    {
         settingsMenu.SetActive(false);
         gameMenu.SetActive(false);
     }
