@@ -15,7 +15,7 @@ public class LightMecanic : MonoBehaviour
 
 
     void Start(){
-        Torch = GameObject.FindGameObjectWithTag("Torch");
+        Torch = GameObject.Find("Torch");
         
     }
 
