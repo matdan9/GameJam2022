@@ -194,7 +194,7 @@ Shader "Custom/Grass Geometry Shader 3" {
  
                 // every segment adds 2 new triangles
                 triStream.Append(GrassVertex(newPos, segmentWidth, segmentHeight, offset, segmentForward, float2(0, t), transformMatrix, faceNormal, color, worldPos));
-                triStream.Append(GrassVertex(newPos, -segmentWidth, segmentHeight, offset, segmentForward, float2(1, t), transformMatrix, faceNormal, color, worldPos));
+                triStream.Append(GrassVertex(newPos, -segmentWidth, segmentHeight, offset, segmentForward, float2(0, t), transformMatrix, faceNormal, color, worldPos));
  
  
  
@@ -275,7 +275,8 @@ Shader "Custom/Grass Geometry Shader 3" {
             {
                     UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
  
-                    float3 pointlights = atten * _LightColor0.rgb;
+                    // float3 pointlights = atten * _LightColor0.rgb;
+                    float3 pointlights;
  
                     return float4(pointlights, 1);
                 }
