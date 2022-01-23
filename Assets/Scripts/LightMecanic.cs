@@ -6,17 +6,20 @@ public class LightMecanic : MonoBehaviour
 {
 
     public float torchValue = 7f;
-    private float torchDurationSpeed = 0.0009f;
+    private float torchDurationSpeed = 0.001f;
     private float lightIntensity;
     
     public bool isTorchAlight = false;
-    private GameObject Torch;
+    [SerializeField]
+    private GameObject Torch, torchFlame, torchFireParticle, torchSmoke;
 
 
 
     void Start(){
         Torch = GameObject.Find("Torch");
-        
+        torchFlame = GameObject.Find("TorchFlame");
+        torchFireParticle = GameObject.Find("TorchFireParticle");
+        torchSmoke = GameObject.Find("TorchSmoke");
     }
 
     // Update is called once per frame
@@ -24,7 +27,8 @@ public class LightMecanic : MonoBehaviour
     {
         torchValue = Mathf.Clamp(torchValue, 0f, 7f);
         LightDetection();
-        BurningTorch();  
+        BurningTorch();
+        torchFlame.transform.localScale = flameScale();
     }
 
     
@@ -44,7 +48,6 @@ public class LightMecanic : MonoBehaviour
             if(hit.transform.tag == "Enemy" || hit.transform.tag == "ScreamerFix") {
                 hit.transform.gameObject.GetComponent<Screamer>().EnnemyScream();
             }
-            
         }
     }
 
@@ -60,8 +63,17 @@ public class LightMecanic : MonoBehaviour
         }
     }
 
+    private Vector3 flameScale()
+    {
+        float size = ((3f * torchValue) / 7f);
+        return new Vector3(size, size, size);
+    }
+
     public void RestartTorch(){
         torchValue = 7;
+        torchFlame.GetComponent<ParticleSystem>().Play();
+        torchFireParticle.GetComponent<ParticleSystem>().Play();
+        torchSmoke.GetComponent<ParticleSystem>().Play();
     }
 
 
