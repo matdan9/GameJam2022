@@ -10,17 +10,17 @@ ModelImporter:
       74: -5713081264567881343
     second: gulosus-die
   - first:
-      74: -8124251267293949457
-    second: gulosus-kill
-  - first:
       74: -6918149454150392574
     second: gulosus-run
+  - first:
+      74: -6846759267407896347
+    second: gulosus-takeDamage
   - first:
       74: 2191183881590218732
     second: gulosus-walk
   - first:
-      74: -6846759267407896347
-    second: gulosus-takeDamage
+      74: -8124251267293949457
+    second: gulosus-kill
   - first:
       74: 5346851509507648684
     second: gulosus.001|gulosus-die
@@ -176,18 +176,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: gulosus-kill
-      takeName: gulosus-kill
+      name: gulosus-run
+      takeName: gulosus-run
       internalID: 0
       firstFrame: 0
-      lastFrame: 75
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -205,18 +205,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: gulosus-run
-      takeName: gulosus-run
+      name: gulosus-takeDamage
+      takeName: gulosus-takeDamage
       internalID: 0
       firstFrame: 0
-      lastFrame: 19
+      lastFrame: 38
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -263,11 +263,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: gulosus-takeDamage
-      takeName: gulosus-takeDamage
+      name: gulosus-kill
+      takeName: gulosus-kill
       internalID: 0
       firstFrame: 0
-      lastFrame: 38
+      lastFrame: 75
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
