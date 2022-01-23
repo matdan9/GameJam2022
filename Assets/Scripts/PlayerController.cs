@@ -311,6 +311,6 @@ public class PlayerController: MonoBehaviour
 
     private void OnDisable()
     {
-       inputSystem.Disable();
+        inputSystem.Disable();
     }
 }

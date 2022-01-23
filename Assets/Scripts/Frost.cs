@@ -5,26 +5,56 @@ using UnityEngine.UI;
 
 public class Frost : MonoBehaviour
 {
-    public GameObject frostOverlay;
+    [SerializeField]
+    GameObject frost;
+    [SerializeField]
+    Collider sphereCollider;
+    [SerializeField]
+    bool atFirecamp;
+    [SerializeField]
     public float multiplier;
+    [SerializeField]
     float frostValue;
+    [SerializeField]
     bool cold = false;
+    LightMecanic l;
 
     public void Start()
     {
+        frost = GameObject.Find("frostOverlay");
+        sphereCollider = GameObject.Find("Player").GetComponent<SphereCollider>();
+        l = GameObject.Find("Player").GetComponent<LightMecanic>();
         SetFrost(0);
-        SetMultiplier(1);
+        SetMultiplier(3);
     }
 
     public void FixedUpdate()
     {
         frostValue = Mathf.Clamp(frostValue, 0, 255);
-        Color32 temp = frostOverlay.GetComponent<RawImage>().color;
+        Color32 temp = frost.GetComponent<RawImage>().color;
         temp.a = (byte)frostValue; //color.a is transparency
-        frostOverlay.GetComponent<RawImage>().color = temp;
+        frost.GetComponent<RawImage>().color = temp;
 
         if (cold) AddFrost(0.1f * multiplier);
         else RemoveFrost(0.1f * multiplier);
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Campfire")
+        {
+            SetCold(false);
+            atFirecamp = true;
+        }
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.tag == "Campfire")
+        {
+            if(l.torchValue <= 0) SetCold(true);
+            atFirecamp = false;
+        }
     }
 
     public void SetFrost(float alpha)
@@ -50,5 +80,10 @@ public class Frost : MonoBehaviour
     public void SetMultiplier(float value)
     {
         multiplier = value;
+    }
+
+    public bool AtFirecamp()
+    {
+        return atFirecamp;
     }
 }

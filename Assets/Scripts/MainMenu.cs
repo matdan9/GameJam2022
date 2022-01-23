@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     //Play settings credits exit
     public GameObject play, settings, credits, exit;
     public GameObject settingsMenu, creditsMenu, title;
+
+    void Awake()
+    {
+        FOV.value = PlayerPrefs.GetFloat("fov");
+        sensitivityX.value = PlayerPrefs.GetFloat("sensX");
+        sensitivityY.value = PlayerPrefs.GetFloat("sensY");
+        mainVolume.value = PlayerPrefs.GetFloat("mainVol");
+        musicVolume.value = PlayerPrefs.GetFloat("musVol");
+        sfxVolume.value = PlayerPrefs.GetFloat("sfxVol");
+    }
 
     void Start()
     {
@@ -20,7 +31,13 @@ public class MainMenu : MonoBehaviour
 
     void PlayButton()
     {
-        //SceneManager.LoadScene("SceneName");
+        PlayerPrefs.SetFloat("fov", FOV.value);
+        PlayerPrefs.SetFloat("sensX", sensitivityX.value);
+        PlayerPrefs.SetFloat("sensY", sensitivityY.value);
+        PlayerPrefs.SetFloat("mainVol", mainVolume.value);
+        PlayerPrefs.SetFloat("musVol", musicVolume.value);
+        PlayerPrefs.SetFloat("sfxVol", sfxVolume.value);
+        SceneManager.LoadScene("GameScene");
     }
 
     void SettingsButton()

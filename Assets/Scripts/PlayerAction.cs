@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerAction: MonoBehaviour
 {
@@ -14,9 +15,12 @@ public class PlayerAction: MonoBehaviour
     private GameObject item;
 
     private int bulletCounter = 0;
+    private int maxBulletCount = 10;
 
+    private GameObject bulletText;
     private GameObject pickupText;
     private GameObject interactText;
+    private GameObject shotgunSlot;
     
     private void Awake()
     {
@@ -32,16 +36,18 @@ public class PlayerAction: MonoBehaviour
     
 
     void Start(){
-
+        bulletText = GameObject.Find("bulletText");
+        shotgunSlot = GameObject.Find("GunSlot");
         pickupText = GameObject.Find("pickupText");
         interactText = GameObject.Find("interactText");
+
         pickupText.SetActive(false);
         interactText.SetActive(false);
         
     }
     
     void Update(){
-        
+        bulletText.GetComponent<Text>().text = bulletCounter.ToString() + "/" + maxBulletCount.ToString();
     }
     
 
@@ -82,12 +88,17 @@ public class PlayerAction: MonoBehaviour
             item = null;
             bulletCounter ++;  
             pickupText.SetActive(false);
+            canInteract = false;
 
         }
         else if(canInteract && item.transform.tag == "Shotgun" )
         {
             Destroy(item);
             item = null;
+            pickupText.SetActive(false);
+            canInteract = false;
+            shotgunSlot.GetComponent<RawImage>().color = new Color32(188, 195, 204, 255);
+            bulletText.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
         }
     }
     

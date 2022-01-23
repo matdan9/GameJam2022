@@ -600,6 +600,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 305392458, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 773466638, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: cam
       value: 
@@ -619,6 +623,10 @@ PrefabInstance:
     - target: {fileID: 944046165, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: m_IsOn
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1080243165, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_Value
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1096163158, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: m_Value
