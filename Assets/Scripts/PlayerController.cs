@@ -108,7 +108,6 @@ public class PlayerController: MonoBehaviour
             PlayWalkingSound();
         }
         totalSound += 5 * _rbPlayer.velocity.magnitude;
-        UpdateMovement();
         soundEmitter.AddNoise(new Sound(0.1f, totalSound, 1));
         totalSound = 0;
     }
@@ -116,6 +115,7 @@ public class PlayerController: MonoBehaviour
     private void FixedUpdate()
     {
         UpdateGroundSensors();
+        UpdateMovement();
         UpdatePlayerPosition();
     }
     
