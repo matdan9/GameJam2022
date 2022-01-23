@@ -17,6 +17,8 @@ public class Screamer : MonoBehaviour
     private int navMeshArea;
     
     public Transform patrolArea;
+    public Vector3 currentScreamPos;
+    [SerializeField]private GameObject bigBoy;
 
 
     // Start is called before the first frame update
@@ -27,6 +29,8 @@ public class Screamer : MonoBehaviour
         animScreamer = GetComponent<Animator>();
         navMeshArea = NavMesh.GetAreaFromName("IMP");
         if(patrolArea == null) patrolArea = this.transform;
+
+        bigBoy = GameObject.Find("bigBoy");
     }
 
     // Update is called once per frame
@@ -65,11 +69,22 @@ public class Screamer : MonoBehaviour
     public void EnnemyScream(){
         isScreaming = true;
         animScreamer.SetBool("alert", true);
-        if(transform.tag == "ScreamerFix"){
+
+        if(transform.tag == "ScreamerFix")
+        {
             Invoke("EnnemyFixCalmDown", 3f);
-        }else{
-            Invoke("EnnemyCalmDown", 3f);
+            currentScreamPos = transform.position;
+            bigBoy.GetComponent<BigBoy>().OnScreamerCall(currentScreamPos);
+
         }
+        else
+        {
+            Invoke("EnnemyCalmDown", 3f);
+            currentScreamPos = transform.position;
+            bigBoy.GetComponent<BigBoy>().OnScreamerCall(currentScreamPos);
+            
+        }
+
         transform.tag = "EnemyTouched";
         Debug.Log("Scream sound !");
     }

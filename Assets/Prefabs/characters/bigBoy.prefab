@@ -1587,6 +1587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
 --- !u!136 &799898072902355443
+  walkPoint: {x: 0, y: 0, z: 0}
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1594,12 +1595,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7283324683031892402}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 3.09
-  m_Height: 8.43
+  m_Radius: 4.598545
+  m_Height: 15.733345
   m_Direction: 1
-  m_Center: {x: 0, y: 2.4, z: 0}
+  m_Center: {x: 0, y: 1.1776352, z: 3.8242912}
 --- !u!1 &7286898631301509730
 GameObject:
   m_ObjectHideFlags: 0
