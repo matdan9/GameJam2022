@@ -13,6 +13,7 @@ public class BigBoy : MonoBehaviour
     private LayerMask ground;
     private bool isRaging = false;
     private Animator animBigBoy;
+    private bool isPlayerDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +28,14 @@ public class BigBoy : MonoBehaviour
     void Update()
     {
         EnnemyPatroling();
+
         if(isRaging){
           OnRageMode();  
         }else{
             animBigBoy.SetBool("run", false);
         }
+
+        if(isPlayerDead) agent.speed = 0;
     }
 
 
@@ -91,8 +95,11 @@ public class BigBoy : MonoBehaviour
             walkPoint = transform.position;
             isRaging = false;
             animBigBoy.SetTrigger("kill"); 
-            agent.speed = 0f;
+            isPlayerDead = true;
+
             
+            player.GetComponent<PlayerController>().EnableMouseLook(false);
+            player.GetComponent<CapsuleCollider>().enabled = false;
             player.GetComponent<PlayerController>().enabled = false;
             
         }
