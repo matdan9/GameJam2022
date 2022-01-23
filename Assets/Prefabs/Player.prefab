@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 2263078876150260602}
   - component: {fileID: 2263078876150260605}
   - component: {fileID: 2263078876150260604}
+  - component: {fileID: -8121624134543929426}
   - component: {fileID: 5586831481079781621}
   - component: {fileID: 3199953587737051340}
   m_Layer: 0
@@ -273,6 +274,8 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!135 &-8121624134543929426
+SphereCollider:
 --- !u!114 &5586831481079781621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,5 +395,6 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
+  m_Radius: 6.17
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

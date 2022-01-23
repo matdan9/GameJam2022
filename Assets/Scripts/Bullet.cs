@@ -11,7 +11,6 @@ public class Bullet : MonoBehaviour
     private Vector3 movement;
     private Rigidbody rb;
 
-    // Start is called before the first frame update
     private void Start()
     {
         collider = GetComponent<MeshCollider>();
@@ -21,10 +20,8 @@ public class Bullet : MonoBehaviour
         rb.isKinematic = true;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         movement = new Vector3(speed, 0, 0);
-        
     }
 
-    // Update is called once per frame
     private void Update()
     {
         this.transform.position += this.transform.forward * speed * Time.deltaTime;
