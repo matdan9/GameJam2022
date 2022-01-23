@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
+    [SerializeField]
     GameObject player, gameMenu, settingsMenu, resume, settings, menu;
+    [SerializeField]
     Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
     Toggle inverseX, inverseY;
     Text fovText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
