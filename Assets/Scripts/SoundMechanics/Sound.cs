@@ -12,7 +12,7 @@ public class Sound
     public Sound(float duration, float intencity, float fade){
         this.fade = fade;
         this.intencity = intencity;
-        this.endingTime = (double)(Time.time * 1000f) + duration;
+        this.endingTime = (double)(Time.time * 1000f) + duration * 1000;
         this.lastTime = (double)(Time.time * 1000f);
     }
 
@@ -23,7 +23,7 @@ public class Sound
     public bool UpdateStatus(){
         double currentTime = (double)(Time.time * 1000f);
         if(currentTime >= endingTime) return true;
-        intencity /= fade * (float) (lastTime - currentTime);
+        //intencity /= fade * (float)(lastTime - currentTime)/1000;
         lastTime = currentTime;
         return false;
     }

@@ -25,7 +25,11 @@ public class SoundEmitter : MonoBehaviour
         return totalNoise + permanentNoise;
     }
 
-    public void addPermanentNoise(float noise){
+    public void AddNoise(Sound d){
+        sounds.Add(d);
+    }
+
+    public void AddPermanentNoise(float noise){
         this.permanentNoise += noise;
     }
 
@@ -35,8 +39,12 @@ public class SoundEmitter : MonoBehaviour
     }
 
     private void SetCollider(){
-        if(useExistingCollider) SetExistingCollider();
-        else CreateCollider();
+        if(useExistingCollider){
+            SetExistingCollider();
+        }
+        else{
+            CreateCollider();
+        }
         triggerZone.isTrigger = true;
     }
 
@@ -50,7 +58,7 @@ public class SoundEmitter : MonoBehaviour
         this.triggerRange = triggerZone.radius;
     }
 
-    private void OnTriggerEnter(Collider other){
+    private void OnTriggerStay(Collider other){
         if(other.tag == "Enemy"){
             float dist = Vector3.Distance(transform.position, other.transform.position);
             other.gameObject.GetComponent<SoundSeeker>().OnSoundTrigger(gameObject, dist, GetNoiseLevel());
