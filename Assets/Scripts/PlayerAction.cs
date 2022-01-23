@@ -21,25 +21,26 @@ public class PlayerAction: MonoBehaviour
     private GameObject pickupText;
     private GameObject interactText;
     private GameObject shotgunSlot;
+    private GameObject shotgun;
     
     private void Awake()
     {
         //Go get the new input system
         inputActions = new InputSystem();
-
         inputActions.PlayerActions.Pickup.performed += PickUp;
-        
-        inputActions.PlayerActions.Interact.performed += Interact;  
-        
+        inputActions.PlayerActions.Interact.performed += Interact;
+
+        bulletText = GameObject.Find("bulletText");
+        shotgunSlot = GameObject.Find("GunSlot");
+        pickupText = GameObject.Find("pickupText");
+        interactText = GameObject.Find("interactText");
+        shotgun = GameObject.Find("HeldShotgun");
     }
 
     
 
     void Start(){
-        bulletText = GameObject.Find("bulletText");
-        shotgunSlot = GameObject.Find("GunSlot");
-        pickupText = GameObject.Find("pickupText");
-        interactText = GameObject.Find("interactText");
+
 
         pickupText.SetActive(false);
         interactText.SetActive(false);
@@ -99,6 +100,7 @@ public class PlayerAction: MonoBehaviour
             canInteract = false;
             shotgunSlot.GetComponent<RawImage>().color = new Color32(188, 195, 204, 255);
             bulletText.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
+            shotgun.SetActive(true);
         }
     }
     
