@@ -85,15 +85,16 @@ public class BigBoy : MonoBehaviour
             GameObject rightHand = GameObject.Find("forearm.R.002_end");
 
             cam.transform.SetParent(rightHand.transform); 
-            cam.transform.localPosition = new Vector3(0.000179f, -0.000542f, 0.001018f);
-            cam.transform.localEulerAngles = new Vector3(18, -1.3f, 30);
+            cam.transform.localPosition = new Vector3(0.000152f, 0.000369f, -0.00019f);
+            cam.transform.localEulerAngles = new Vector3(26f, 0, 0);
 
             walkPoint = transform.position;
             isRaging = false;
             animBigBoy.SetTrigger("kill"); 
             agent.speed = 0f;
             
-            Destroy(player);
+            player.GetComponent<PlayerController>().enabled = false;
+            
         }
     }
 
