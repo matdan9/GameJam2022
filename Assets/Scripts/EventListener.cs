@@ -8,9 +8,13 @@ public class EventListener : MonoBehaviour
     [SerializeField]
     GameObject gameMenu, settingsMenu, slots;
 
-    void Start()
+    void Awake()
     {
+        gameMenu = GameObject.Find("GameMenu");
+        settingsMenu = GameObject.Find("SettingsMenu");
         slots = GameObject.Find("Slots");
+        settingsMenu.SetActive(false);
+        gameMenu.SetActive(false);
     }
 
     void Update()
