@@ -44,6 +44,7 @@ public class PlayerController: MonoBehaviour
     private AudioClip dieSound;
     [SerializeField]
     private AudioClip _jumpAudio;
+    
 
     private bool _touchedGround = false;
     private float _movingSpeed;
@@ -61,12 +62,14 @@ public class PlayerController: MonoBehaviour
     private Vector2 _mouseMovement = new Vector2();
     private Vector3 _extraPhisicsVec = new Vector3();
     private long _nextShot = 0;
-    private AudioSource _audio;
     private Vector2 _movementInputs;
     private InputSystem inputSystem;
     private SoundEmitter soundEmitter;
     private float totalSound;
     private bool enableMouseLook = true;
+    private AudioSource _audioFootstep;
+    private AudioSource _audioSFX;
+    private AudioManager audioManager;
 
     private void Awake(){
         SetupControls();
@@ -90,10 +93,11 @@ public class PlayerController: MonoBehaviour
         SetupCollider();
         RbSetup();
         SetupControls();
-        _audio = this.gameObject.AddComponent<AudioSource>() as AudioSource;
-        _audio.clip = movingSound;
+        _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioSFX = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         soundEmitter = gameObject.GetComponent<SoundEmitter>();
         soundEmitter.AddPermanentNoise(5);
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     private void UpdateMovementInputs(InputAction.CallbackContext c){
@@ -105,8 +109,14 @@ public class PlayerController: MonoBehaviour
 
     private void Update()
     {
-        if(_rbPlayer.velocity.magnitude >= 1 && !_audio.isPlaying) {
-            PlayWalkingSound();
+        if(_rbPlayer.velocity.magnitude >= 1 && !_audioFootstep.isPlaying) {
+            //PlayWalkingSound();
+            _audioFootstep.clip = audioManager.ftDirt;
+            _audioFootstep.Play();
+        }
+        else if(_rbPlayer.velocity.magnitude <= 1)
+        {
+            _audioFootstep.Pause();
         }
         totalSound += 5 * _rbPlayer.velocity.magnitude;
         soundEmitter.AddNoise(new Sound(0.1f, totalSound, 1));
@@ -164,6 +174,8 @@ public class PlayerController: MonoBehaviour
         GameObject bullet = Instantiate(_bullet, pos, rot);
         //RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
         Destroy(bullet, 10f);
+
+        _audioSFX.PlayOneShot(audioManager.shotgunFire);
     }
 
     private void Crouch(InputAction.CallbackContext c)
@@ -312,9 +324,9 @@ public class PlayerController: MonoBehaviour
 
     private void PlayWalkingSound()
     {
-        _audio.volume = Random.Range(0.5f, 8f);
+        /*_audio.volume = Random.Range(0.5f, 8f);
         _audio.pitch = Random.Range(0.7f, 1f);
-        _audio.Play();
+        _audio.Play();*/
     }
 
     private void RpcPlayGunSound(Vector3 position)

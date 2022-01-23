@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.011062279, g: 0.012213675, b: 0.014090947, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1090,6 +1090,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &744640273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 744640275}
+  - component: {fileID: 744640274}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &744640274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744640273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e901d07cf8ecac24eb775803f2452214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigboyRage: {fileID: 8300000, guid: 0d5147abfcf0641449f336be65b913b2, type: 3}
+  bigboyRun: {fileID: 8300000, guid: 254ba0fbdaa9baa45b2455f1b06d9881, type: 3}
+  bigboyVoiceIdle: {fileID: 8300000, guid: 7abcb38fde25a2b4ea9c893adcdf3499, type: 3}
+  bigboyWalk: {fileID: 8300000, guid: 8658a6385e303e245ac4618d28213044, type: 3}
+  fireIdle: {fileID: 8300000, guid: 938fe0df3367cb54c833b25a0f2aa40c, type: 3}
+  ftConcrete: {fileID: 8300000, guid: b863eff4eff31714a99ae2f1b403a6bc, type: 3}
+  ftDirt: {fileID: 8300000, guid: 7204dbc6de34d7f42bfdf505278a2096, type: 3}
+  ftSand: {fileID: 8300000, guid: 3a6df7c962b98b5428f1ba18a6393af1, type: 3}
+  heroBreathNormal: {fileID: 8300000, guid: 6d1cfbc05b9922a4c9aa3a75dec42b21, type: 3}
+  heroBreathScare: {fileID: 8300000, guid: cfe13bd3b1f003347bee2c88e0086576, type: 3}
+  heroFreezing: {fileID: 8300000, guid: f0b3c5c3d7f485048bd0c8d9640044f1, type: 3}
+  heroHeartbeat: {fileID: 8300000, guid: 12152ea802c58c745b7c3d47ec5348fb, type: 3}
+  shotgunFire: {fileID: 8300000, guid: 3c836dc239f93ad47bcf6178c75f24db, type: 3}
+  shotgunReload: {fileID: 8300000, guid: 218c6446a5f8fc8449cec2163027455c, type: 3}
+  spiderAlert: {fileID: 8300000, guid: d3ca33dba3dec4441b206623cc6add74, type: 3}
+  spiderIdle: {fileID: 8300000, guid: 94e624ebc2f8c5645ab766e1a041ae5f, type: 3}
+  spiderWalk: {fileID: 8300000, guid: 5bd858c8eb775d04ab3b056d38326805, type: 3}
+  takeBullets: {fileID: 8300000, guid: af00b66d29495f44790bcdc5dd8dbe4a, type: 3}
+  takeShotgun: {fileID: 8300000, guid: 3b7f43040bcb49946a07fed10a3c985e, type: 3}
+  torchIdle: {fileID: 8300000, guid: 152e64205e95be44da5fb8ead6e843df, type: 3}
+  torchIgnite: {fileID: 8300000, guid: a5be73879bba4234db2ffc2c2ad0edf3, type: 3}
+  envForestWind: {fileID: 8300000, guid: bf964b606445b304e8745fc69fbd6951, type: 3}
+  envBeachOcean: {fileID: 8300000, guid: ec8b2bfb94c273640bfa17e6f7bfd6f8, type: 3}
+  envBeachSeagull: {fileID: 8300000, guid: 198a54ea62c3b2144941c0f9b7973b9b, type: 3}
+  envForestBird: {fileID: 8300000, guid: fc348e77496e492418a364911583649f, type: 3}
+  envForestWolf: {fileID: 8300000, guid: c8db071cf4b6d424cb9598709c0e4017, type: 3}
+  envShedLight: {fileID: 8300000, guid: 4907461c99f364541b4004c8f0c06de6, type: 3}
+  musicGameIdle: {fileID: 0}
+  musicGettingChase: {fileID: 0}
+  musicMenu: {fileID: 0}
+--- !u!4 &744640275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744640273}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.886375, y: 4.3, z: 29.637348}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047553307
 GameObject:

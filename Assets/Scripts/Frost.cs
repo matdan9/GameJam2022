@@ -19,6 +19,9 @@ public class Frost : MonoBehaviour
     bool cold = false;
     LightMecanic l;
 
+    private AudioManager audioManager;
+    private AudioSource _audioBreathing;
+
     public void Start()
     {
         frost = GameObject.Find("frostOverlay");
@@ -26,6 +29,8 @@ public class Frost : MonoBehaviour
         l = GameObject.Find("Player").GetComponent<LightMecanic>();
         SetFrost(0);
         SetMultiplier(3);
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        _audioBreathing = this.gameObject.AddComponent<AudioSource>() as AudioSource;
     }
 
     public void FixedUpdate()
@@ -39,6 +44,8 @@ public class Frost : MonoBehaviour
         if (l.torchValue > 0) SetCold(false);
         if (cold) AddFrost(0.1f * multiplier);
         else RemoveFrost(0.1f * multiplier);
+
+        PlayBreathingSound();
     }
 
     void OnTriggerEnter(Collider collider)
@@ -87,5 +94,15 @@ public class Frost : MonoBehaviour
     public bool AtFirecamp()
     {
         return atFirecamp;
+    }
+
+    private void PlayBreathingSound()
+    {
+        _audioBreathing.clip = audioManager.heroFreezing;
+
+        if (cold)
+        {
+            _audioBreathing.Play();
+        }
     }
 }
