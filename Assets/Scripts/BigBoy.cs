@@ -1,9 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class BigBoy : MonoBehaviour
 {
     private NavMeshAgent agent;
+
+    [SerializeField]
+    private int health = 5;
+    private Animator animator;
     
     //Patroling
     private Vector3 walkPoint;
@@ -19,6 +24,7 @@ public class BigBoy : MonoBehaviour
         ground = LayerMask.GetMask("Ground");
         agent = GetComponent<NavMeshAgent>();
         navMeshArea = NavMesh.GetAreaFromName("BigBoy");
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,6 +35,7 @@ public class BigBoy : MonoBehaviour
 
 
     private void EnnemyPatroling(){
+        if(isDead()) return;
         if(!isWalkPointSet && !isRaging){
             SearchWalkingPoint();
         }
@@ -43,6 +50,33 @@ public class BigBoy : MonoBehaviour
             isWalkPointSet = false;
         }
     }
+
+    public void TakeDamage(int damage){
+        if(isDead()) return;
+        health -= damage;
+        if(isDead()){
+            killBigBoy();
+            return;
+        }
+        animator.SetBool("take damage", true);
+    }
+
+    private void killBigBoy(){
+        stopAnimations();
+        animator.SetBool("die", true);
+        agent.isStopped = true;
+    }
+
+    private bool isDead(){
+        return health <=0;
+    }
+
+    private void stopAnimations(){
+        foreach(AnimatorControllerParameter parameter in animator.parameters) {
+            animator.SetBool(parameter.name, false);
+        }
+    }
+
 
     private void SearchWalkingPoint(){
         walkPoint = NavMeshHelper.RandomCoordinateInRange(agent.transform.position, 40f, navMeshArea);
