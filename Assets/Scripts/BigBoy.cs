@@ -3,11 +3,8 @@ using UnityEngine.AI;
 
 public class BigBoy : MonoBehaviour
 {
-    
-    
     private NavMeshAgent agent;
     
-
     //Patroling
     private Vector3 walkPoint;
     private bool isWalkPointSet = false;
@@ -17,29 +14,26 @@ public class BigBoy : MonoBehaviour
 
     private bool isRaging = false;
 
-    public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask) {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
-           
-            randomDirection += origin;
-           
-            NavMeshHit navHit;
-           
-            bool a = NavMesh.SamplePosition (randomDirection, out navHit, distance, layermask);
-            //bool a = NavMesh.Raycast(randomDirection, distance, out navHit, NavMesh.AllAreas);
+    public GameObject target;
 
-            Debug.Log(a);
-           
-            return navHit.position;
+    public Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask) {
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
+        randomDirection += origin;
+        NavMeshHit navHit;
+        var g = NavMesh.GetAreaFromName("BigBoy");
+        bool a = NavMesh.SamplePosition(randomDirection, out navHit, distance, 1 << g);
+        if(a){
+            target.transform.position = navHit.position;
         }
-
-
+        Debug.Log(g + " :: " + NavMesh.GetAreaFromName("IMP") + " :: " + a);
+        return navHit.position;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        ground = LayerMask.GetMask("GroundBigBoy");
+        ground = LayerMask.GetMask("Ground");
         agent = GetComponent<NavMeshAgent>();
-        
     }
 
     // Update is called once per frame
@@ -50,7 +44,6 @@ public class BigBoy : MonoBehaviour
 
 
     private void EnnemyPatroling(){
-
         if(!isWalkPointSet && !isRaging){
             SearchWalkingPoint();
         }
@@ -62,28 +55,16 @@ public class BigBoy : MonoBehaviour
         {
             agent.SetDestination(agent.transform.position);
         }
-
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //Walkpoint reached
-        if(distanceToWalkPoint.magnitude < 1f){
+        if(distanceToWalkPoint.magnitude < 2f){
             isWalkPointSet = false;
         }
-
     }
 
     private void SearchWalkingPoint(){
-
-        Vector3 randomPosition = RandomNavSphere(agent.transform.position, 20f, 10);
-        Debug.Log(randomPosition);
-
-        walkPoint = randomPosition;
-
+        walkPoint = RandomNavSphere(agent.transform.position, 20f, ground);
         if(Physics.Raycast(walkPoint, -transform.up, 3f, ground)){
             isWalkPointSet = true;
         }
     }
-
-    
-
 }

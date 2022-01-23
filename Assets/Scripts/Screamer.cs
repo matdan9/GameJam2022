@@ -17,16 +17,17 @@ public class Screamer : MonoBehaviour
     private bool isScreaming = false;
 
     public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask) {
-            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
-           
-            randomDirection += origin;
-           
-            NavMeshHit navHit;
-           
-            NavMesh.SamplePosition (randomDirection, out navHit, distance, layermask);
-           
-            return navHit.position;
-        }
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
+       
+        randomDirection += origin;
+       
+        NavMeshHit navHit;
+       
+        int area = NavMesh.GetAreaFromName("IMP");
+        NavMesh.SamplePosition (randomDirection, out navHit, distance, 1 << area);
+       
+        return navHit.position;
+    }
 
 
 
@@ -45,8 +46,8 @@ public class Screamer : MonoBehaviour
     }
 
 
-    private void EnnemyPatroling(){
-
+    private void EnnemyPatroling()
+    {
         if(!isWalkPointSet && !isScreaming){
             SearchWalkingPoint();
         }
