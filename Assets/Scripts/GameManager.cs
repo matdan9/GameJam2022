@@ -4,8 +4,34 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    GameObject player, bigBoy;
+    [SerializeField]
+    float distance;
+
+    void Awake()
+    {
+        player = GameObject.Find("Player");
+        bigBoy = GameObject.Find("bigBoy");
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void Update()
+    {
+        distance = CalculateDistance(bigBoy.transform, player.transform);
+    }
+
+    float CalculateDistance(Transform other, Transform player)
+    {
+        return Vector3.Distance(other.position, player.position);
+    }
+
+    public float GetDistance()
+    {
+        return distance;
     }
 }
