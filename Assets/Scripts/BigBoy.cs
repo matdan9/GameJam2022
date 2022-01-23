@@ -6,12 +6,13 @@ public class BigBoy : MonoBehaviour
     private NavMeshAgent agent;
     
     //Patroling
-    private Vector3 walkPoint;
+    public Vector3 walkPoint;
     private bool isWalkPointSet = false;
     private float walkPointRange = 10f;
     private int navMeshArea;
     private LayerMask ground;
     private bool isRaging = false;
+    private Animator animBigBoy;
 
     // Start is called before the first frame update
     void Start()
@@ -19,12 +20,18 @@ public class BigBoy : MonoBehaviour
         ground = LayerMask.GetMask("Ground");
         agent = GetComponent<NavMeshAgent>();
         navMeshArea = NavMesh.GetAreaFromName("BigBoy");
+        animBigBoy = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         EnnemyPatroling();
+        if(isRaging){
+          OnRageMode();  
+        }else{
+            animBigBoy.SetBool("run", false);
+        }
     }
 
 
@@ -36,11 +43,14 @@ public class BigBoy : MonoBehaviour
             agent.SetDestination(walkPoint);
         }
         else if(!isWalkPointSet && isRaging || isWalkPointSet && isRaging) {
-            agent.SetDestination(agent.transform.position);
+             
         }
+
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
         if(distanceToWalkPoint.magnitude < 2f){
+            isRaging = false; 
             isWalkPointSet = false;
+            agent.speed = 3.5f;
         }
     }
 
@@ -50,4 +60,23 @@ public class BigBoy : MonoBehaviour
             isWalkPointSet = true;
         }
     }
+
+
+    public void OnScreamerCall(Vector3 screamerPosition){
+        walkPoint = NavMeshHelper.RandomCoordinateInRange(screamerPosition, 10f, navMeshArea);
+        agent.SetDestination(walkPoint);
+        
+        
+
+        isRaging = true; 
+    }
+
+    private void OnRageMode(){
+
+        agent.speed = 10f;
+        animBigBoy.SetBool("run", true);
+    }
+
+
+
 }
