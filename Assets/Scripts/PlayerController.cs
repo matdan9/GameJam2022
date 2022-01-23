@@ -91,7 +91,7 @@ public class PlayerController: MonoBehaviour
         SetupControls();
         _audio = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         _audio.clip = movingSound;
-        soundEmitter = gameObject.AddComponent<SoundEmitter>();
+        soundEmitter = gameObject.GetComponent<SoundEmitter>();
         soundEmitter.AddPermanentNoise(5);
     }
 

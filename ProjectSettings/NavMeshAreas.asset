@@ -12,9 +12,9 @@ NavMeshProjectSettings:
   - name: Jump
     cost: 2
   - name: BigBoy
-    cost: 1
+    cost: 0
   - name: IMP
-    cost: 1
+    cost: 0
   - name: 
     cost: 1
   - name: 

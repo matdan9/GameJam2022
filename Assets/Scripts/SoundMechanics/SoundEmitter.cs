@@ -7,10 +7,9 @@ using UnityEngine.Serialization;
 public class SoundEmitter : MonoBehaviour
 {
     [SerializeField]
-    private float triggerRange = 5;
+    private float triggerRange = 10;
     [SerializeField]
-    private bool useExistingCollider = true;
-
+    private LayerMask seekerMask;
     private SphereCollider triggerZone;
     private List<Sound> sounds;
     private float permanentNoise = 0;
@@ -34,35 +33,28 @@ public class SoundEmitter : MonoBehaviour
     }
 
     private void Awake(){
-        SetCollider();
+        SetMask();
         sounds = new List<Sound>();
     }
 
-    private void SetCollider(){
-        if(useExistingCollider){
-            SetExistingCollider();
-        }
-        else{
-            CreateCollider();
-        }
-        triggerZone.isTrigger = true;
-    }
-
-    private void CreateCollider(){
-        triggerZone = this.gameObject.AddComponent<SphereCollider>();
-        triggerZone.radius = triggerRange;
-    }
-
-    private void SetExistingCollider(){
-        triggerZone = this.gameObject.GetComponent<SphereCollider>();
-        this.triggerRange = triggerZone.radius;
-    }
-
-    private void OnTriggerStay(Collider other){
-        if(other.tag == "Enemy"){
+    private void FixedUpdate(){
+        seekerMask = LayerMask.GetMask("Ennemis");
+        Collider[] colliders = Physics.OverlapSphere(transform.position, triggerRange, 1 << 6);
+        foreach(Collider other in colliders){
             float dist = Vector3.Distance(transform.position, other.transform.position);
             other.gameObject.GetComponent<SoundSeeker>().OnSoundTrigger(gameObject, dist, GetNoiseLevel());
-            //other.gameObject.SendMessage("OnSoundTrigger", (int)this);
         }
+    }
+
+    private void SetMask(){
+        if(seekerMask == null){
+            seekerMask = LayerMask.GetMask("Ennemis");
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, triggerRange);
     }
 }
