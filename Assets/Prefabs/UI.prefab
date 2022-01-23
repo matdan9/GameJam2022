@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 305392459}
   - component: {fileID: 305392460}
   m_Layer: 0
-  m_Name: In-game Menu
+  m_Name: GameMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3920,7 +3920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000061035156, y: 23.508942}
+  m_AnchoredPosition: {x: 0, y: 80}
   m_SizeDelta: {x: 246.633, y: 66.2365}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1236512211933284448
@@ -5327,7 +5327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000061035156, y: 23.508942}
+  m_AnchoredPosition: {x: 0, y: 80}
   m_SizeDelta: {x: 343.915, y: 66.2365}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1236512212653103555

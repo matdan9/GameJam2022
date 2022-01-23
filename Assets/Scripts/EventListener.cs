@@ -5,7 +5,13 @@ using UnityEngine.InputSystem;
 
 public class EventListener : MonoBehaviour
 {
-    public GameObject gameMenu, settingsMenu, slots;
+    [SerializeField]
+    GameObject gameMenu, settingsMenu, slots;
+
+    void Start()
+    {
+        slots = GameObject.Find("Slots");
+    }
 
     void Update()
     {
