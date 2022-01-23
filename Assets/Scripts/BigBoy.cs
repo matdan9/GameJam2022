@@ -6,12 +6,14 @@ public class BigBoy : MonoBehaviour
     private NavMeshAgent agent;
     
     //Patroling
-    private Vector3 walkPoint;
+    public Vector3 walkPoint;
     private bool isWalkPointSet = false;
     private float walkPointRange = 10f;
     private int navMeshArea;
     private LayerMask ground;
     private bool isRaging = false;
+    private Animator animBigBoy;
+    private bool isPlayerDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,12 +21,21 @@ public class BigBoy : MonoBehaviour
         ground = LayerMask.GetMask("Ground");
         agent = GetComponent<NavMeshAgent>();
         navMeshArea = NavMesh.GetAreaFromName("BigBoy");
+        animBigBoy = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         EnnemyPatroling();
+
+        if(isRaging){
+          OnRageMode();  
+        }else{
+            animBigBoy.SetBool("run", false);
+        }
+
+        if(isPlayerDead) agent.speed = 0;
     }
 
 
@@ -36,11 +47,14 @@ public class BigBoy : MonoBehaviour
             agent.SetDestination(walkPoint);
         }
         else if(!isWalkPointSet && isRaging || isWalkPointSet && isRaging) {
-            agent.SetDestination(agent.transform.position);
+             
         }
+
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
         if(distanceToWalkPoint.magnitude < 2f){
+            isRaging = false; 
             isWalkPointSet = false;
+            agent.speed = 3.5f;
         }
     }
 
@@ -50,4 +64,47 @@ public class BigBoy : MonoBehaviour
             isWalkPointSet = true;
         }
     }
+
+
+    public void OnScreamerCall(Vector3 screamerPosition){
+        walkPoint = NavMeshHelper.RandomCoordinateInRange(screamerPosition, 10f, navMeshArea);
+        agent.SetDestination(walkPoint);
+        
+        
+
+        isRaging = true; 
+    }
+
+    private void OnRageMode(){
+
+        agent.speed = 10f;
+        animBigBoy.SetBool("run", true);
+    }
+
+     private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.transform.tag == "Player"){
+            GameObject player = collision.transform.gameObject;
+            GameObject cam = player.transform.GetChild(0).transform.gameObject;
+            GameObject rightHand = GameObject.Find("forearm.R.002_end");
+
+            cam.transform.SetParent(rightHand.transform); 
+            cam.transform.localPosition = new Vector3(0.000152f, 0.000369f, -0.00019f);
+            cam.transform.localEulerAngles = new Vector3(26f, 0, 0);
+
+            walkPoint = transform.position;
+            isRaging = false;
+            animBigBoy.SetTrigger("kill"); 
+            isPlayerDead = true;
+
+            
+            player.GetComponent<PlayerController>().EnableMouseLook(false);
+            player.GetComponent<CapsuleCollider>().enabled = false;
+            player.GetComponent<PlayerController>().enabled = false;
+            
+        }
+    }
+
+
+
 }

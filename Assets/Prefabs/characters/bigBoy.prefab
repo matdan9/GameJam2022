@@ -1490,6 +1490,7 @@ GameObject:
   - component: {fileID: 346853820448635110}
   - component: {fileID: 3261159373934281910}
   - component: {fileID: 5145338312039335033}
+  - component: {fileID: 3809559556255492263}
   m_Layer: 0
   m_Name: bigBoy
   m_TagString: Untagged
@@ -1584,6 +1585,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35507ea163b597ed6bac1027759c16b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkPoint: {x: 0, y: 0, z: 0}
+--- !u!136 &3809559556255492263
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283324683031892402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 4.598545
+  m_Height: 15.733345
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.1776352, z: 3.8242912}
 --- !u!1 &7286898631301509730
 GameObject:
   m_ObjectHideFlags: 0
