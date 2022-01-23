@@ -2703,7 +2703,7 @@ GameObject:
   - component: {fileID: 280078758}
   - component: {fileID: 280078757}
   - component: {fileID: 280078756}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Dirt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36490,7 +36490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1857457808}
   - component: {fileID: 1857457809}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39595,7 +39595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2125132963}
   - component: {fileID: 2125132964}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
