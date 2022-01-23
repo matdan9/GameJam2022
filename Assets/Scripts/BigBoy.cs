@@ -77,6 +77,26 @@ public class BigBoy : MonoBehaviour
         animBigBoy.SetBool("run", true);
     }
 
+     private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.transform.tag == "Player"){
+            GameObject player = collision.transform.gameObject;
+            GameObject cam = player.transform.GetChild(0).transform.gameObject;
+            GameObject rightHand = GameObject.Find("forearm.R.002_end");
+
+            cam.transform.SetParent(rightHand.transform); 
+            cam.transform.localPosition = new Vector3(0.000179f, -0.000542f, 0.001018f);
+            cam.transform.localEulerAngles = new Vector3(18, -1.3f, 30);
+
+            walkPoint = transform.position;
+            isRaging = false;
+            animBigBoy.SetTrigger("kill"); 
+            agent.speed = 0f;
+            
+            Destroy(player);
+        }
+    }
+
 
 
 }
