@@ -35,7 +35,7 @@ public class LightMecanic : MonoBehaviour
     private void LightDetection(){
 
         Vector3 originRay = new Vector3(transform.position.x, transform.position.y -1, transform.position.z);
-        Quaternion rotation = Quaternion.AngleAxis(5000 * Time.time, Vector3.up);
+        Quaternion rotation = Quaternion.AngleAxis(2000 * Time.time, Vector3.up);
         Vector3  direction = transform.forward * 5;
         LayerMask layer = LayerMask.GetMask("Ennemis", "Obstacle"); 
        
