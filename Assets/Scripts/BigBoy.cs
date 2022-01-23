@@ -9,31 +9,16 @@ public class BigBoy : MonoBehaviour
     private Vector3 walkPoint;
     private bool isWalkPointSet = false;
     private float walkPointRange = 10f;
-
+    private int navMeshArea;
     private LayerMask ground;
-
     private bool isRaging = false;
-
-    public GameObject target;
-
-    public Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask) {
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
-        randomDirection += origin;
-        NavMeshHit navHit;
-        var g = NavMesh.GetAreaFromName("BigBoy");
-        bool a = NavMesh.SamplePosition(randomDirection, out navHit, distance, 1 << g);
-        if(a){
-            target.transform.position = navHit.position;
-        }
-        Debug.Log(g + " :: " + NavMesh.GetAreaFromName("IMP") + " :: " + a);
-        return navHit.position;
-    }
 
     // Start is called before the first frame update
     void Start()
     {
         ground = LayerMask.GetMask("Ground");
         agent = GetComponent<NavMeshAgent>();
+        navMeshArea = NavMesh.GetAreaFromName("BigBoy");
     }
 
     // Update is called once per frame
@@ -47,12 +32,10 @@ public class BigBoy : MonoBehaviour
         if(!isWalkPointSet && !isRaging){
             SearchWalkingPoint();
         }
-        else if(isWalkPointSet && !isRaging)
-        {
+        else if(isWalkPointSet && !isRaging) {
             agent.SetDestination(walkPoint);
         }
-        else if(!isWalkPointSet && isRaging || isWalkPointSet && isRaging)
-        {
+        else if(!isWalkPointSet && isRaging || isWalkPointSet && isRaging) {
             agent.SetDestination(agent.transform.position);
         }
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -62,7 +45,7 @@ public class BigBoy : MonoBehaviour
     }
 
     private void SearchWalkingPoint(){
-        walkPoint = RandomNavSphere(agent.transform.position, 20f, ground);
+        walkPoint = NavMeshHelper.RandomCoordinateInRange(agent.transform.position, 40f, navMeshArea);
         if(Physics.Raycast(walkPoint, -transform.up, 3f, ground)){
             isWalkPointSet = true;
         }
