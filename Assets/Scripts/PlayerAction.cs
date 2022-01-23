@@ -35,17 +35,14 @@ public class PlayerAction: MonoBehaviour
         pickupText = GameObject.Find("pickupText");
         interactText = GameObject.Find("interactText");
         shotgun = GameObject.Find("HeldShotgun");
-        shotgun.SetActive(false);
     }
 
     
 
     void Start(){
-
-
         pickupText.SetActive(false);
         interactText.SetActive(false);
-        
+        shotgun.SetActive(false);
     }
     
     void Update(){
