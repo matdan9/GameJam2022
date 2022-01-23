@@ -20,6 +20,7 @@ public class PlayerAction: MonoBehaviour
     private GameObject bulletText;
     private GameObject pickupText;
     private GameObject interactText;
+    private GameObject shotgunSlot;
     
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class PlayerAction: MonoBehaviour
 
     void Start(){
         bulletText = GameObject.Find("bulletText");
+        shotgunSlot = GameObject.Find("GunSlot");
         pickupText = GameObject.Find("pickupText");
         interactText = GameObject.Find("interactText");
 
@@ -95,6 +97,8 @@ public class PlayerAction: MonoBehaviour
             item = null;
             pickupText.SetActive(false);
             canInteract = false;
+            shotgunSlot.GetComponent<RawImage>().color = new Color32(188, 195, 204, 255);
+            bulletText.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
         }
     }
     

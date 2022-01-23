@@ -22,6 +22,7 @@ public class LightMecanic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        torchValue = Mathf.Clamp(torchValue, 0f, 7f);
         LightDetection();
         BurningTorch();  
     }
