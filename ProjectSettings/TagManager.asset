@@ -9,6 +9,9 @@ TagManager:
   - Shotgun
   - Enemy
   - Torch
+  - ScreamerFix
+  - Screamer
+  - EnemyTouched
   layers:
   - Default
   - TransparentFX
@@ -18,8 +21,8 @@ TagManager:
   - UI
   - Ennemis
   - Obstacle
-  - 
-  - 
+  - Player
+  - Ground
   - 
   - 
   - 
