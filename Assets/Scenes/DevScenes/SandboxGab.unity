@@ -3236,6 +3236,10 @@ PrefabInstance:
       propertyPath: intensity
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 7316702902131276447, guid: 79a498689f0467a2a9fd1d61e65bd3f1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4329319606672130173, guid: 79a498689f0467a2a9fd1d61e65bd3f1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79a498689f0467a2a9fd1d61e65bd3f1, type: 3}
