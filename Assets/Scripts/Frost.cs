@@ -35,6 +35,8 @@ public class Frost : MonoBehaviour
         temp.a = (byte)frostValue; //color.a is transparency
         frost.GetComponent<RawImage>().color = temp;
 
+        if (l.torchValue <= 0 && !AtFirecamp()) SetCold(true);
+        if (l.torchValue > 0) SetCold(false);
         if (cold) AddFrost(0.1f * multiplier);
         else RemoveFrost(0.1f * multiplier);
     }
