@@ -5,7 +5,17 @@ using UnityEngine.InputSystem;
 
 public class EventListener : MonoBehaviour
 {
-    public GameObject gameMenu, settingsMenu;
+    [SerializeField]
+    GameObject gameMenu, settingsMenu, slots;
+
+    void Awake()
+    {
+        gameMenu = GameObject.Find("GameMenu");
+        settingsMenu = GameObject.Find("SettingsMenu");
+        slots = GameObject.Find("Slots");
+        settingsMenu.SetActive(false);
+        gameMenu.SetActive(false);
+    }
 
     void Update()
     {
@@ -15,12 +25,14 @@ public class EventListener : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             gameMenu.SetActive(false);
             settingsMenu.SetActive(false);
+            slots.SetActive(true);
         }
         else if (Keyboard.current.escapeKey.wasPressedThisFrame && !gameMenu.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
             gameMenu.SetActive(true);
+            slots.SetActive(false);
         }
     }
 }

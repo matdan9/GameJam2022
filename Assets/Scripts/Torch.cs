@@ -7,7 +7,6 @@ public class Torch : MonoBehaviour
 {
     LightMecanic l;
     Frost frost;
-    float red = 25;
 
     // Start is called before the first frame update
     void Start()

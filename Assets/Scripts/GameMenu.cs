@@ -6,7 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
-    public GameObject gameMenu, settingsMenu, resume, settings, menu;
+    GameObject player, gameMenu, settingsMenu, resume, settings, menu;
+    Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
+    Toggle inverseX, inverseY;
+    Text fovText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
+    Camera cam;
+
+    PlayerController playerController;
+
+    void Awake()
+    {
+        FindGameObject();
+        FindSlider();
+        FindToggle();
+        FindText();
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        GetPrefs();
+    }
 
     void Start()
     {
@@ -14,6 +30,52 @@ public class GameMenu : MonoBehaviour
         settings.GetComponent<Button>().onClick.AddListener(SettingsButton);
         menu.GetComponent<Button>().onClick.AddListener(MenuButton);
         playerController = player.GetComponent<PlayerController>();
+    }
+
+    void FindGameObject()
+    {
+        player = GameObject.Find("Player");
+        gameMenu = GameObject.Find("GameMenu");
+        settingsMenu = GameObject.Find("SettingsMenu");
+        resume = GameObject.Find("Resume");
+        settings = GameObject.Find("Settings");
+        menu = GameObject.Find("Menu");
+    }
+
+    void FindSlider()
+    {
+        FOV = GameObject.Find("FOV").GetComponent<Slider>();
+        sensitivityX = GameObject.Find("Sensitivity X").GetComponent<Slider>();
+        sensitivityY = GameObject.Find("Sensitivity Y").GetComponent<Slider>();
+        mainVolume = GameObject.Find("Main Volume").GetComponent<Slider>();
+        musicVolume = GameObject.Find("Music Volume").GetComponent<Slider>();
+        sfxVolume = GameObject.Find("SFX Volume").GetComponent<Slider>();
+    }
+
+    void FindToggle()
+    {
+        inverseX = GameObject.Find("Inverse X").GetComponent<Toggle>();
+        inverseY = GameObject.Find("Inverse Y").GetComponent<Toggle>();
+    }
+
+    void FindText()
+    {
+        fovText = GameObject.Find("FOV Value").GetComponent<Text>();
+        sensitivityXText = GameObject.Find("SensX Value").GetComponent<Text>();
+        sensitivityYText = GameObject.Find("SensY Value").GetComponent<Text>();
+        mainVolumeText = GameObject.Find("MainVol Value").GetComponent<Text>();
+        musicVolumeText = GameObject.Find("MusVol Value").GetComponent<Text>();
+        sfxVolumeText = GameObject.Find("SFXVol Value").GetComponent<Text>();
+    }
+
+    void GetPrefs()
+    {
+        FOV.value = PlayerPrefs.GetFloat("fov");
+        sensitivityX.value = PlayerPrefs.GetFloat("sensX");
+        sensitivityY.value = PlayerPrefs.GetFloat("sensY");
+        mainVolume.value = PlayerPrefs.GetFloat("mainVol");
+        musicVolume.value = PlayerPrefs.GetFloat("musVol");
+        sfxVolume.value = PlayerPrefs.GetFloat("sfxVol");
     }
 
     void ResumeButton()
@@ -39,24 +101,6 @@ public class GameMenu : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    //Settings
-    public Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
-    public Toggle inverseX, inverseY;
-    public Text FOVText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
-    public Camera cam;
-    public GameObject player;
-    PlayerController playerController;
-
-    void Awake()
-    {
-        FOV.value = PlayerPrefs.GetFloat("fov");
-        sensitivityX.value = PlayerPrefs.GetFloat("sensX");
-        sensitivityY.value = PlayerPrefs.GetFloat("sensY");
-        mainVolume.value = PlayerPrefs.GetFloat("mainVol");
-        musicVolume.value = PlayerPrefs.GetFloat("musVol");
-        sfxVolume.value = PlayerPrefs.GetFloat("sfxVol");
-    }
-
     void Update()
     {
         SetTextValuesToSlider();
@@ -69,7 +113,7 @@ public class GameMenu : MonoBehaviour
 
     void SetTextValuesToSlider()
     {
-        FOVText.text = FOV.value.ToString();
+        fovText.text = FOV.value.ToString();
         sensitivityXText.text = sensitivityX.value.ToString();
         sensitivityYText.text = sensitivityY.value.ToString();
         mainVolumeText.text = mainVolume.value.ToString();
