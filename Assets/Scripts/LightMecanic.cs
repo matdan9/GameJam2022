@@ -22,6 +22,7 @@ public class LightMecanic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        torchValue = Mathf.Clamp(torchValue, 0f, 7f);
         LightDetection();
         BurningTorch();  
     }
@@ -29,15 +30,16 @@ public class LightMecanic : MonoBehaviour
     
     private void LightDetection(){
 
+        Vector3 originRay = new Vector3(transform.position.x, transform.position.y -1, transform.position.z);
         Quaternion rotation = Quaternion.AngleAxis(5000 * Time.time, Vector3.up);
         Vector3  direction = transform.forward * 5;
         LayerMask layer = LayerMask.GetMask("Ennemis", "Obstacle"); 
        
         RaycastHit hit;
-        Debug.DrawRay (transform.position, rotation * direction,Color.green);
+        Debug.DrawRay (originRay, rotation * direction,Color.green);
         
         
-        if(Physics.Raycast(transform.position, rotation * direction, out hit, 5f, layer)){
+        if(Physics.Raycast(originRay, rotation * direction, out hit, 5f, layer) && isTorchAlight){
             
             if(hit.transform.tag == "Enemy" || hit.transform.tag == "ScreamerFix") {
                 hit.transform.gameObject.GetComponent<Screamer>().EnnemyScream();

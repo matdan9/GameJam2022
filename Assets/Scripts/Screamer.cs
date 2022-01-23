@@ -16,6 +16,8 @@ public class Screamer : MonoBehaviour
 
     private bool isScreaming = false;
 
+    private Animator animScreamer;
+
     public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask) {
         Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
        
@@ -36,13 +38,18 @@ public class Screamer : MonoBehaviour
     {
         ground = LayerMask.GetMask("Ground");
         agent = GetComponent<NavMeshAgent>();
+        animScreamer = GetComponent<Animator>();
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.tag != "ScreamerFix")EnnemyPatroling();
+        if(transform.tag != "ScreamerFix"){
+          EnnemyPatroling();  
+          animScreamer.SetBool("walk", true);
+        }
+        
     }
 
 
@@ -82,18 +89,30 @@ public class Screamer : MonoBehaviour
 
     public void EnnemyScream(){
         isScreaming = true;
-        transform.tag = "EnemyTouched";
+        animScreamer.SetBool("alert", true);
 
-        Debug.Log("Anim scream !");
+        if(transform.tag == "ScreamerFix"){
+            Invoke("EnnemyFixCalmDown", 3f);
+        }else{
+            Invoke("EnnemyCalmDown", 3f);
+        }
+
+        transform.tag = "EnemyTouched";
         Debug.Log("Scream sound !");
 
-        Invoke("EnnemyCalmDown", 3f);
     }
 
     private void EnnemyCalmDown(){
-         Debug.Log("Ennemy is calm !!!");
          isScreaming = false;
          transform.tag = "Enemy";
+         animScreamer.SetBool("alert", false);
+    }
+
+    private void EnnemyFixCalmDown(){
+         isScreaming = false;
+         transform.tag = "ScreamerFix";
+         animScreamer.SetBool("alert", false);
+         animScreamer.SetBool("walk", false);
     }
 
 

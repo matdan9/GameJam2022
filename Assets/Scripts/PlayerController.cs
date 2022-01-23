@@ -64,6 +64,8 @@ public class PlayerController: MonoBehaviour
     private AudioSource _audio;
     private Vector2 _movementInputs;
     private InputSystem inputSystem;
+    private SoundEmitter soundEmitter;
+    private float totalSound;
 
     private void Awake(){
         SetupControls();
@@ -89,21 +91,31 @@ public class PlayerController: MonoBehaviour
         SetupControls();
         _audio = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         _audio.clip = movingSound;
+        soundEmitter = gameObject.AddComponent<SoundEmitter>();
+        soundEmitter.AddPermanentNoise(5);
     }
 
     private void UpdateMovementInputs(InputAction.CallbackContext c){
         _movementInputs = c.ReadValue<Vector2>();
+        if(_movementInputs.x == 0 || _movementInputs.y == 0){
+            return;
+        }
     }
 
     private void Update()
     {
-        if(_rbPlayer.velocity.magnitude >= 2 && !_audio.isPlaying) PlayWalkingSound();
-        UpdateMovement();
+        if(_rbPlayer.velocity.magnitude >= 1 && !_audio.isPlaying) {
+            PlayWalkingSound();
+        }
+        totalSound += 5 * _rbPlayer.velocity.magnitude;
+        soundEmitter.AddNoise(new Sound(0.1f, totalSound, 1));
+        totalSound = 0;
     }
 
     private void FixedUpdate()
     {
         UpdateGroundSensors();
+        UpdateMovement();
         UpdatePlayerPosition();
     }
     
@@ -147,7 +159,7 @@ public class PlayerController: MonoBehaviour
         long currentTime = GetCurrentTime();
         if (_nextShot > currentTime) return;
         _nextShot = currentTime + _weaponCoolDown;
-        GameObject bullet = Instantiate(_bullet, pos + Vector3.down * 0.1f, rot);
+        GameObject bullet = Instantiate(_bullet, pos, rot);
         //RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
         Destroy(bullet, 10f);
     }
@@ -231,7 +243,7 @@ public class PlayerController: MonoBehaviour
         _rbPlayer.freezeRotation = true;
         _rbPlayer.interpolation = RigidbodyInterpolation.Interpolate;
         _rbPlayer.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        _rbPlayer.mass = 1f;
+        _rbPlayer.mass = 3f;
     }
 
     private void UpdateGroundSensors()
