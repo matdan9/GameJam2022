@@ -16,6 +16,8 @@ public class BigBoy : MonoBehaviour
     private float grabRange = 5;
     [SerializeField]
     private float viewAngle = 100;
+    [SerializeField]
+    GameObject deathUi;
     
     //Patroling
     public Vector3 walkPoint;
@@ -31,6 +33,12 @@ public class BigBoy : MonoBehaviour
     private AudioManager audioManager;
     private AudioSource _audioVoice;
     private AudioSource _audioFootstep;
+    private AudioListener audioListener;
+
+    public void Awake()
+    {
+        deathUi = GameObject.Find("DeathScreenBigBoi");
+    }
     
 
     // Start is called before the first frame update
@@ -47,6 +55,9 @@ public class BigBoy : MonoBehaviour
         AudioManager.setAudio(_audioFootstep);
         _audioFootstep.maxDistance = 30.0f;
         _audioVoice.maxDistance = 20.0f;
+        
+        audioListener = GameObject.FindObjectOfType<AudioListener>();
+        deathUi.SetActive(false);
     }
 
     // Update is called once per frame
@@ -85,7 +96,12 @@ public class BigBoy : MonoBehaviour
             SearchWalkingPoint();
         }
         else if(isWalkPointSet && !isRaging) {
-            agent.SetDestination(walkPoint);
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(walkPoint, path);
+            if(path.status == NavMeshPathStatus.PathComplete){
+                agent.SetDestination(walkPoint);
+            }
+            
 
 
         }
@@ -138,7 +154,11 @@ public class BigBoy : MonoBehaviour
 
     public void OnScreamerCall(Vector3 screamerPosition){
         walkPoint = NavMeshHelper.RandomCoordinateInRange(screamerPosition, 10f, navMeshArea);
-        agent.SetDestination(walkPoint);
+         NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(walkPoint, path);
+            if(path.status == NavMeshPathStatus.PathComplete){
+                agent.SetDestination(walkPoint);
+            }
         isRaging = true; 
     }
 
@@ -174,7 +194,11 @@ public class BigBoy : MonoBehaviour
     private void ChasePlayer(GameObject player){
         walkPoint = NavMeshHelper.GetCloseCoordinate(player.transform.position, navMeshArea);
         isWalkPointSet = true;
-        agent.SetDestination(walkPoint);
+         NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(walkPoint, path);
+            if(path.status == NavMeshPathStatus.PathComplete){
+                agent.SetDestination(walkPoint);
+            }
         if(Vector3.Distance(player.transform.position, transform.position) <= grabRange){
             KillPlayer(player);
             return;
@@ -197,6 +221,16 @@ public class BigBoy : MonoBehaviour
         player.GetComponent<PlayerController>().EnableMouseLook(false);
         player.GetComponent<CapsuleCollider>().enabled = false;
         player.GetComponent<PlayerController>().enabled = false;
+
+        Invoke("DeathScreen", 3f);
+    }
+
+    private void DeathScreen(){
+        Debug.Log("DeathScreen");
+        deathUi.SetActive(true);
+        Time.timeScale = 0;
+        audioListener.enabled = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void OnDrawGizmosSelected()

@@ -906,6 +906,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: shotgunIcon
       objectReference: {fileID: 0}
+    - target: {fileID: 2750139049750362764, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2750139049750362764, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 410
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830442726001316613, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830442726001316613, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830442726001316613, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3145139481136998960, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: m_Name
       value: UI
@@ -986,6 +1006,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4307756023261307521, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4795270594816270288, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1002,6 +1026,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5703147013698325176, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_Text
+      value: YOU DIED
+      objectReference: {fileID: 0}
+    - target: {fileID: 5887858447740692528, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ba678f3df265ab145a61c98cfecdb44a, type: 3}
     - target: {fileID: 6793504621203027247, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1214,6 +1246,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9021663456160955739, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 968eeca6bbc11384a9b2d76e8a5192c1, type: 3}
     - target: {fileID: 9164302105010110002, guid: 8e5070ed86801474ebe2b26ded8b5009, type: 3}
       propertyPath: m_RootOrder
       value: 2

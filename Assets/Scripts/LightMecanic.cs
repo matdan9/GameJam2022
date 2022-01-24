@@ -6,7 +6,7 @@ public class LightMecanic : MonoBehaviour
 {
 
     public float torchValue = 7f;
-    private float torchDurationSpeed = 0.001f;
+    private float torchDurationSpeed = 0.01f;
     private float lightIntensity;
     private float maxIntensity = 7f;
     
