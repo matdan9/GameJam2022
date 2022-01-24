@@ -32,6 +32,7 @@ public class EventListener : MonoBehaviour
             settingsMenu.SetActive(false);
             slots.SetActive(true);
             player.GetComponent<PlayerController>().EnableMouseLook(true);
+            player.GetComponent<PlayerController>().EnableShooting(true);
         }
         else if (Keyboard.current.escapeKey.wasPressedThisFrame && !gameMenu.activeSelf)
         {
@@ -40,6 +41,7 @@ public class EventListener : MonoBehaviour
             gameMenu.SetActive(true);
             slots.SetActive(false);
             player.GetComponent<PlayerController>().EnableMouseLook(false);
+            player.GetComponent<PlayerController>().EnableShooting(false);
         }
     }
 }

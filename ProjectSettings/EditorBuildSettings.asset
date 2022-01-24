@@ -8,10 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: cd38c95915d7d6d4fa0936217e81c3ad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameScene.unity
     guid: c54e9c73ba8f17c49acd6d1dd6a87955
   - enabled: 0
     path: Assets/Scenes/Niveau_Foret.unity
     guid: 0d04d56db657fe04e8fac571b4ae3e14
+  - enabled: 1
+    path: Assets/Scenes/BugFixing.unity
+    guid: 3d825b63dd5858e4885ca796fd9aad18
   m_configObjects: {}

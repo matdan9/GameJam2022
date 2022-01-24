@@ -62,12 +62,14 @@ public class PlayerController: MonoBehaviour
     private Vector2 _mouseMovement = new Vector2();
     private Vector3 _extraPhisicsVec = new Vector3();
     private long _nextShot = 0;
+    private int bulletCount = 0;
     private Vector2 _movementInputs;
     private InputSystem inputSystem;
     private SoundEmitter soundEmitter;
     private float totalSound;
     private bool enableMouseLook = true;
-    //private bool enableShooting = false;
+    private bool enableShooting = false;
+    private bool gunPickedUp = false;
     private AudioSource _audioFootstep;
     private AudioSource _audioSFX;
     private AudioManager audioManager;
@@ -127,6 +129,7 @@ public class PlayerController: MonoBehaviour
         totalSound += 5 * _rbPlayer.velocity.magnitude;
         soundEmitter.AddNoise(new Sound(0.1f, totalSound, 1));
         totalSound = 0;
+        bulletCount = this.GetComponent<PlayerAction>().GetBulletCount();
     }
 
     private void FixedUpdate()
@@ -135,7 +138,7 @@ public class PlayerController: MonoBehaviour
         UpdateMovement();
         UpdatePlayerPosition();
     }
-    
+
     private void UpdatePlayerPosition()
     {
         if (!_touchedGround) _movement /= 3;
@@ -175,8 +178,10 @@ public class PlayerController: MonoBehaviour
         Vector3 pos = new Vector3(_camPlayer.transform.position.x, _camPlayer.transform.position.y, _camPlayer.transform.position.z);
         Quaternion rot = new Quaternion(_camPlayer.transform.rotation.x, _camPlayer.transform.rotation.y, _camPlayer.transform.rotation.z, _camPlayer.transform.rotation.w);
         long currentTime = GetCurrentTime();
-        //if (!enableShooting) return;
+        if (!enableShooting) return;
+        if (bulletCount == 0) return;
         if (_nextShot > currentTime) return;
+        this.GetComponent<PlayerAction>().RemoveBullet(1);
         _nextShot = currentTime + _weaponCoolDown;
         GameObject bullet = Instantiate(_bullet, pos, rot);
         light.GetComponent<ParticleSystem>().Play();
@@ -276,8 +281,24 @@ public class PlayerController: MonoBehaviour
         _touchedGround = Physics.Raycast(pos, Vector3.down, out _jumpRay, _jumpSensorLength);
     }
 
-    public void EnableMouseLook(bool b){
+    public void EnableMouseLook(bool b)
+    {
         enableMouseLook = b;
+    }
+
+    public void EnableShooting(bool b)
+    {
+        enableShooting = b;
+    }
+
+    public bool isPickedUp()
+    {
+        return gunPickedUp;
+    }
+
+    public void SetGunPickedUp(bool b)
+    {
+        gunPickedUp = b;
     }
 
     public void SetSens(float sens)
