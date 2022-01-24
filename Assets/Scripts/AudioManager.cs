@@ -85,4 +85,13 @@ public class AudioManager : MonoBehaviour
     {
         
     }
+
+    public static void setAudio(AudioSource audio)
+    {
+        audio.loop = true;
+        audio.playOnAwake = false;
+        audio.maxDistance = 10;
+        audio.spatialBlend = 1.0f;
+        audio.rolloffMode = AudioRolloffMode.Linear;
+    }
 }

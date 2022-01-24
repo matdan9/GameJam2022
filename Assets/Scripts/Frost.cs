@@ -99,9 +99,10 @@ public class Frost : MonoBehaviour
     private void PlayBreathingSound()
     {
         _audioBreathing.clip = audioManager.heroFreezing;
-
+        Debug.Log("chara");
         if (cold)
         {
+            Debug.Log("askufnmanfmasn");
             _audioBreathing.Play();
         }
     }

@@ -5,7 +5,7 @@ public class Screamer : MonoBehaviour
 {
     
     private NavMeshAgent agent;
-    
+    private Rigidbody rb;
 
     //Patroling
     private Vector3 walkPoint;
@@ -15,7 +15,10 @@ public class Screamer : MonoBehaviour
     private bool isScreaming = false;
     private Animator animScreamer;
     private int navMeshArea;
-    
+    private AudioManager audioManager;
+    private AudioSource _audioIdle;
+    private AudioSource _audioFootstep;
+
     public Transform patrolArea;
     public Vector3 currentScreamPos;
     [SerializeField]private GameObject bigBoy;
@@ -31,12 +34,26 @@ public class Screamer : MonoBehaviour
         if(patrolArea == null) patrolArea = this.transform;
 
         bigBoy = GameObject.Find("bigBoy");
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
+        rb = gameObject.GetComponent<Rigidbody>();
+
+        _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioIdle = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        AudioManager.setAudio(_audioFootstep);
+        AudioManager.setAudio(_audioIdle);
+        _audioIdle.clip = audioManager.spiderIdle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.tag != "ScreamerFix"){
+        if(rb.velocity.magnitude >= 1 && !_audioFootstep.isPlaying)
+        {
+            _audioFootstep.clip = audioManager.spiderWalk;
+            _audioFootstep.Play();
+        }
+        if (transform.tag != "ScreamerFix"){
           EnnemyPatroling();  
           animScreamer.SetBool("walk", true);
         }
@@ -44,7 +61,8 @@ public class Screamer : MonoBehaviour
 
     private void EnnemyPatroling()
     {
-        if(!isWalkPointSet && !isScreaming) {
+        //_audioFootstep.Play();
+        if (!isWalkPointSet && !isScreaming) {
             SearchWalkingPoint();
         }
         else if(isWalkPointSet && !isScreaming) {
@@ -69,8 +87,9 @@ public class Screamer : MonoBehaviour
     public void EnnemyScream(){
         isScreaming = true;
         animScreamer.SetBool("alert", true);
+        _audioFootstep.clip = audioManager.spiderAlert;
 
-        if(transform.tag == "ScreamerFix")
+        if (transform.tag == "ScreamerFix")
         {
             Invoke("EnnemyFixCalmDown", 3f);
             currentScreamPos = transform.position;

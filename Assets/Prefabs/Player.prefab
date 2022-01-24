@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2263078876150260602}
   - component: {fileID: 2263078876150260605}
   - component: {fileID: 2263078876150260604}
+  - component: {fileID: 1291989805497797861}
   - component: {fileID: 5586831481079781621}
   - component: {fileID: 3199953587737051340}
   - component: {fileID: 5236074279581186182}
@@ -136,6 +137,26 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 4294967295
+  light: {fileID: 0}
+  smoke: {fileID: 0}
+--- !u!114 &1291989805497797861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2263078876150260607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95caecc7ace69484abb8da7f5bfe7e1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frost: {fileID: 0}
+  sphereCollider: {fileID: 0}
+  atFirecamp: 0
+  multiplier: 0
+  frostValue: 0
+  cold: 0
 --- !u!114 &5586831481079781621
 MonoBehaviour:
   m_ObjectHideFlags: 0
