@@ -104,12 +104,10 @@ public class Frost : MonoBehaviour
         
         if(cold && !_audioBreathing.isPlaying)
         {
-            Debug.Log("askufnmanfmasn");
             _audioBreathing.Play();
         }
         else if(!cold)
         {
-            Debug.Log("lol");
             _audioBreathing.Pause();
         }
     }
