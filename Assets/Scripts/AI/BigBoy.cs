@@ -72,7 +72,6 @@ public class BigBoy : MonoBehaviour
             _audioVoice.clip = audioManager.bigboyVoiceIdle;
 
         }
-
         if(isPlayerDead) agent.speed = 0;
     }
 
