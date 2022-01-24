@@ -8,6 +8,7 @@ public class LightMecanic : MonoBehaviour
     public float torchValue = 7f;
     private float torchDurationSpeed = 0.001f;
     private float lightIntensity;
+    private float maxIntensity = 7f;
     
     public bool isTorchAlight = false;
     [SerializeField]
@@ -30,32 +31,11 @@ public class LightMecanic : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         torchValue = Mathf.Clamp(torchValue, 0f, 7f);
-        LightDetection();
         BurningTorch();
         torchFlame.transform.localScale = flameScale();
-    }
-
-    
-    private void LightDetection(){
-
-        Vector3 originRay = new Vector3(transform.position.x, transform.position.y -1, transform.position.z);
-        Quaternion rotation = Quaternion.AngleAxis(2000 * Time.time, Vector3.up);
-        Vector3  direction = transform.forward * 5;
-        LayerMask layer = LayerMask.GetMask("Ennemis", "Obstacle"); 
-       
-        RaycastHit hit;
-        Debug.DrawRay (originRay, rotation * direction,Color.green);
-        
-        
-        if(Physics.Raycast(originRay, rotation * direction, out hit, 5f, layer) && isTorchAlight){
-            
-            if(hit.transform.tag == "Enemy" || hit.transform.tag == "ScreamerFix") {
-                hit.collider.gameObject.GetComponent<Screamer>().Scream();
-            }
-        }
     }
 
     private void BurningTorch(){
@@ -81,6 +61,24 @@ public class LightMecanic : MonoBehaviour
     {
         float size = ((3f * torchValue) / 7f);
         return new Vector3(size, size, size);
+    }
+
+    public float GetIntensity()
+    {
+        return lightIntensity;
+    }
+
+
+    public float GetMaxIntensity()
+    {
+        return maxIntensity;
+    }
+
+    public float IntensityRatio()
+    {
+        Debug.Log("Intensity Ratio:" + torchValue / maxIntensity);
+        if (torchValue <= 0) return 0.01f;
+        return torchValue / maxIntensity;
     }
 
     public void RestartTorch(){

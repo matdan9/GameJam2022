@@ -44,7 +44,6 @@ public class PlayerController: MonoBehaviour
     private AudioClip dieSound;
     [SerializeField]
     private AudioClip _jumpAudio;
-    
 
     private bool _touchedGround = false;
     private float _movingSpeed;

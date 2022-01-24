@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frost: {fileID: 0}
+  deathUi: {fileID: 0}
   sphereCollider: {fileID: 0}
   atFirecamp: 0
   multiplier: 0
@@ -217,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frost: {fileID: 0}
+  deathUi: {fileID: 0}
   sphereCollider: {fileID: 0}
   atFirecamp: 0
   multiplier: 0
@@ -466,15 +468,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4047828295093707903, guid: 846256cf6cf0e6641bcc8972ecc99072, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.266369
+      value: 1.121
       objectReference: {fileID: 0}
     - target: {fileID: 4047828295093707903, guid: 846256cf6cf0e6641bcc8972ecc99072, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.2843876
+      value: -1.411
       objectReference: {fileID: 0}
     - target: {fileID: 4047828295093707903, guid: 846256cf6cf0e6641bcc8972ecc99072, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.772821
+      value: 6.1799994
       objectReference: {fileID: 0}
     - target: {fileID: 4047828295093707903, guid: 846256cf6cf0e6641bcc8972ecc99072, type: 3}
       propertyPath: m_LocalRotation.w
@@ -592,15 +594,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 330457118710012441, guid: 90332f4af5b2b4748a43e80d4a2ca11c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.4153686
+      value: -0.73
       objectReference: {fileID: 0}
     - target: {fileID: 330457118710012441, guid: 90332f4af5b2b4748a43e80d4a2ca11c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.0953875
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 330457118710012441, guid: 90332f4af5b2b4748a43e80d4a2ca11c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.592822
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 330457118710012441, guid: 90332f4af5b2b4748a43e80d4a2ca11c, type: 3}
       propertyPath: m_LocalRotation.w

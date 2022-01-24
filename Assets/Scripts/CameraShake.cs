@@ -16,6 +16,7 @@ public class CameraShake : MonoBehaviour
     float intensity = 1f;
     [SerializeField]
     Vector3 originalPosition;
+    bool canShake = true;
 
     void Awake()
     {
@@ -26,16 +27,14 @@ public class CameraShake : MonoBehaviour
     void Update()
     {
         distance = gm.GetDistance();
-        if(distance <= range)
+        if(canShake && distance <= range)
         {
             cam.transform.localPosition = originalPosition + Random.insideUnitSphere * intensity;
         }
-
-        else
+        else if(canShake)
         {
             cam.transform.localPosition = originalPosition;
         }
-
     }
 
     void OnEnable()
@@ -56,5 +55,10 @@ public class CameraShake : MonoBehaviour
     void SetIntensity(float val)
     {
         intensity = val;
+    }
+
+    public void SetShake(bool b)
+    {
+        canShake = b;
     }
 }

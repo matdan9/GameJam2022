@@ -185,6 +185,7 @@ public class BigBoy : MonoBehaviour
     private void KillPlayer(GameObject player)
     {
         GameObject cam = player.transform.GetChild(0).transform.gameObject;
+        cam.GetComponent<CameraShake>().SetShake(false);
         GameObject rightHand = GameObject.Find("forearm.R.002_end");
         cam.transform.SetParent(rightHand.transform); 
         cam.transform.localPosition = new Vector3(0.000152f, 0.000369f, -0.00019f);
