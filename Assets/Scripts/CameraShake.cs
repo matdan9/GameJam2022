@@ -19,7 +19,7 @@ public class CameraShake : MonoBehaviour
 
     void Awake()
     {
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
