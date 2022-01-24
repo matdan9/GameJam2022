@@ -22,7 +22,8 @@ public class PlayerAction: MonoBehaviour
     private GameObject interactText;
     private GameObject shotgunSlot;
     private GameObject shotgun;
-    
+    private GameObject player;
+
     private void Awake()
     {
         //Go get the new input system
@@ -30,6 +31,7 @@ public class PlayerAction: MonoBehaviour
         inputActions.PlayerActions.Pickup.performed += PickUp;
         inputActions.PlayerActions.Interact.performed += Interact;
 
+        player = GameObject.FindGameObjectWithTag("Player");
         bulletText = GameObject.Find("bulletText");
         shotgunSlot = GameObject.Find("GunSlot");
         pickupText = GameObject.Find("pickupText");
@@ -77,8 +79,6 @@ public class PlayerAction: MonoBehaviour
         }
     }
 
-
-
     //------- this fonction detect if the pickup(E) bouton is pressed -------//
      private void PickUp(InputAction.CallbackContext context)
     {   
@@ -99,8 +99,10 @@ public class PlayerAction: MonoBehaviour
             shotgunSlot.GetComponent<RawImage>().color = new Color32(188, 195, 204, 255);
             bulletText.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
             shotgun.SetActive(true);
+            player.GetComponent<PlayerController>().EnableShooting(true);
+            player.GetComponent<PlayerController>().SetGunPickedUp(true);
         }
-    }
+     }
     
 
 
@@ -114,7 +116,15 @@ public class PlayerAction: MonoBehaviour
         }  
     }
 
+    public int GetBulletCount()
+    {
+        return bulletCounter;
+    }
 
+    public void RemoveBullet(int val)
+    {
+        bulletCounter -= val;
+    }
 
     //------- This fonction activate the input system -------//
     private void OnEnable()

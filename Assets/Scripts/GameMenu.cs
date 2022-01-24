@@ -89,6 +89,7 @@ public class GameMenu : MonoBehaviour
         gameMenu.SetActive(false);
         UI.SetActive(true);
         player.GetComponent<PlayerController>().EnableMouseLook(true);
+        if(player.GetComponent<PlayerController>().isPickedUp()) player.GetComponent<PlayerController>().EnableShooting(true);
     }
 
     void SettingsButton()

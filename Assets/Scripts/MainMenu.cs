@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetFloat("mainVol", mainVolume.value);
         PlayerPrefs.SetFloat("musVol", musicVolume.value);
         PlayerPrefs.SetFloat("sfxVol", sfxVolume.value);
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("BugFixing");
     }
 
     void SettingsButton()
