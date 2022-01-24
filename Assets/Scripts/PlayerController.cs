@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
+//using Cursor = UnityEngine.Cursor;
 using Random = UnityEngine.Random;
 
 public class PlayerController: MonoBehaviour
@@ -95,7 +95,7 @@ public class PlayerController: MonoBehaviour
     private void Start()
     {
         _movingSpeed = jogSpeed;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         SetupCam();
         SetupCollider();
         RbSetup();
