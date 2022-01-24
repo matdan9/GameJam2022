@@ -67,6 +67,7 @@ public class PlayerController: MonoBehaviour
     private SoundEmitter soundEmitter;
     private float totalSound;
     private bool enableMouseLook = true;
+    //private bool enableShooting = false;
     private AudioSource _audioFootstep;
     private AudioSource _audioSFX;
     private AudioManager audioManager;
@@ -174,6 +175,7 @@ public class PlayerController: MonoBehaviour
         Vector3 pos = new Vector3(_camPlayer.transform.position.x, _camPlayer.transform.position.y, _camPlayer.transform.position.z);
         Quaternion rot = new Quaternion(_camPlayer.transform.rotation.x, _camPlayer.transform.rotation.y, _camPlayer.transform.rotation.z, _camPlayer.transform.rotation.w);
         long currentTime = GetCurrentTime();
+        //if (!enableShooting) return;
         if (_nextShot > currentTime) return;
         _nextShot = currentTime + _weaponCoolDown;
         GameObject bullet = Instantiate(_bullet, pos, rot);
