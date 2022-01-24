@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameMenu : MonoBehaviour
 {
     [SerializeField]
-    GameObject player, gameMenu, settingsMenu, resume, settings, menu;
+    GameObject player, gameMenu, settingsMenu, resume, settings, menu, UI;
     [SerializeField]
     Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
     Toggle inverseX, inverseY;
@@ -42,6 +42,7 @@ public class GameMenu : MonoBehaviour
         resume = GameObject.Find("Resume");
         settings = GameObject.Find("Settings");
         menu = GameObject.Find("Menu");
+        UI = GameObject.Find("Slots");
     }
 
     void FindSlider()
@@ -85,6 +86,7 @@ public class GameMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Locked;
         gameMenu.SetActive(false);
+        UI.SetActive(true);
         player.GetComponent<PlayerController>().EnableMouseLook(true);
     }
 
