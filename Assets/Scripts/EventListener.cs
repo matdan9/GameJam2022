@@ -6,10 +6,11 @@ using UnityEngine.InputSystem;
 public class EventListener : MonoBehaviour
 {
     [SerializeField]
-    GameObject gameMenu, settingsMenu, slots;
+    GameObject player, gameMenu, settingsMenu, slots;
 
     void Awake()
     {
+        player = GameObject.Find("Player");
         gameMenu = GameObject.Find("GameMenu");
         settingsMenu = GameObject.Find("SettingsMenu");
         slots = GameObject.Find("Slots");
@@ -30,6 +31,7 @@ public class EventListener : MonoBehaviour
             gameMenu.SetActive(false);
             settingsMenu.SetActive(false);
             slots.SetActive(true);
+            player.GetComponent<PlayerController>().EnableMouseLook(true);
         }
         else if (Keyboard.current.escapeKey.wasPressedThisFrame && !gameMenu.activeSelf)
         {
@@ -37,6 +39,7 @@ public class EventListener : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             gameMenu.SetActive(true);
             slots.SetActive(false);
+            player.GetComponent<PlayerController>().EnableMouseLook(false);
         }
     }
 }

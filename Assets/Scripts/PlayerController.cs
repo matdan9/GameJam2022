@@ -68,8 +68,13 @@ public class PlayerController: MonoBehaviour
     private float totalSound;
     private bool enableMouseLook = true;
 
+    [SerializeField]
+    GameObject light, smoke;
+
     private void Awake(){
         SetupControls();
+        light = GameObject.Find("GunLight");
+        smoke = GameObject.Find("Smoke");
     }
 
     private void SetupControls(){
@@ -162,6 +167,8 @@ public class PlayerController: MonoBehaviour
         if (_nextShot > currentTime) return;
         _nextShot = currentTime + _weaponCoolDown;
         GameObject bullet = Instantiate(_bullet, pos, rot);
+        light.GetComponent<ParticleSystem>().Play();
+        smoke.GetComponent<ParticleSystem>().Play();
         //RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
         Destroy(bullet, 10f);
     }
