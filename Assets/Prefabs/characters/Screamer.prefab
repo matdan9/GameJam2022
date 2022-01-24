@@ -782,8 +782,8 @@ GameObject:
   - component: {fileID: 8357887238515256438}
   - component: {fileID: 8357887238515256435}
   - component: {fileID: 8357887238515256439}
-  - component: {fileID: 8357887238515256392}
   - component: {fileID: 535780163765409615}
+  - component: {fileID: 41995300986203386}
   m_Layer: 6
   m_Name: Screamer
   m_TagString: Enemy
@@ -879,21 +879,6 @@ NavMeshAgent:
   m_BaseOffset: 0.28
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8357887238515256392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8357887238515256434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17ee0e0d7953c34faeee8168cb68ab0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolArea: {fileID: 0}
-  currentScreamPos: {x: 0, y: 0, z: 0}
-  bigBoy: {fileID: 0}
 --- !u!114 &535780163765409615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,6 +906,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &41995300986203386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8357887238515256434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d7c69a891ac32289635d0caf8df898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScreamPos: {x: 0, y: 0, z: 0}
+  bigBoy: {fileID: 0}
+  patrolArea: {fileID: 0}
+  fov: 110
+  viewRange: 20
+  contactRange: 4
+  dangerRange: 2
 --- !u!1 &8357887238564553555
 GameObject:
   m_ObjectHideFlags: 0

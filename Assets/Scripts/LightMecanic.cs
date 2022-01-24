@@ -53,7 +53,7 @@ public class LightMecanic : MonoBehaviour
         if(Physics.Raycast(originRay, rotation * direction, out hit, 5f, layer) && isTorchAlight){
             
             if(hit.transform.tag == "Enemy" || hit.transform.tag == "ScreamerFix") {
-                hit.collider.gameObject.GetComponent<Screamer>().EnnemyScream();
+                //hit.collider.gameObject.GetComponent<Screamer>().EnnemyScream();
             }
         }
     }
@@ -91,7 +91,4 @@ public class LightMecanic : MonoBehaviour
         _audioFire.PlayOneShot(audioManager.torchIgnite);
         _audioFire.volume = 0.15f;
     }
-
-
-
 }
