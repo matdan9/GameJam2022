@@ -36,7 +36,7 @@ public class GameMenu : MonoBehaviour
 
     void FindGameObject()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         gameMenu = GameObject.Find("GameMenu");
         settingsMenu = GameObject.Find("SettingsMenu");
         resume = GameObject.Find("Resume");
@@ -85,6 +85,7 @@ public class GameMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Locked;
         gameMenu.SetActive(false);
+        player.GetComponent<PlayerController>().EnableMouseLook(true);
     }
 
     void SettingsButton()

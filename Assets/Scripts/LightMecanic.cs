@@ -16,7 +16,7 @@ public class LightMecanic : MonoBehaviour
 
 
     void Start(){
-        Torch = GameObject.Find("Torch");
+        Torch = GameObject.FindGameObjectWithTag("Torch");
         torchFlame = GameObject.Find("TorchFlame");
         torchFireParticle = GameObject.Find("TorchFireParticle");
         torchSmoke = GameObject.Find("TorchSmoke");
