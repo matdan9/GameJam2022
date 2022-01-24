@@ -14,7 +14,6 @@ public class LightMecanic : MonoBehaviour
     private GameObject Torch, torchFlame, torchFireParticle, torchSmoke;
 
 
-
     void Start(){
         Torch = GameObject.Find("Torch");
         torchFlame = GameObject.Find("TorchFlame");
@@ -33,20 +32,16 @@ public class LightMecanic : MonoBehaviour
 
     
     private void LightDetection(){
-
         Vector3 originRay = new Vector3(transform.position.x, transform.position.y -1, transform.position.z);
         Quaternion rotation = Quaternion.AngleAxis(2000 * Time.time, Vector3.up);
         Vector3  direction = transform.forward * 5;
         LayerMask layer = LayerMask.GetMask("Ennemis", "Obstacle"); 
-       
         RaycastHit hit;
         Debug.DrawRay (originRay, rotation * direction,Color.green);
-        
-        
         if(Physics.Raycast(originRay, rotation * direction, out hit, 5f, layer) && isTorchAlight){
             
             if(hit.transform.tag == "Enemy" || hit.transform.tag == "ScreamerFix") {
-                hit.transform.gameObject.GetComponent<Screamer>().EnnemyScream();
+                //hit.transform.gameObject.GetComponent<Screamer>().EnnemyScream();
             }
         }
     }
@@ -54,8 +49,6 @@ public class LightMecanic : MonoBehaviour
     private void BurningTorch(){
         torchValue -= torchDurationSpeed;
         lightIntensity = Torch.GetComponent<Light>().intensity = torchValue;
-
-
         if(torchValue <= 0){
             isTorchAlight = false;
         }else{

@@ -40,13 +40,11 @@ public class BigBoy : MonoBehaviour
     void Update()
     {
         EnnemyPatroling();
-
         if(isRaging){
           OnRageMode();  
         }else{
             animBigBoy.SetBool("run", false);
         }
-
         if(isPlayerDead) agent.speed = 0;
     }
 
