@@ -27,4 +27,11 @@ public class NavMeshHelper
         int a = NavMesh.GetAreaFromName(area);
         return RandomCoordinateInRange(origin, range, a);
     }
+
+    public static Vector3 GetCloseCoordinate(Vector3 origin, int area){
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(origin, out navHit, 5f, 1 << area);
+        return navHit.position;
+    }
+
 }

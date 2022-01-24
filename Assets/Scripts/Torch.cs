@@ -11,8 +11,8 @@ public class Torch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        l = GameObject.Find("Player").GetComponent<LightMecanic>();
-        frost = GameObject.Find("Player").GetComponent<Frost>();
+        l = GameObject.FindGameObjectWithTag("Player").GetComponent<LightMecanic>();
+        frost = GameObject.FindGameObjectWithTag("Player").GetComponent<Frost>();
     }
 
     // Update is called once per frame

@@ -10,7 +10,7 @@ public class EventListener : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         gameMenu = GameObject.Find("GameMenu");
         settingsMenu = GameObject.Find("SettingsMenu");
         slots = GameObject.Find("Slots");
