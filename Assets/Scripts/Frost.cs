@@ -111,11 +111,11 @@ public class Frost : MonoBehaviour
     }
 
     private void DeathFrost(){
-        Debug.Log(frostValue);
         if(frostValue >= 255.3f){
             deathUi.SetActive(true);
             Time.timeScale = 0;
             audioListener.enabled = false;
+            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 
