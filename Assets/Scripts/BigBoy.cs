@@ -4,11 +4,18 @@ using UnityEngine.Serialization;
 
 public class BigBoy : MonoBehaviour
 {
+
+    public LayerMask playerMask;
     private NavMeshAgent agent;
 
     [SerializeField]
     private int health = 5;
-    private Animator animBigBoy;
+    [SerializeField]
+    private float view = 3;
+    [SerializeField]
+    private float grabRange = 5;
+    [SerializeField]
+    private float viewAngle = 100;
     
     //Patroling
     public Vector3 walkPoint;
@@ -43,6 +50,9 @@ public class BigBoy : MonoBehaviour
         if(isPlayerDead) agent.speed = 0;
     }
 
+    private void FixedUpdate(){
+        UpdateGrab();
+    }
 
     private void EnnemyPatroling(){
         if(isDead()) return;
@@ -102,42 +112,71 @@ public class BigBoy : MonoBehaviour
     public void OnScreamerCall(Vector3 screamerPosition){
         walkPoint = NavMeshHelper.RandomCoordinateInRange(screamerPosition, 10f, navMeshArea);
         agent.SetDestination(walkPoint);
-        
-        
-
         isRaging = true; 
     }
 
     private void OnRageMode(){
-
         agent.speed = 10f;
         animBigBoy.SetBool("run", true);
     }
 
-     private void OnTriggerEnter(Collider collision)
-    {
-        if(collision.transform.tag == "Player"){
-            GameObject player = collision.transform.gameObject;
-            GameObject cam = player.transform.GetChild(0).transform.gameObject;
-            GameObject rightHand = GameObject.Find("forearm.R.002_end");
-
-            cam.transform.SetParent(rightHand.transform); 
-            cam.transform.localPosition = new Vector3(0.000152f, 0.000369f, -0.00019f);
-            cam.transform.localEulerAngles = new Vector3(26f, 0, 0);
-
-            walkPoint = transform.position;
-            isRaging = false;
-            animBigBoy.SetTrigger("kill"); 
-            isPlayerDead = true;
-
-            
-            player.GetComponent<PlayerController>().EnableMouseLook(false);
-            player.GetComponent<CapsuleCollider>().enabled = false;
-            player.GetComponent<PlayerController>().enabled = false;
-            
+    private void UpdateGrab(){
+        if(isDead()) return;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, view, playerMask);
+        foreach(Collider col in colliders){
+            Transform target = col.transform;
+            Vector3 targetDirection = (target.position - transform.position).normalized;
+            if(Vector3.Angle(transform.forward, targetDirection) < viewAngle / 2){
+                RaycastHit hit;
+                if(Physics.Raycast(transform.position, targetDirection, out hit, view)){
+                    if(hit.collider.tag == "Player") {
+                        ChasePlayer(hit.collider.gameObject);
+                        return;
+                    }
+                    if(!isWalkPointSet) StopPlayerChase();
+                }
+            }
         }
     }
 
+    private void StopPlayerChase(){
+        SearchWalkingPoint();
+        isRaging = false;
+    }
 
+    private void ChasePlayer(GameObject player){
+        walkPoint = NavMeshHelper.GetCloseCoordinate(player.transform.position, navMeshArea);
+        isWalkPointSet = true;
+        agent.SetDestination(walkPoint);
+        if(Vector3.Distance(player.transform.position, transform.position) <= grabRange){
+            KillPlayer(player);
+            return;
+        }
+        isRaging = true;
+    }
+
+    private void KillPlayer(GameObject player)
+    {
+        GameObject cam = player.transform.GetChild(0).transform.gameObject;
+        GameObject rightHand = GameObject.Find("forearm.R.002_end");
+        cam.transform.SetParent(rightHand.transform); 
+        cam.transform.localPosition = new Vector3(0.000152f, 0.000369f, -0.00019f);
+        cam.transform.localEulerAngles = new Vector3(26f, 0, 0);
+        walkPoint = transform.position;
+        isRaging = false;
+        animBigBoy.SetTrigger("kill"); 
+        isPlayerDead = true;
+        player.GetComponent<PlayerController>().EnableMouseLook(false);
+        player.GetComponent<CapsuleCollider>().enabled = false;
+        player.GetComponent<PlayerController>().enabled = false;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, view);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, grabRange);
+    }
 
 }
