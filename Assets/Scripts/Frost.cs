@@ -21,9 +21,9 @@ public class Frost : MonoBehaviour
 
     public void Start()
     {
-        frost = GameObject.Find("frostOverlay");
-        sphereCollider = GameObject.Find("Player").GetComponent<SphereCollider>();
-        l = GameObject.Find("Player").GetComponent<LightMecanic>();
+        frost = GameObject.FindGameObjectWithTag("Overlay");
+        sphereCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<SphereCollider>();
+        l = GameObject.FindGameObjectWithTag("Player").GetComponent<LightMecanic>();
         SetFrost(0);
         SetMultiplier(3);
     }
