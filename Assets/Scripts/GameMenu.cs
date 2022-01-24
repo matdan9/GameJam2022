@@ -11,6 +11,7 @@ public class GameMenu : MonoBehaviour
     [SerializeField]
     Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
     Toggle inverseX, inverseY;
+    [SerializeField]
     Text fovText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
     Camera cam;
 
