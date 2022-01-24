@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     //Play settings credits exit
     public GameObject play, settings, credits, exit;
-    public GameObject settingsMenu, creditsMenu, title;
+    public GameObject settingsMenu, creditsMenu;
 
     void Awake()
     {
@@ -44,14 +44,12 @@ public class MainMenu : MonoBehaviour
     {
         settingsMenu.SetActive(true);
         creditsMenu.SetActive(false);
-        title.SetActive(false);
     }
 
     void CreditsButton()
     {
         creditsMenu.SetActive(true);
         settingsMenu.SetActive(false);
-        title.SetActive(false);
     }
 
     void ExitButton()
@@ -71,7 +69,6 @@ public class MainMenu : MonoBehaviour
         {
             settingsMenu.SetActive(false);
             creditsMenu.SetActive(false);
-            title.SetActive(true);
         }
     }
 

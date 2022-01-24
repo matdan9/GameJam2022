@@ -4271,7 +4271,6 @@ MonoBehaviour:
   exit: {fileID: 1858094390}
   settingsMenu: {fileID: 2140620844}
   creditsMenu: {fileID: 1487822659}
-  title: {fileID: 0}
   FOV: {fileID: 300888098}
   sensitivityX: {fileID: 1360404280}
   sensitivityY: {fileID: 574520741}

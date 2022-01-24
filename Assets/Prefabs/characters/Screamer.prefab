@@ -820,7 +820,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -891,6 +891,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17ee0e0d7953c34faeee8168cb68ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolArea: {fileID: 0}
+  currentScreamPos: {x: 0, y: 0, z: 0}
+  bigBoy: {fileID: 0}
 --- !u!114 &535780163765409615
 MonoBehaviour:
   m_ObjectHideFlags: 0
