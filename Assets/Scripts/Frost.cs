@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Frost : MonoBehaviour
 {
     [SerializeField]
-    GameObject frost;
+    GameObject frost, deathUi;
     [SerializeField]
     Collider sphereCollider;
     [SerializeField]
@@ -21,6 +21,8 @@ public class Frost : MonoBehaviour
 
     private AudioManager audioManager;
     private AudioSource _audioBreathing;
+    private AudioListener audioListener;
+    
 
     public void Start()
     {
@@ -34,6 +36,11 @@ public class Frost : MonoBehaviour
         _audioBreathing.loop = true;
         _audioBreathing.clip = audioManager.heroFreezing;
         _audioBreathing.volume = 0.5f;
+
+
+        audioListener = GameObject.FindObjectOfType<AudioListener>();
+        deathUi = GameObject.Find("DeathScreenFrost");
+        deathUi.SetActive(false);
     }
 
     public void FixedUpdate()
@@ -49,6 +56,7 @@ public class Frost : MonoBehaviour
         else RemoveFrost(0.1f * multiplier);
 
         PlayBreathingSound();
+        DeathFrost();
     }
 
     void OnTriggerEnter(Collider collider)
@@ -97,6 +105,15 @@ public class Frost : MonoBehaviour
     public bool AtFirecamp()
     {
         return atFirecamp;
+    }
+
+    private void DeathFrost(){
+        Debug.Log(frostValue);
+        if(frostValue >= 255.3f){
+            deathUi.SetActive(true);
+            Time.timeScale = 0;
+            audioListener.enabled = false;
+        }
     }
 
     private void PlayBreathingSound()

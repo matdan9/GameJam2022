@@ -16,6 +16,7 @@ public class GameMenu : MonoBehaviour
     Camera cam;
 
     PlayerController playerController;
+    private AudioListener audioListener;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class GameMenu : MonoBehaviour
         settings.GetComponent<Button>().onClick.AddListener(SettingsButton);
         menu.GetComponent<Button>().onClick.AddListener(MenuButton);
         playerController = player.GetComponent<PlayerController>();
+        audioListener = GameObject.FindObjectOfType<AudioListener>();
     }
 
     void FindGameObject()
@@ -88,6 +90,8 @@ public class GameMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         gameMenu.SetActive(false);
         UI.SetActive(true);
+        Time.timeScale = 1;
+        audioListener.enabled = true;
         player.GetComponent<PlayerController>().EnableMouseLook(true);
         if(player.GetComponent<PlayerController>().isPickedUp()) player.GetComponent<PlayerController>().EnableShooting(true);
     }
