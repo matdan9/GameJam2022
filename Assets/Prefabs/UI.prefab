@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 2369494302238427776}
   - component: {fileID: 9192492978118871126}
   m_Layer: 0
-  m_Name: shotgun
+  m_Name: shotgunIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
