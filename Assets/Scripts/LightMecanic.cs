@@ -13,6 +13,9 @@ public class LightMecanic : MonoBehaviour
     [SerializeField]
     private GameObject Torch, torchFlame, torchFireParticle, torchSmoke;
 
+    private AudioManager audioManager;
+    private AudioSource _audioFire;
+
 
 
     void Start(){
@@ -20,6 +23,10 @@ public class LightMecanic : MonoBehaviour
         torchFlame = GameObject.Find("TorchFlame");
         torchFireParticle = GameObject.Find("TorchFireParticle");
         torchSmoke = GameObject.Find("TorchSmoke");
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        _audioFire = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioFire.loop = true;
+        _audioFire.clip = audioManager.fireIdle;
     }
 
     // Update is called once per frame
@@ -58,8 +65,15 @@ public class LightMecanic : MonoBehaviour
 
         if(torchValue <= 0){
             isTorchAlight = false;
-        }else{
+            _audioFire.Pause();
+        }
+        else{
             isTorchAlight = true;
+            if(isTorchAlight && !_audioFire.isPlaying)
+            {
+                _audioFire.Play();
+                
+            }
         }
     }
 
@@ -74,6 +88,8 @@ public class LightMecanic : MonoBehaviour
         torchFlame.GetComponent<ParticleSystem>().Play();
         torchFireParticle.GetComponent<ParticleSystem>().Play();
         torchSmoke.GetComponent<ParticleSystem>().Play();
+        _audioFire.PlayOneShot(audioManager.torchIgnite);
+        _audioFire.volume = 0.15f;
     }
 
 

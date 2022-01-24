@@ -43,35 +43,24 @@ public class Screamer : MonoBehaviour
         AudioManager.setAudio(_audioFootstep);
         AudioManager.setAudio(_audioIdle);
         _audioIdle.clip = audioManager.spiderIdle;
-        _audioIdle.maxDistance = 15;
+        _audioIdle.maxDistance = 12;
         _audioIdle.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(rb.velocity.magnitude >= 1 && !_audioFootstep.isPlaying)
-        {
-            Debug.Log("wdmwiakdmwa alloallo");
-            //_audioFootstep.Pause();
-            _audioFootstep.clip = audioManager.spiderWalk;
-            _audioFootstep.volume = 1;
-            _audioFootstep.Play();
-        }
+
         if (transform.tag != "ScreamerFix")
         {
             EnnemyPatroling();
             animScreamer.SetBool("walk", true);
         }
-        else if(rb.velocity.magnitude <= 1 && !_audioIdle.isPlaying)
-        {
 
-        }
     }
 
     private void EnnemyPatroling()
     {
-        //_audioFootstep.Play();
         if (!isWalkPointSet && !isScreaming) {
             SearchWalkingPoint();
         }
@@ -99,7 +88,6 @@ public class Screamer : MonoBehaviour
         animScreamer.SetBool("alert", true); 
         if (isScreaming)
         {
-            //_audioFootstep.Pause();
             _audioFootstep.clip = audioManager.spiderAlert;
             _audioFootstep.volume = 0.75f;
             _audioFootstep.Play();
@@ -128,6 +116,13 @@ public class Screamer : MonoBehaviour
          isScreaming = false;
          transform.tag = "Enemy";
          animScreamer.SetBool("alert", false);
+
+        if (!isScreaming)
+        {
+            _audioFootstep.clip = audioManager.spiderWalk;
+            _audioFootstep.volume = 1;
+            _audioFootstep.Play();
+        }
     }
 
     private void EnnemyFixCalmDown(){
