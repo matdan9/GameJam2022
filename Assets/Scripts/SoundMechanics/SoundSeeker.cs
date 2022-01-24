@@ -12,7 +12,7 @@ public class SoundSeeker : MonoBehaviour
     }
 
     public void TriggerDemo(GameObject o, float d, float ss){
-        Debug.Log(ss);
+        //Debug.Log(ss);
     }
 }
 

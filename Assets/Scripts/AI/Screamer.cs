@@ -26,6 +26,11 @@ public class Screamer : MonoBehaviour
     [SerializeField]
     public float dangerRange = 2;
 
+    private AudioManager audioManager;
+    private AudioSource _audioIdle;
+    private AudioSource _audioFootstep;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +38,14 @@ public class Screamer : MonoBehaviour
         animScreamer = GetComponent<Animator>();
         bigBoy = GameObject.Find("bigBoy");
         animScreamer.SetBool("walk", true);
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioIdle = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        AudioManager.setAudio(_audioFootstep);
+        AudioManager.setAudio(_audioIdle);
+        _audioIdle.clip = audioManager.spiderIdle;
+        _audioIdle.maxDistance = 12;
+        _audioIdle.Play();
     }
 
     private void setupAi(){
@@ -52,6 +65,11 @@ public class Screamer : MonoBehaviour
         if(ai.Update(transform)){
             Scream();
         }
+        if(isScreaming){
+            _audioFootstep.clip = audioManager.spiderAlert;
+            _audioFootstep.volume = 0.75f;
+            _audioFootstep.Play();
+        }
     }
 
     public void Scream(){
@@ -68,6 +86,13 @@ public class Screamer : MonoBehaviour
          isScreaming = false;
          transform.tag = "Enemy";
          animScreamer.SetBool("alert", false);
+         if (!isScreaming)
+         {
+            _audioFootstep.clip = audioManager.spiderWalk;
+            _audioFootstep.volume = 1;
+            _audioFootstep.Play();
+         }
+
     }
 
     void OnDrawGizmosSelected()

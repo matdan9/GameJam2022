@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameMenu : MonoBehaviour
 {
     [SerializeField]
-    GameObject player, gameMenu, settingsMenu, resume, settings, menu;
+    GameObject player, gameMenu, settingsMenu, resume, settings, menu, UI;
     [SerializeField]
     Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
     Toggle inverseX, inverseY;
+    [SerializeField]
     Text fovText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
     Camera cam;
 
@@ -22,7 +23,7 @@ public class GameMenu : MonoBehaviour
         FindSlider();
         FindToggle();
         FindText();
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         GetPrefs();
     }
 
@@ -36,12 +37,13 @@ public class GameMenu : MonoBehaviour
 
     void FindGameObject()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         gameMenu = GameObject.Find("GameMenu");
         settingsMenu = GameObject.Find("SettingsMenu");
         resume = GameObject.Find("Resume");
         settings = GameObject.Find("Settings");
         menu = GameObject.Find("Menu");
+        UI = GameObject.Find("Slots");
     }
 
     void FindSlider()
@@ -85,6 +87,9 @@ public class GameMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Locked;
         gameMenu.SetActive(false);
+        UI.SetActive(true);
+        player.GetComponent<PlayerController>().EnableMouseLook(true);
+        if(player.GetComponent<PlayerController>().isPickedUp()) player.GetComponent<PlayerController>().EnableShooting(true);
     }
 
     void SettingsButton()

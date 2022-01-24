@@ -27,6 +27,12 @@ public class BigBoy : MonoBehaviour
     private Animator animBigBoy;
     private bool isPlayerDead = false;
 
+    //Sounds
+    private AudioManager audioManager;
+    private AudioSource _audioVoice;
+    private AudioSource _audioFootstep;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,16 +40,37 @@ public class BigBoy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         navMeshArea = NavMesh.GetAreaFromName("BigBoy");
         animBigBoy = GetComponent<Animator>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        _audioVoice = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        AudioManager.setAudio(_audioVoice);
+        AudioManager.setAudio(_audioFootstep);
+        _audioFootstep.maxDistance = 30.0f;
+        _audioVoice.maxDistance = 20.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
         EnnemyPatroling();
-        if(isRaging){
-          OnRageMode();  
-        }else{
+        if (!_audioFootstep.isPlaying && !_audioVoice.isPlaying)
+        {
+            _audioFootstep.Play();
+            _audioVoice.Play();
+        }
+           
+
+        if (isRaging){
+          OnRageMode();
+            _audioFootstep.clip = audioManager.bigboyRun;
+            _audioVoice.clip = audioManager.bigboyRage;
+
+        }
+        else{
             animBigBoy.SetBool("run", false);
+            _audioFootstep.clip = audioManager.bigboyWalk;
+            _audioVoice.clip = audioManager.bigboyVoiceIdle;
+
         }
         if(isPlayerDead) agent.speed = 0;
     }
@@ -59,9 +86,11 @@ public class BigBoy : MonoBehaviour
         }
         else if(isWalkPointSet && !isRaging) {
             agent.SetDestination(walkPoint);
+
+
         }
         else if(!isWalkPointSet && isRaging || isWalkPointSet && isRaging) {
-             
+
         }
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;

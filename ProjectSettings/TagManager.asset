@@ -12,6 +12,8 @@ TagManager:
   - ScreamerFix
   - Screamer
   - EnemyTouched
+  - PlayerGun
+  - Overlay
   layers:
   - Default
   - TransparentFX

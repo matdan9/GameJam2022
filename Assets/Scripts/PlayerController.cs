@@ -44,6 +44,7 @@ public class PlayerController: MonoBehaviour
     private AudioClip dieSound;
     [SerializeField]
     private AudioClip _jumpAudio;
+    
 
     private bool _touchedGround = false;
     private float _movingSpeed;
@@ -61,12 +62,17 @@ public class PlayerController: MonoBehaviour
     private Vector2 _mouseMovement = new Vector2();
     private Vector3 _extraPhisicsVec = new Vector3();
     private long _nextShot = 0;
-    private AudioSource _audio;
+    private int bulletCount = 0;
     private Vector2 _movementInputs;
     private InputSystem inputSystem;
     private SoundEmitter soundEmitter;
     private float totalSound;
     private bool enableMouseLook = true;
+    private bool enableShooting = false;
+    private bool gunPickedUp = false;
+    private AudioSource _audioFootstep;
+    private AudioSource _audioSFX;
+    private AudioManager audioManager;
 
     [SerializeField]
     GameObject light, smoke;
@@ -95,10 +101,11 @@ public class PlayerController: MonoBehaviour
         SetupCollider();
         RbSetup();
         SetupControls();
-        _audio = this.gameObject.AddComponent<AudioSource>() as AudioSource;
-        _audio.clip = movingSound;
+        _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioSFX = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         soundEmitter = gameObject.GetComponent<SoundEmitter>();
         soundEmitter.AddPermanentNoise(5);
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     private void UpdateMovementInputs(InputAction.CallbackContext c){
@@ -110,12 +117,19 @@ public class PlayerController: MonoBehaviour
 
     private void Update()
     {
-        if(_rbPlayer.velocity.magnitude >= 1 && !_audio.isPlaying) {
-            PlayWalkingSound();
+        if(_rbPlayer.velocity.magnitude >= 1 && !_audioFootstep.isPlaying) {
+            //PlayWalkingSound();
+            _audioFootstep.clip = audioManager.ftDirt;
+            _audioFootstep.Play();
+        }
+        else if(_rbPlayer.velocity.magnitude <= 1)
+        {
+            _audioFootstep.Pause();
         }
         totalSound += 5 * _rbPlayer.velocity.magnitude;
         soundEmitter.AddNoise(new Sound(0.1f, totalSound, 1));
         totalSound = 0;
+        bulletCount = this.GetComponent<PlayerAction>().GetBulletCount();
     }
 
     private void FixedUpdate()
@@ -124,7 +138,7 @@ public class PlayerController: MonoBehaviour
         UpdateMovement();
         UpdatePlayerPosition();
     }
-    
+
     private void UpdatePlayerPosition()
     {
         if (!_touchedGround) _movement /= 3;
@@ -164,13 +178,18 @@ public class PlayerController: MonoBehaviour
         Vector3 pos = new Vector3(_camPlayer.transform.position.x, _camPlayer.transform.position.y, _camPlayer.transform.position.z);
         Quaternion rot = new Quaternion(_camPlayer.transform.rotation.x, _camPlayer.transform.rotation.y, _camPlayer.transform.rotation.z, _camPlayer.transform.rotation.w);
         long currentTime = GetCurrentTime();
+        if (!enableShooting) return;
+        if (bulletCount == 0) return;
         if (_nextShot > currentTime) return;
+        this.GetComponent<PlayerAction>().RemoveBullet(1);
         _nextShot = currentTime + _weaponCoolDown;
         GameObject bullet = Instantiate(_bullet, pos, rot);
         light.GetComponent<ParticleSystem>().Play();
         smoke.GetComponent<ParticleSystem>().Play();
         //RpcPlayGunSound(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
         Destroy(bullet, 10f);
+
+        _audioSFX.PlayOneShot(audioManager.shotgunFire);
     }
 
     private void Crouch(InputAction.CallbackContext c)
@@ -262,8 +281,24 @@ public class PlayerController: MonoBehaviour
         _touchedGround = Physics.Raycast(pos, Vector3.down, out _jumpRay, _jumpSensorLength);
     }
 
-    public void EnableMouseLook(bool b){
+    public void EnableMouseLook(bool b)
+    {
         enableMouseLook = b;
+    }
+
+    public void EnableShooting(bool b)
+    {
+        enableShooting = b;
+    }
+
+    public bool isPickedUp()
+    {
+        return gunPickedUp;
+    }
+
+    public void SetGunPickedUp(bool b)
+    {
+        gunPickedUp = b;
     }
 
     public void SetSens(float sens)
@@ -319,9 +354,9 @@ public class PlayerController: MonoBehaviour
 
     private void PlayWalkingSound()
     {
-        _audio.volume = Random.Range(0.5f, 8f);
+        /*_audio.volume = Random.Range(0.5f, 8f);
         _audio.pitch = Random.Range(0.7f, 1f);
-        _audio.Play();
+        _audio.Play();*/
     }
 
     private void RpcPlayGunSound(Vector3 position)
