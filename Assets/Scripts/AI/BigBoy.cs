@@ -85,7 +85,12 @@ public class BigBoy : MonoBehaviour
             SearchWalkingPoint();
         }
         else if(isWalkPointSet && !isRaging) {
-            agent.SetDestination(walkPoint);
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(walkPoint, path);
+            if(path.status == NavMeshPathStatus.PathComplete){
+                agent.SetDestination(walkPoint);
+            }
+            
 
 
         }
@@ -138,7 +143,11 @@ public class BigBoy : MonoBehaviour
 
     public void OnScreamerCall(Vector3 screamerPosition){
         walkPoint = NavMeshHelper.RandomCoordinateInRange(screamerPosition, 10f, navMeshArea);
-        agent.SetDestination(walkPoint);
+         NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(walkPoint, path);
+            if(path.status == NavMeshPathStatus.PathComplete){
+                agent.SetDestination(walkPoint);
+            }
         isRaging = true; 
     }
 
@@ -174,7 +183,11 @@ public class BigBoy : MonoBehaviour
     private void ChasePlayer(GameObject player){
         walkPoint = NavMeshHelper.GetCloseCoordinate(player.transform.position, navMeshArea);
         isWalkPointSet = true;
-        agent.SetDestination(walkPoint);
+         NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(walkPoint, path);
+            if(path.status == NavMeshPathStatus.PathComplete){
+                agent.SetDestination(walkPoint);
+            }
         if(Vector3.Distance(player.transform.position, transform.position) <= grabRange){
             KillPlayer(player);
             return;
