@@ -8,6 +8,8 @@ public class EventListener : MonoBehaviour
     [SerializeField]
     GameObject player, gameMenu, settingsMenu, slots;
 
+    private AudioListener audioListener;
+
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -20,6 +22,8 @@ public class EventListener : MonoBehaviour
     {
         settingsMenu.SetActive(false);
         gameMenu.SetActive(false);
+
+        audioListener = GameObject.FindObjectOfType<AudioListener>();
     }
 
     void Update()
@@ -33,6 +37,8 @@ public class EventListener : MonoBehaviour
             slots.SetActive(true);
             player.GetComponent<PlayerController>().EnableMouseLook(true);
             player.GetComponent<PlayerController>().EnableShooting(true);
+            Time.timeScale = 1;
+            audioListener.enabled = true;
         }
         else if (Keyboard.current.escapeKey.wasPressedThisFrame && !gameMenu.activeSelf)
         {
@@ -42,6 +48,9 @@ public class EventListener : MonoBehaviour
             slots.SetActive(false);
             player.GetComponent<PlayerController>().EnableMouseLook(false);
             player.GetComponent<PlayerController>().EnableShooting(false);
+
+            Time.timeScale = 0;
+            audioListener.enabled = false;
         }
     }
 }
