@@ -31,6 +31,9 @@ public class Frost : MonoBehaviour
         SetMultiplier(3);
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         _audioBreathing = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioBreathing.loop = true;
+        _audioBreathing.clip = audioManager.heroFreezing;
+        _audioBreathing.volume = 0.5f;
     }
 
     public void FixedUpdate()
@@ -98,12 +101,16 @@ public class Frost : MonoBehaviour
 
     private void PlayBreathingSound()
     {
-        _audioBreathing.clip = audioManager.heroFreezing;
-        Debug.Log("chara");
-        if (cold)
+        
+        if(cold && !_audioBreathing.isPlaying)
         {
             Debug.Log("askufnmanfmasn");
             _audioBreathing.Play();
+        }
+        else if(!cold)
+        {
+            Debug.Log("lol");
+            _audioBreathing.Pause();
         }
     }
 }
