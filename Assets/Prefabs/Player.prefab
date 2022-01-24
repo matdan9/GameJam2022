@@ -127,7 +127,7 @@ MonoBehaviour:
   jogSpeed: 5
   crouchSpeed: 2
   runSpeed: 10
-  _extraDrag: 0.3
+  _extraDrag: 0
   _groundLayer:
     serializedVersion: 2
     m_Bits: 4294967295
