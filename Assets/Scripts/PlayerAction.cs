@@ -20,7 +20,7 @@ public class PlayerAction: MonoBehaviour
     private GameObject bulletText;
     private GameObject pickupText;
     private GameObject interactText;
-    private GameObject shotgunSlot;
+    private GameObject shotgunIcon;
     private GameObject shotgun;
     private GameObject player;
 
@@ -33,7 +33,7 @@ public class PlayerAction: MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         bulletText = GameObject.Find("bulletText");
-        shotgunSlot = GameObject.Find("GunSlot");
+        shotgunIcon = GameObject.Find("shotgunIcon");
         pickupText = GameObject.Find("pickupText");
         interactText = GameObject.Find("interactText");
         shotgun = GameObject.Find("HeldShotgun");
@@ -45,6 +45,7 @@ public class PlayerAction: MonoBehaviour
         pickupText.SetActive(false);
         interactText.SetActive(false);
         shotgun.SetActive(false);
+        shotgunIcon.SetActive(false);
     }
     
     void Update(){
@@ -96,15 +97,12 @@ public class PlayerAction: MonoBehaviour
             item = null;
             pickupText.SetActive(false);
             canInteract = false;
-            shotgunSlot.GetComponent<RawImage>().color = new Color32(188, 195, 204, 255);
-            bulletText.GetComponent<Text>().color = new Color32(0, 0, 0, 255);
+            shotgunIcon.SetActive(true);
             shotgun.SetActive(true);
             player.GetComponent<PlayerController>().EnableShooting(true);
             player.GetComponent<PlayerController>().SetGunPickedUp(true);
         }
      }
-    
-
 
     private void Interact(InputAction.CallbackContext context)
     {
