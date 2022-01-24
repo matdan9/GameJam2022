@@ -1489,8 +1489,8 @@ GameObject:
   - component: {fileID: 7625430777362017505}
   - component: {fileID: 346853820448635110}
   - component: {fileID: 3261159373934281910}
-  - component: {fileID: 5145338312039335033}
   - component: {fileID: 799898072902355443}
+  - component: {fileID: 8138196955201782}
   m_Layer: 6
   m_Name: bigBoy
   m_TagString: Enemy
@@ -1573,26 +1573,6 @@ NavMeshAgent:
   m_BaseOffset: 1.62
   m_WalkableMask: 8
   m_ObstacleAvoidanceType: 4
---- !u!114 &5145338312039335033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7283324683031892402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35507ea163b597ed6bac1027759c16b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  health: 5
-  view: 10
-  grabRange: 5
-  viewAngle: 100
-  walkPoint: {x: 0, y: 0, z: 0}
 --- !u!136 &799898072902355443
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1607,6 +1587,26 @@ CapsuleCollider:
   m_Height: 9.3
   m_Direction: 1
   m_Center: {x: 0, y: 3.15, z: 0}
+--- !u!114 &8138196955201782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283324683031892402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d57c20ad2cdc5ef906909ad1d0b719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  health: 5
+  view: 12.55
+  grabRange: 5
+  viewAngle: 100
+  walkPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &7286898631301509730
 GameObject:
   m_ObjectHideFlags: 0
