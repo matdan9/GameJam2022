@@ -37,7 +37,8 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetFloat("mainVol", mainVolume.value);
         PlayerPrefs.SetFloat("musVol", musicVolume.value);
         PlayerPrefs.SetFloat("sfxVol", sfxVolume.value);
-        SceneManager.LoadScene("BugFixing");
+        SceneManager.LoadScene("Niveau_Foret");
+        Time.timeScale = 1;
     }
 
     void SettingsButton()

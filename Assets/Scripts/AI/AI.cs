@@ -106,8 +106,13 @@ public class AI
     }
 
     private void setNewDestination(Vector3 target){
-        hasTarget = true;
-        agent.SetDestination(target);
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(target, path);
+        if(path.status == NavMeshPathStatus.PathComplete){
+            hasTarget = true;
+            agent.SetDestination(target);
+        }
+        
     }
 
     private bool hasTargetValue(Transform trans, Vector3 targetDirection){

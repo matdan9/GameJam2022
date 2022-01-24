@@ -20,6 +20,6 @@ public class RetryButton : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         audioListener.enabled = true;
         Time.timeScale = 1;
-        SceneManager.LoadScene("BugFixing");
+        SceneManager.LoadScene("Niveau_Foret");
     }
 }
