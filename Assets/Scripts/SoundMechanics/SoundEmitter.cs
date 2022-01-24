@@ -42,7 +42,7 @@ public class SoundEmitter : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, triggerRange, 1 << 6);
         foreach(Collider other in colliders){
             float dist = Vector3.Distance(transform.position, other.transform.position);
-            other.gameObject.GetComponent<SoundSeeker>().OnSoundTrigger(gameObject, dist, GetNoiseLevel());
+            //other.gameObject.GetComponent<SoundSeeker>().OnSoundTrigger(gameObject, dist, GetNoiseLevel());
         }
     }
 
