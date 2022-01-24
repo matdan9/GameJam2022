@@ -8,7 +8,6 @@ public class Screamer : MonoBehaviour
     
 
     //Patroling
-    private bool isScreaming = false;
     private Animator animScreamer;
     
     public Vector3 currentScreamPos;
@@ -29,23 +28,36 @@ public class Screamer : MonoBehaviour
     private AudioManager audioManager;
     private AudioSource _audioIdle;
     private AudioSource _audioFootstep;
+    private AudioSource _audioAlert;
+    private CapsuleCollider collider;
 
+    void Awake()
+    {
+        bigBoy = GameObject.Find("bigBoy");
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         setupAi();
+        collider = GetComponent<CapsuleCollider>();
         animScreamer = GetComponent<Animator>();
-        bigBoy = GameObject.Find("bigBoy");
         animScreamer.SetBool("walk", true);
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         _audioIdle = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioAlert = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         AudioManager.setAudio(_audioFootstep);
         AudioManager.setAudio(_audioIdle);
+        AudioManager.setAudio(_audioAlert);
         _audioIdle.clip = audioManager.spiderIdle;
         _audioIdle.maxDistance = 12;
         _audioIdle.Play();
+        _audioAlert.maxDistance = 20.0f;
+        _audioAlert.clip = audioManager.spiderAlert;
+        _audioAlert.volume = 0.75f;
+        _audioFootstep.clip = audioManager.spiderWalk;
+        _audioFootstep.volume = 1;
     }
 
     private void setupAi(){
@@ -62,37 +74,24 @@ public class Screamer : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(ai.Update(transform)){
-            Scream();
-        }
-        if(isScreaming){
-            _audioFootstep.clip = audioManager.spiderAlert;
-            _audioFootstep.volume = 0.75f;
-            _audioFootstep.Play();
-        }
+        if (ai.Update(transform)) Scream();
     }
 
     public void Scream(){
-        isScreaming = true;
+        if (_audioAlert.isPlaying) return;
         animScreamer.SetBool("alert", true);
-        Invoke("EnnemyCalmDown", 3f);
+        _audioAlert.Play();
         currentScreamPos = transform.position;
         bigBoy.GetComponent<BigBoy>().OnScreamerCall(currentScreamPos);
-        //transform.tag = "EnemyTouched";
-        Debug.Log("Scream sound !");
+        collider.isTrigger = true;
+        Invoke("EnnemyCalmDown", 2.5f);
     }
 
     private void EnnemyCalmDown(){
-         isScreaming = false;
-         transform.tag = "Enemy";
          animScreamer.SetBool("alert", false);
-         if (!isScreaming)
-         {
-            _audioFootstep.clip = audioManager.spiderWalk;
-            _audioFootstep.volume = 1;
-            _audioFootstep.Play();
-         }
-
+         _audioAlert.Stop();
+         _audioFootstep.Play();
+        collider.isTrigger = false;
     }
 
     void OnDrawGizmosSelected()
@@ -103,5 +102,10 @@ public class Screamer : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, contactRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, viewRange);
+    }
+
+    public void TakeDamage(int val)
+    {
+        return;
     }
 }

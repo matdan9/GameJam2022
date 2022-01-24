@@ -23,6 +23,10 @@ public class Frost : MonoBehaviour
     private AudioSource _audioBreathing;
     private AudioListener audioListener;
     
+    public void Awake()
+    {
+        deathUi = GameObject.Find("DeathScreenFrost");
+    }
 
     public void Start()
     {
@@ -39,7 +43,6 @@ public class Frost : MonoBehaviour
 
 
         audioListener = GameObject.FindObjectOfType<AudioListener>();
-        deathUi = GameObject.Find("DeathScreenFrost");
         deathUi.SetActive(false);
     }
 

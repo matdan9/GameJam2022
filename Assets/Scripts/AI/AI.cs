@@ -33,7 +33,7 @@ public class AI
 
     public bool Update(Transform trans){
         if(this.pause) return false;
-        Collider[] colliders = Physics.OverlapSphere(trans.position, viewRange, 1 << triggerMask);
+        Collider[] colliders = Physics.OverlapSphere(trans.position, viewRange*2, 1 << triggerMask);
         updatePath(trans);
         foreach(Collider col in colliders){
             Transform target = col.transform;
@@ -47,10 +47,14 @@ public class AI
                 if(distance <= dangerRange){
                     return true;
                 }
-                Chase(col.gameObject);
-                return false;
+                if (distance <= viewRange * (1 + col.gameObject.GetComponent<LightMecanic>().IntensityRatio()))
+                {
+                    Chase(col.gameObject);
+                    return false;
+                }
             }
-            if(distance <= contactRange){
+            if(distance <= contactRange * col.gameObject.GetComponent<LightMecanic>().IntensityRatio())
+            {
                 Chase(col.gameObject);
                 return false;
             }
@@ -66,7 +70,6 @@ public class AI
     }
 
     private void vocation(Transform trans){
-        Debug.Log(defaultAiState);
         if(defaultAiState == AiState.Roaming){
             roam(trans);
             return;
@@ -75,18 +78,23 @@ public class AI
     }
 
     private void Chase(GameObject obj){
+        agent.stoppingDistance = 2f;
         target = NavMeshHelper.GetCloseCoordinate(obj.transform.position, navMeshArea);
         aiState = AiState.Chase;
         setNewDestination(target);
     }
 
     private void patrol(){
+        if (hasTarget) return;
+        agent.stoppingDistance = 0f;
         target = NavMeshHelper.RandomCoordinateInRange(patrolArea.position, 20f, navMeshArea);
         setNewDestinationSafely(target);
         aiState = AiState.Patrol;
     }
 
     private void roam(Transform trans){
+        if (hasTarget) return;
+        agent.stoppingDistance = 0f;
         target = NavMeshHelper.RandomCoordinateInRange(trans.position, 20f, navMeshArea);
         setNewDestinationSafely(target);
         aiState = AiState.Roaming;
@@ -104,7 +112,7 @@ public class AI
 
     private bool hasTargetValue(Transform trans, Vector3 targetDirection){
         RaycastHit hit;
-        if(Physics.Raycast(trans.position, targetDirection, out hit, viewRange)){
+        if(Physics.Raycast(trans.position, targetDirection, out hit, viewRange*2)){
             return hit.collider.tag == triggerTag;
         }
         return false;

@@ -16,14 +16,13 @@ public class EventListener : MonoBehaviour
         gameMenu = GameObject.Find("GameMenu");
         settingsMenu = GameObject.Find("SettingsMenu");
         slots = GameObject.Find("Slots");
+        audioListener = GameObject.FindObjectOfType<AudioListener>();
     }
 
     void Start()
     {
         settingsMenu.SetActive(false);
         gameMenu.SetActive(false);
-
-        audioListener = GameObject.FindObjectOfType<AudioListener>();
     }
 
     void Update()
