@@ -102,7 +102,7 @@ public class PlayerController: MonoBehaviour
         SetupControls();
         _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         _audioSFX = this.gameObject.AddComponent<AudioSource>() as AudioSource;
-        soundEmitter = gameObject.GetComponent<SoundEmitter>();
+        soundEmitter = this.gameObject.GetComponent<SoundEmitter>();
         soundEmitter.AddPermanentNoise(5);
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
