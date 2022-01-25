@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class RetryButton : MonoBehaviour
 {
     private AudioListener audioListener;
+    public bool menu = false;
 
     void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(Retry);
+        if(!menu) GetComponent<Button>().onClick.AddListener(Retry);
+        else GetComponent<Button>().onClick.AddListener(MainMenu);
         audioListener = GameObject.FindObjectOfType<AudioListener>();
     }
 
@@ -21,5 +23,12 @@ public class RetryButton : MonoBehaviour
         audioListener.enabled = true;
         Time.timeScale = 1;
         SceneManager.LoadScene("Niveau_Foret");
+    }
+
+    void MainMenu()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
+        SceneManager.LoadScene("MainMenu");
     }
 }

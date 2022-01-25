@@ -16,9 +16,6 @@ public class MainMenu : MonoBehaviour
         FOV.value = PlayerPrefs.GetFloat("fov");
         sensitivityX.value = PlayerPrefs.GetFloat("sensX");
         sensitivityY.value = PlayerPrefs.GetFloat("sensY");
-        mainVolume.value = PlayerPrefs.GetFloat("mainVol");
-        musicVolume.value = PlayerPrefs.GetFloat("musVol");
-        sfxVolume.value = PlayerPrefs.GetFloat("sfxVol");
     }
 
     void Start()
@@ -34,9 +31,6 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetFloat("fov", FOV.value);
         PlayerPrefs.SetFloat("sensX", sensitivityX.value);
         PlayerPrefs.SetFloat("sensY", sensitivityY.value);
-        PlayerPrefs.SetFloat("mainVol", mainVolume.value);
-        PlayerPrefs.SetFloat("musVol", musicVolume.value);
-        PlayerPrefs.SetFloat("sfxVol", sfxVolume.value);
         SceneManager.LoadScene("Niveau_Foret");
         Time.timeScale = 1;
     }
@@ -59,9 +53,9 @@ public class MainMenu : MonoBehaviour
     }
 
     //Settings
-    public Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
+    public Slider FOV, sensitivityX, sensitivityY;
     public Toggle inverseX, inverseY;
-    public Text FOVText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
+    public Text FOVText, sensitivityXText, sensitivityYText;
 
     void Update()
     {
@@ -78,8 +72,5 @@ public class MainMenu : MonoBehaviour
         FOVText.text = FOV.value.ToString();
         sensitivityXText.text = sensitivityX.value.ToString();
         sensitivityYText.text = sensitivityY.value.ToString();
-        mainVolumeText.text = mainVolume.value.ToString();
-        musicVolumeText.text = musicVolume.value.ToString();
-        sfxVolumeText.text = sfxVolume.value.ToString();
     }
 }

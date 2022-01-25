@@ -103,9 +103,6 @@ public class BigBoy : MonoBehaviour
             if(path.status == NavMeshPathStatus.PathComplete){
                 agent.SetDestination(walkPoint);
             }
-            
-
-
         }
         else if(!isWalkPointSet && isRaging || isWalkPointSet && isRaging) {
 
@@ -134,8 +131,7 @@ public class BigBoy : MonoBehaviour
         animBigBoy.SetBool("die", true);
         agent.isStopped = true;
 
-        Destroy(_audioFootstep);
-        Destroy(_audioVoice);
+        AudioListener.volume = 0;
 
         Invoke("WinScreen", 3f);
     }
