@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &176629586
 RectTransform:
   m_ObjectHideFlags: 0
@@ -660,17 +660,20 @@ MonoBehaviour:
     OBJECTIVES:
 
     1.
-    Find the gun and the bullets
+    Light your torch at campfires to prevent freezing
 
-    2. Kill Gulosus
+    2. Find the gun and the
+    bullets
+
+    3. Kill Gulosus
 
 
     PS:
 
-    The spiders
-    are immortal.
+    The spiders are immortal.
 
-    They will also call him if you get too close to them.
+    They
+    will also call him if you get too close to them.
 
 
 '
