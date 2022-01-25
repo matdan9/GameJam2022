@@ -134,6 +134,9 @@ public class BigBoy : MonoBehaviour
         animBigBoy.SetBool("die", true);
         agent.isStopped = true;
 
+        Destroy(_audioFootstep);
+        Destroy(_audioVoice);
+
         Invoke("WinScreen", 3f);
     }
 
