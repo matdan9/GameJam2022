@@ -17,7 +17,7 @@ public class BigBoy : MonoBehaviour
     [SerializeField]
     private float viewAngle = 100;
     [SerializeField]
-    GameObject deathUi;
+    GameObject deathUi, winUi;
     
     //Patroling
     public Vector3 walkPoint;
@@ -38,6 +38,7 @@ public class BigBoy : MonoBehaviour
     public void Awake()
     {
         deathUi = GameObject.Find("DeathScreenBigBoi");
+        winUi = GameObject.Find("WinScreen");
     }
     
 
@@ -58,6 +59,7 @@ public class BigBoy : MonoBehaviour
         
         audioListener = GameObject.FindObjectOfType<AudioListener>();
         deathUi.SetActive(false);
+        winUi.SetActive(false);
     }
 
     // Update is called once per frame
@@ -131,10 +133,20 @@ public class BigBoy : MonoBehaviour
         stopAnimations();
         animBigBoy.SetBool("die", true);
         agent.isStopped = true;
+
+        Invoke("WinScreen", 3f);
     }
 
     private bool isDead(){
         return health <=0;
+    }
+
+    private void WinScreen(){
+        Debug.Log("Win");
+        winUi.SetActive(true);
+        Time.timeScale = 0;
+        audioListener.enabled = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void stopAnimations(){
@@ -226,7 +238,6 @@ public class BigBoy : MonoBehaviour
     }
 
     private void DeathScreen(){
-        Debug.Log("DeathScreen");
         deathUi.SetActive(true);
         Time.timeScale = 0;
         audioListener.enabled = false;
