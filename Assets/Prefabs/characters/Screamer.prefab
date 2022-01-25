@@ -782,7 +782,6 @@ GameObject:
   - component: {fileID: 8357887238515256438}
   - component: {fileID: 8357887238515256435}
   - component: {fileID: 8357887238515256439}
-  - component: {fileID: 535780163765409615}
   - component: {fileID: 41995300986203386}
   m_Layer: 6
   m_Name: Screamer
@@ -879,33 +878,6 @@ NavMeshAgent:
   m_BaseOffset: 0.28
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &535780163765409615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8357887238515256434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae96ed0524a8386bbc4d55141904845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SoundTriggerEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 535780163765409615}
-        m_TargetAssemblyTypeName: SoundSeeker, Assembly-CSharp
-        m_MethodName: TriggerDemo
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &41995300986203386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,9 +894,9 @@ MonoBehaviour:
   bigBoy: {fileID: 0}
   patrolArea: {fileID: 0}
   fov: 110
-  viewRange: 20
-  contactRange: 4
-  dangerRange: 2
+  viewRange: 25
+  contactRange: 7
+  dangerRange: 5
 --- !u!1 &8357887238564553555
 GameObject:
   m_ObjectHideFlags: 0

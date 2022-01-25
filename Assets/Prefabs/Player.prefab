@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: 1291989805497797861}
   - component: {fileID: 5586831481079781621}
   - component: {fileID: 3199953587737051340}
-  - component: {fileID: 5236074279581186182}
-  - component: {fileID: 5411544381982157925}
+  - component: {fileID: 7238307094451658873}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -189,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc69b89338309c44aa695ff1596370e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5236074279581186182
+--- !u!114 &7238307094451658873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,26 +203,7 @@ MonoBehaviour:
   triggerRange: 10
   seekerMask:
     serializedVersion: 2
-    m_Bits: 64
---- !u!114 &5411544381982157925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2263078876150260607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95caecc7ace69484abb8da7f5bfe7e1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  frost: {fileID: 0}
-  deathUi: {fileID: 0}
-  sphereCollider: {fileID: 0}
-  atFirecamp: 0
-  multiplier: 0
-  frostValue: 0
-  cold: 0
+    m_Bits: 0
 --- !u!1 &8312162396226642881
 GameObject:
   m_ObjectHideFlags: 0
