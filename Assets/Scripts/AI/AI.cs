@@ -53,8 +53,9 @@ public class AI
                     return false;
                 }
             }
-            if(distance <= contactRange * col.gameObject.GetComponent<LightMecanic>().IntensityRatio())
+            if(distance <= contactRange * (1 + col.gameObject.GetComponent<LightMecanic>().IntensityRatio()))
             {
+                Debug.Log("contact");
                 Chase(col.gameObject);
                 return false;
             }

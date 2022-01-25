@@ -9,10 +9,10 @@ public class GameMenu : MonoBehaviour
     [SerializeField]
     GameObject player, gameMenu, settingsMenu, resume, settings, menu, UI;
     [SerializeField]
-    Slider FOV, sensitivityX, sensitivityY, mainVolume, musicVolume, sfxVolume;
+    Slider FOV, sensitivityX, sensitivityY;
     Toggle inverseX, inverseY;
     [SerializeField]
-    Text fovText, sensitivityXText, sensitivityYText, mainVolumeText, musicVolumeText, sfxVolumeText;
+    Text fovText, sensitivityXText, sensitivityYText;
     Camera cam;
 
     PlayerController playerController;
@@ -53,9 +53,6 @@ public class GameMenu : MonoBehaviour
         FOV = GameObject.Find("FOV").GetComponent<Slider>();
         sensitivityX = GameObject.Find("Sensitivity X").GetComponent<Slider>();
         sensitivityY = GameObject.Find("Sensitivity Y").GetComponent<Slider>();
-        mainVolume = GameObject.Find("Main Volume").GetComponent<Slider>();
-        musicVolume = GameObject.Find("Music Volume").GetComponent<Slider>();
-        sfxVolume = GameObject.Find("SFX Volume").GetComponent<Slider>();
     }
 
     void FindToggle()
@@ -69,9 +66,6 @@ public class GameMenu : MonoBehaviour
         fovText = GameObject.Find("FOV Value").GetComponent<Text>();
         sensitivityXText = GameObject.Find("SensX Value").GetComponent<Text>();
         sensitivityYText = GameObject.Find("SensY Value").GetComponent<Text>();
-        mainVolumeText = GameObject.Find("MainVol Value").GetComponent<Text>();
-        musicVolumeText = GameObject.Find("MusVol Value").GetComponent<Text>();
-        sfxVolumeText = GameObject.Find("SFXVol Value").GetComponent<Text>();
     }
 
     void GetPrefs()
@@ -79,9 +73,6 @@ public class GameMenu : MonoBehaviour
         FOV.value = PlayerPrefs.GetFloat("fov");
         sensitivityX.value = PlayerPrefs.GetFloat("sensX");
         sensitivityY.value = PlayerPrefs.GetFloat("sensY");
-        mainVolume.value = PlayerPrefs.GetFloat("mainVol");
-        musicVolume.value = PlayerPrefs.GetFloat("musVol");
-        sfxVolume.value = PlayerPrefs.GetFloat("sfxVol");
     }
 
     void ResumeButton()
@@ -106,9 +97,6 @@ public class GameMenu : MonoBehaviour
         PlayerPrefs.SetFloat("fov", FOV.value);
         PlayerPrefs.SetFloat("sensX", sensitivityX.value);
         PlayerPrefs.SetFloat("sensY", sensitivityY.value);
-        PlayerPrefs.SetFloat("mainVol", mainVolume.value);
-        PlayerPrefs.SetFloat("musVol", musicVolume.value);
-        PlayerPrefs.SetFloat("sfxVol", sfxVolume.value);
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -127,8 +115,5 @@ public class GameMenu : MonoBehaviour
         fovText.text = FOV.value.ToString();
         sensitivityXText.text = sensitivityX.value.ToString();
         sensitivityYText.text = sensitivityY.value.ToString();
-        mainVolumeText.text = mainVolume.value.ToString();
-        musicVolumeText.text = musicVolume.value.ToString();
-        sfxVolumeText.text = sfxVolume.value.ToString();
     }
 }
