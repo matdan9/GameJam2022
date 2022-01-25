@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     public AudioClip bigboyRage;
     [SerializeField]
+    public AudioClip bigboyRageFar;
+    [SerializeField]
     public AudioClip bigboyRun;
     [SerializeField]
     public AudioClip bigboyVoiceIdle;

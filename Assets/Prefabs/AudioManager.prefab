@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bigboyRage: {fileID: 8300000, guid: 0d5147abfcf0641449f336be65b913b2, type: 3}
-  bigboyRun: {fileID: 8300000, guid: 254ba0fbdaa9baa45b2455f1b06d9881, type: 3}
+  bigboyRageFar: {fileID: 8300000, guid: 50bc8f304137d5941801b0d53a08d5f0, type: 3}
+  bigboyRun: {fileID: 8300000, guid: d5d2c15d23316b1489f9d65430b7bb39, type: 3}
   bigboyVoiceIdle: {fileID: 8300000, guid: 7abcb38fde25a2b4ea9c893adcdf3499, type: 3}
   bigboyWalk: {fileID: 8300000, guid: 8658a6385e303e245ac4618d28213044, type: 3}
   fireIdle: {fileID: 8300000, guid: 938fe0df3367cb54c833b25a0f2aa40c, type: 3}

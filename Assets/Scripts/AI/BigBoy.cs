@@ -32,6 +32,7 @@ public class BigBoy : MonoBehaviour
     //Sounds
     private AudioManager audioManager;
     private AudioSource _audioVoice;
+    private AudioSource _audioSFX;
     private AudioSource _audioFootstep;
     private AudioListener audioListener;
 
@@ -52,6 +53,7 @@ public class BigBoy : MonoBehaviour
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         _audioVoice = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         _audioFootstep = this.gameObject.AddComponent<AudioSource>() as AudioSource;
+        _audioSFX = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         AudioManager.setAudio(_audioVoice);
         AudioManager.setAudio(_audioFootstep);
         _audioFootstep.maxDistance = 30.0f;
@@ -168,13 +170,18 @@ public class BigBoy : MonoBehaviour
 
 
     public void OnScreamerCall(Vector3 screamerPosition){
+        if (!isRaging)
+        {
+            _audioSFX.PlayOneShot(audioManager.bigboyRageFar);
+        }
         walkPoint = NavMeshHelper.RandomCoordinateInRange(screamerPosition, 10f, navMeshArea);
          NavMeshPath path = new NavMeshPath();
             agent.CalculatePath(walkPoint, path);
             if(path.status == NavMeshPathStatus.PathComplete){
                 agent.SetDestination(walkPoint);
             }
-        isRaging = true; 
+        isRaging = true;
+
     }
 
     private void OnRageMode(){
