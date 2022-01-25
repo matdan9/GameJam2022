@@ -76,7 +76,6 @@ public class LightMecanic : MonoBehaviour
 
     public float IntensityRatio()
     {
-        Debug.Log("Intensity Ratio:" + torchValue / maxIntensity);
         if (torchValue <= 0) return 0.01f;
         return torchValue / maxIntensity;
     }
