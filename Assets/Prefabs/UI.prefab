@@ -685,7 +685,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: YOU FROZE
+  m_Text: 'YOU''RE DEAD
+
+'
 --- !u!1 &963633560602071570
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7622,7 +7624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.8877, y: 490}
+  m_AnchoredPosition: {x: 2, y: 414}
   m_SizeDelta: {x: 1957.6472, y: 268.8771}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6463093985518626096
@@ -7653,7 +7655,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 01cccac810db85c49910db6895b9becb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ba678f3df265ab145a61c98cfecdb44a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7731,7 +7733,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e9f18a1cc714e4644b2dd6994fe119e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 968eeca6bbc11384a9b2d76e8a5192c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
