@@ -116,9 +116,9 @@ public class PlayerController: MonoBehaviour
 
     private void Update()
     {
+        ChangeFootstepsSound();
         if(_rbPlayer.velocity.magnitude >= 1 && !_audioFootstep.isPlaying) {
             //PlayWalkingSound();
-            _audioFootstep.clip = audioManager.ftDirt;
             _audioFootstep.Play();
         }
         else if(_rbPlayer.velocity.magnitude <= 1)
@@ -278,6 +278,20 @@ public class PlayerController: MonoBehaviour
         Vector3 pos = this.transform.position;
         pos.y -= _collider.bounds.size.y / 2.1f;
         _touchedGround = Physics.Raycast(pos, Vector3.down, out _jumpRay, _jumpSensorLength);
+    }
+
+    private void ChangeFootstepsSound()
+    {
+        if (gameObject.transform.position.z > -235)
+        {
+            _audioFootstep.Pause();
+            _audioFootstep.clip = audioManager.ftDirt;
+        }
+        else
+        {
+            _audioFootstep.Pause();
+            _audioFootstep.clip = audioManager.ftSand;
+        }
     }
 
     public void EnableMouseLook(bool b)
