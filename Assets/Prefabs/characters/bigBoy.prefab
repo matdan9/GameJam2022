@@ -1603,9 +1603,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   health: 5
-  view: 12.55
+  view: 25
   grabRange: 5
-  viewAngle: 100
+  viewAngle: 140
+  deathUi: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &7286898631301509730
 GameObject:
