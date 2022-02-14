@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightMecanic : MonoBehaviour
+public class LightMechanic : MonoBehaviour
 {
 
     public float torchValue = 7f;
@@ -12,18 +12,20 @@ public class LightMecanic : MonoBehaviour
     
     public bool isTorchAlight = false;
     [SerializeField]
-    private GameObject Torch, torchFlame, torchFireParticle, torchSmoke;
+    private GameObject torch, torchFlame, torchFireParticle, torchSmoke;
 
     private AudioManager audioManager;
     private AudioSource _audioFire;
 
+    GameManager gameManager;
 
+    void Awake()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
-    void Start(){
-        Torch = GameObject.FindGameObjectWithTag("Torch");
-        torchFlame = GameObject.Find("TorchFlame");
-        torchFireParticle = GameObject.Find("TorchFireParticle");
-        torchSmoke = GameObject.Find("TorchSmoke");
+    void Start() {
+        GetObjects();
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         _audioFire = this.gameObject.AddComponent<AudioSource>() as AudioSource;
         _audioFire.loop = true;
@@ -38,10 +40,17 @@ public class LightMecanic : MonoBehaviour
         torchFlame.transform.localScale = flameScale();
     }
 
+    private void GetObjects()
+    {
+        torch = gameManager.GetTorchObject();
+        torchFlame = gameManager.GetTorchFlameObject();
+        torchFireParticle = gameManager.GetTorchFireParticleObject();
+        torchSmoke = gameManager.GetTorchSmokeObject();
+    }
+
     private void BurningTorch(){
         torchValue -= torchDurationSpeed;
-        lightIntensity = Torch.GetComponent<Light>().intensity = torchValue;
-
+        lightIntensity = torch.GetComponent<Light>().intensity = torchValue;
 
         if(torchValue <= 0){
             isTorchAlight = false;
@@ -52,7 +61,6 @@ public class LightMecanic : MonoBehaviour
             if(isTorchAlight && !_audioFire.isPlaying)
             {
                 _audioFire.Play();
-                
             }
         }
     }

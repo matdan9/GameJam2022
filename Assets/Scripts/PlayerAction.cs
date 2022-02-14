@@ -108,7 +108,7 @@ public class PlayerAction: MonoBehaviour
     {
         if(canInteract && item.transform.tag == "Campfire")
         {
-            GetComponent<LightMecanic>().RestartTorch();
+            GetComponent<LightMechanic>().RestartTorch();
             
         }  
     }

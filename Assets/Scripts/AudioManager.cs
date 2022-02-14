@@ -71,22 +71,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip musicGettingChase;
     [SerializeField]
     public AudioClip musicMenu;
-    [SerializeField]
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public static void setAudio(AudioSource audio)
     {
