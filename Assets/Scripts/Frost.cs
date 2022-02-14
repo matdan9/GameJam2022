@@ -17,7 +17,10 @@ public class Frost : MonoBehaviour
     float frostValue;
     [SerializeField]
     bool cold = false;
-    LightMecanic l;
+    LightMechanic l;
+
+    [SerializeField]
+    GameManager gameManager;
 
     private AudioManager audioManager;
     private AudioSource _audioBreathing;
@@ -25,14 +28,15 @@ public class Frost : MonoBehaviour
     
     public void Awake()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         deathUi = GameObject.Find("DeathScreenFrost");
     }
 
     public void Start()
     {
         frost = GameObject.FindGameObjectWithTag("Overlay");
-        sphereCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<SphereCollider>();
-        l = GameObject.FindGameObjectWithTag("Player").GetComponent<LightMecanic>();
+        sphereCollider = gameManager.GetPlayerObject().GetComponent<SphereCollider>();
+        l = gameManager.GetLightMechanic();
         SetFrost(0);
         SetMultiplier(3);
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
@@ -121,7 +125,6 @@ public class Frost : MonoBehaviour
 
     private void PlayBreathingSound()
     {
-        
         if(cold && !_audioBreathing.isPlaying)
         {
             _audioBreathing.Play();

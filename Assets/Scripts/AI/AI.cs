@@ -47,13 +47,13 @@ public class AI
                 if(distance <= dangerRange){
                     return true;
                 }
-                if (distance <= viewRange * (1 + col.gameObject.GetComponent<LightMecanic>().IntensityRatio()))
+                if (distance <= viewRange * (1 + col.gameObject.GetComponent<LightMechanic>().IntensityRatio()))
                 {
                     Chase(col.gameObject);
                     return false;
                 }
             }
-            if(distance <= contactRange * (1 + col.gameObject.GetComponent<LightMecanic>().IntensityRatio()))
+            if(distance <= contactRange * (1 + col.gameObject.GetComponent<LightMechanic>().IntensityRatio()))
             {
                 Debug.Log("contact");
                 Chase(col.gameObject);

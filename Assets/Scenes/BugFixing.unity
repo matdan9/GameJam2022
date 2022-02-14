@@ -831,6 +831,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2263078876150260604, guid: 79a498689f0467a2a9fd1d61e65bd3f1, type: 3}
+      propertyPath: xMul
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2263078876150260604, guid: 79a498689f0467a2a9fd1d61e65bd3f1, type: 3}
+      propertyPath: yMul
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2263078876150260604, guid: 79a498689f0467a2a9fd1d61e65bd3f1, type: 3}
       propertyPath: jogSpeed
       value: 10
       objectReference: {fileID: 0}
